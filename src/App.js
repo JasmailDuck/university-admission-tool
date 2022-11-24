@@ -8,10 +8,8 @@ import footerClasses from "./css/Footer.module.css";
 
 import Home from "./Pages/Home";
 import Programs from "./Pages/Programs";
-//import Login from "./Pages/Login";
 import Signup from "./Pages/Signup";
 import UserProfile from "./Pages/UserProfile";
-import AdminProfile from "./Pages/UserProfile";
 import ADMINUSERMANAGEMENT from "./Pages/admin-userManagement/adminUserManagement";
 import ADMIN from "./Pages/admin/admin";
 import LOGIN from "./Pages/FrontEndLogIn";
@@ -193,7 +191,6 @@ class App extends Component {
             <Route path="/programs" element={<Programs />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/userProfile" element={<UserProfile />} />
-            <Route path="/adminProfile" element={<AdminProfile />} />
             <Route path="/admin/usermanagement" element={<ADMINUSERMANAGEMENT/>} />
             <Route path="/adminDashboard" element={<ADMIN/>}/>
             <Route path="/login" element={<LOGIN />} />

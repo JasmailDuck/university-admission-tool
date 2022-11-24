@@ -40,7 +40,7 @@ class UserService {
     return apiInstance
       .post(config.uniAdminToolServer.send_user_doc_location,
         {
-          "files": file,
+          "file": file,
         })
         .then((response) => {
           return response.data;

@@ -51,7 +51,7 @@ class Login extends Component {
     if (this.state.email !== "" && this.state.password !== "") {
       dispatch(login(this.state.email, this.state.password))
         .then(() => {
-          this.sendToHome();
+          this.sendToProfile();
           window.location.reload();
         })
         .catch(() => {
@@ -66,8 +66,8 @@ class Login extends Component {
     }
   }
 
-  sendToHome() {
-    this.props.navigate("/");
+  sendToProfile() {
+    this.props.navigate("/userProfile");
   }
 
   // renders HTML to the web page, and enables reading props and state and return our JSX code to the root of the app.
@@ -112,7 +112,7 @@ class Login extends Component {
                     </label>
                     <input type="password" 
                      placeholder="&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;" 
-                     classNmae="login_pass" name="password" value={this.state.password} onChange={this.onChangePassword} required />
+                     className="login_pass" name="password" value={this.state.password} onChange={this.onChangePassword} required />
                 </div>
             
 

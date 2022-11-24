@@ -7,6 +7,8 @@ import { deleteUser, logout } from "../actions/auth";
 import EventBus from "../helpers/EventBus";
 import { setMessage } from "../actions/message";
 
+import classes from "../css/UserProfile.module.css";
+
 class UserProfile extends Component {
   constructor(props) {
     super(props);
@@ -46,6 +48,7 @@ class UserProfile extends Component {
       role: "",
       fileName: "",
       selectedFile: null,
+      fileString: "",
       editing: 0,
       e_f_name: "",
       e_l_name: "",
@@ -60,10 +63,6 @@ class UserProfile extends Component {
   // gets invoked right after first render() lifecyle of React component
   componentDidMount() {
     this.getUserInformation();
-
-    // if (error.response && error.response.status === 401) {
-    //   EventBus.dispatch("logout");
-    // }
   }
 
   // These methods are called upon when setting up user profile, calling the API
@@ -135,12 +134,6 @@ class UserProfile extends Component {
     });
   }
 
-  onChangeEmail(e) {
-    this.setState({
-      email: e.target.value,
-    });
-  }
-
   onChangeDateOfBirth(e) {
     this.setState({
       dob: e.target.value,
@@ -199,11 +192,14 @@ class UserProfile extends Component {
         }
       });
   }
+  
 
   // makes API call to update information based on what was changed in the editing form
   // then updates the info and closes the editing form.
   updateInformation(e) {
     e.preventDefault();
+
+    //this.checkInformationChanged();
 
     UserService.updateUserInformation(
       this.state.email,
@@ -217,6 +213,44 @@ class UserProfile extends Component {
     ).then(() => {
       this.setEditing();
     });
+  }
+
+  checkInformationChanged() {
+    if (this.state.e_f_name === "") {
+      this.setState({
+        e_f_name: this.state.f_name,
+      });
+    }
+    if (this.state.e_l_name === "") {
+      this.setState({
+        e_l_name: this.state.l_name,
+      });
+    }
+    if (this.state.e_address === "") {
+      this.setState({
+        e_address: this.state.address,
+      });
+    }
+    if (this.state.e_dob === "") {
+      this.setState({
+        e_dob: this.state.dob,
+      });
+    }
+    if (this.state.e_country === "") {
+      this.setState({
+        e_country: this.state.country,
+      });
+    }
+    if (this.state.e_interests === "") {
+      this.setState({
+        e_interests: this.state.interests,
+      });
+    }
+    if (this.state.e_role === "") {
+      this.setState({
+        e_role: this.state.role,
+      });
+    }
   }
 
   // Will delete user from the database, loging them out and deleting token.
@@ -242,16 +276,19 @@ class UserProfile extends Component {
   // On file upload (click the upload button)
   onFileUpload = () => {
     try {
+      var fileString;
       const reader = new FileReader();
 
-      const fileData = reader.readAsText(this.state.selectedFile);
+      reader.readAsDataURL(this.state.selectedFile);
+      reader.onloadend = () => {
+        // Logs data:<type>;base64,wL2dvYWwgbW9yZ...
+        fileString = reader.result;
+      };
 
-      this.setState({ selectedFile: fileData });
-      console.log(this.state.selectedFile);
+      setTimeout(() => {
+        UserService.sendUserDocument(fileString);
+      }, 1000);
 
-      // Request made to the backend api
-      // Send formData object
-      //UserService.sendUserDocument(this.state.selectedFile);
     } catch (e) {
       this.props.dispatch(setMessage("No Document Selected!"));
     }
@@ -296,7 +333,7 @@ class UserProfile extends Component {
           <div>
             <div>
               <div>
-                <button onClick={this.setEditing} type='button'>Edit Profile</button>
+                <button className={classes.button} onClick={this.setEditing} type='button'>Edit Profile</button>
               </div>
               <h3>Name</h3>
               <p>
@@ -332,12 +369,16 @@ class UserProfile extends Component {
               <h3>Files</h3>
               <input type="file" onChange={this.onFileChange} />
               {this.fileData()}
-              <button onClick={this.onFileUpload} type="button">Upload File</button>
+              <button className={classes.button} onClick={this.onFileUpload} type="button">Upload File</button>
             </div>
           </div>
         );
       } else {
-        return (
+        return (   
+          <div>        
+            <div>
+              <button className={classes.button} onClick={this.setEditing} type='button'>Back</button>
+            </div>
             <form onSubmit={this.updateInformation}>
               <div>
                 
@@ -404,11 +445,12 @@ class UserProfile extends Component {
                   name="role" 
                 />
 
-                <button type="submit">
+                <button className={classes.button} type="submit">
                   Confirm Changes
                 </button>
               </div>
             </form>
+          </div>  
         );
       }
     };
@@ -427,6 +469,7 @@ class UserProfile extends Component {
 
         <div>
           <button 
+            className={classes.button}
             style={{ margin: 50 }} 
             onClick={this.deleteUser}
             type="button"
