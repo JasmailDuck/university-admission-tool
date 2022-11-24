@@ -5,6 +5,7 @@ import { withRouter } from "../helpers/withRouter";
 import UserService from "../services/user_service";
 import { deleteUser, logout } from "../actions/auth";
 import EventBus from "../helpers/EventBus";
+import { fileToDataURL, dataURLToFile } from "../helpers/fileHelper";
 import { setMessage } from "../actions/message";
 
 import classes from "../css/UserProfile.module.css";
@@ -199,8 +200,6 @@ class UserProfile extends Component {
   updateInformation(e) {
     e.preventDefault();
 
-    //this.checkInformationChanged();
-
     UserService.updateUserInformation(
       this.state.email,
       this.state.f_name,
@@ -213,44 +212,6 @@ class UserProfile extends Component {
     ).then(() => {
       this.setEditing();
     });
-  }
-
-  checkInformationChanged() {
-    if (this.state.e_f_name === "") {
-      this.setState({
-        e_f_name: this.state.f_name,
-      });
-    }
-    if (this.state.e_l_name === "") {
-      this.setState({
-        e_l_name: this.state.l_name,
-      });
-    }
-    if (this.state.e_address === "") {
-      this.setState({
-        e_address: this.state.address,
-      });
-    }
-    if (this.state.e_dob === "") {
-      this.setState({
-        e_dob: this.state.dob,
-      });
-    }
-    if (this.state.e_country === "") {
-      this.setState({
-        e_country: this.state.country,
-      });
-    }
-    if (this.state.e_interests === "") {
-      this.setState({
-        e_interests: this.state.interests,
-      });
-    }
-    if (this.state.e_role === "") {
-      this.setState({
-        e_role: this.state.role,
-      });
-    }
   }
 
   // Will delete user from the database, loging them out and deleting token.
@@ -276,18 +237,14 @@ class UserProfile extends Component {
   // On file upload (click the upload button)
   onFileUpload = () => {
     try {
-      var fileString;
-      const reader = new FileReader();
-
-      reader.readAsDataURL(this.state.selectedFile);
-      reader.onloadend = () => {
-        // Logs data:<type>;base64,wL2dvYWwgbW9yZ...
-        fileString = reader.result;
-      };
+      var fileString = fileToDataURL(this.state.selectedFile);
 
       setTimeout(() => {
-        UserService.sendUserDocument(fileString);
-      }, 1000);
+        fileString.then((result) => {
+          UserService.sendUserDocument(result);
+
+        })
+      }, 200);
 
     } catch (e) {
       this.props.dispatch(setMessage("No Document Selected!"));
