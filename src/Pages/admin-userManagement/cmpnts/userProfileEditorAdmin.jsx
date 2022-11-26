@@ -66,7 +66,7 @@ class userProfileEditorAdmin extends Component {
       role: "",
       grade: "",
       editing: 0,
-      viewing: 0,
+      viewing: 1,
       e_f_name: "",
       e_l_name: "",
       e_address: "",
