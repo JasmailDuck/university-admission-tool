@@ -1,8 +1,6 @@
 // the query strings for each location. works with api.js as that file creates the Axios instance. 
 const config = {
   uniAdminToolServer: {
-    home_location:
-      "/",
     signup_location:
       "/registerUser",
     login_location:

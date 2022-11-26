@@ -45,8 +45,7 @@ class App extends Component {
   }
 
   // This method stops a user from using the back button on the website to get to login page
-  // while logged in. also stops user from typing in login while logged in so they cant
-  // get to the page that way either.
+  // while logged in. also stops user from typing in a url to a page they cannot get to.
   // Used in render, and parent of routes that require user to be logged in.
   RequireAuth = () => {
     let location = useLocation();
