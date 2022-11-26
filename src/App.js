@@ -14,6 +14,7 @@ import LOGIN from "./Pages/FrontEndLogIn";
 import { logout } from "./actions/auth";
 import { history } from "./helpers/history";
 import Consultants from "./Pages/Consultants";
+import USERPROFILEEDITORADMIN from "./Pages/admin-userManagement/cmpnts/userProfileEditorAdmin";
 
 class App extends Component {
   constructor(props) {
@@ -108,11 +109,8 @@ class App extends Component {
                 </Link>
               </nav>
               <nav className={navbarClasses.NavBtn}>
-                <Link
-                  className={navbarClasses.NavBtnLink}
-                  to="/admin/usermanagement"
-                >
-                  UserManage
+                <Link className={navbarClasses.NavBtnLink} to="/adminDashboard">
+                  Admin Tools Icon
                 </Link>
               </nav>
               <nav className={navbarClasses.NavBtn}>
@@ -159,6 +157,7 @@ class App extends Component {
                 <Route path="/admin/usermanagement" element={<ADMINUSERMANAGEMENT />} />
                 <Route path="/adminDashboard" element={<ADMIN />} />
                 <Route path="/consultants" element={<Consultants />} />
+                <Route path="/admin/usermanagement/userEditor" element={<USERPROFILEEDITORADMIN/>} />
               </Route>
               {defaultRoute()}
             </Routes>

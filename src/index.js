@@ -8,6 +8,7 @@ import store from './store';
 import setupInterceptors from "./services/setupInterceptors";
 
 
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   // The App component needs to be a child of Provider for Redux to work

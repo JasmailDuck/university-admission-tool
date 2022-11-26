@@ -21,7 +21,16 @@ class UserService {
       });
   }
 
-  updateUserInformation(email, f_name, l_name, address, dob, country, interests, role) {
+  getUserInformationByID(id) {
+    return apiInstance
+    .get(config.uniAdminToolServer.get_user_information_id + id)
+    .then((response) => {
+      return response.data
+    })
+  }
+
+  updateUserInformation(email, f_name, l_name, address, dob, country, interests, role, grade) {
+    
     return apiInstance
       .post(config.uniAdminToolServer.user_services_location,
         {
@@ -32,7 +41,8 @@ class UserService {
           "dob": dob,
           "country": country,
           "interests": interests,
-          "roleid": role,
+          "roleid": parseInt(role),
+          "grade": parseInt(grade)
         })
   }
 
