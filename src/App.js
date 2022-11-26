@@ -1,12 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link, Navigate } from "react-router-dom";
 import { FaBars, FaUserCircle } from "react-icons/fa";
 
 import navbarClasses from "./css/Navbar.module.css";
 import footerClasses from "./css/Footer.module.css";
-
-import Home from "./Pages/Home";
 import Programs from "./Pages/Programs";
 import Signup from "./Pages/Signup";
 import UserProfile from "./Pages/UserProfile";
@@ -17,7 +15,6 @@ import { logout } from "./actions/auth";
 import EventBus from "./helpers/EventBus";
 import { history } from "./helpers/history";
 import Consultants from "./Pages/Consultants";
-
 
 class App extends Component {
   constructor(props) {
@@ -56,35 +53,16 @@ class App extends Component {
     });
   }
 
-
   render() {
-    const { currentUser, userRole } =
-      this.state;
+    const { currentUser } = this.state;
 
-    // checks what kind of user is logged in, and will direct them to the according profile
-    const CheckProfile = () => {
-      if (currentUser && userRole) {
-        return (
-          <nav className={navbarClasses.NavBtn}>
-            <Link 
-              to="/adminProfile"
-            >
-              <FaUserCircle className={navbarClasses.Profile} />
-            </Link>
-          </nav>
-        );
-      } else if (currentUser) {
-        return (
-          <nav className={navbarClasses.NavBtn}>
-            <Link 
-              to="/userProfile"
-            >
-              <FaUserCircle className={navbarClasses.Profile} />
-            </Link>
-          </nav>
-        );
+    const defaultRoute = () => {
+      if (currentUser) {
+        return <Route path="*" element={<Navigate to="/userProfile" />} />
+      } else {
+        return <Route path="*" element={<Navigate to="/login" />} />
       }
-    };
+    }
 
     //all the pages that are in the website. Each has a different route leads to
     //a page guided by the nav bar.
@@ -92,17 +70,6 @@ class App extends Component {
       <BrowserRouter location={history.location} navigator={history}>
         <div className={navbarClasses.Nav}>
           <FaBars className={navbarClasses.Bars} />
-
-          {/* This is the Home link*/}
-          <div className={navbarClasses.NavMenu}>
-            <Link 
-              className={navbarClasses.NavLink} 
-              to="/" 
-              activestyle="true"
-            >
-              Home
-            </Link>
-          </div>
 
           {/* Change this later! right now its showing if not current user */}
           {currentUser && (
@@ -117,7 +84,11 @@ class App extends Component {
             </div>
           )}
           <div className={navbarClasses.NavMenu}>
-            <Link className={navbarClasses.NavLink} to="/Consultants" activestyle="true">
+            <Link
+              className={navbarClasses.NavLink}
+              to="/Consultants"
+              activestyle="true"
+            >
               Consultants
             </Link>
           </div>
@@ -127,22 +98,15 @@ class App extends Component {
           {!currentUser ? (
             <div className={navbarClasses.NavMenu}>
               <nav className={navbarClasses.NavBtn}>
-                <Link 
-                  className={navbarClasses.NavBtnLink} 
-                  to="/signup"
-                >
+                <Link className={navbarClasses.NavBtnLink} to="/signup">
                   Sign up
                 </Link>
               </nav>
               <nav className={navbarClasses.NavBtn}>
-                <Link 
-                  className={navbarClasses.NavBtnLink} 
-                  to="/login"
-                >
+                <Link className={navbarClasses.NavBtnLink} to="/login">
                   Login
                 </Link>
               </nav>
-              
             </div>
           ) : (
             /* is current user is logged in, will show log out and profile on navbar  */
@@ -157,44 +121,61 @@ class App extends Component {
                 </Link>
               </nav>
               <nav className={navbarClasses.NavBtn}>
-                <Link className={navbarClasses.NavBtnLink} to="/admin/usermanagement">
+                <Link
+                  className={navbarClasses.NavBtnLink}
+                  to="/admin/usermanagement"
+                >
                   UserManage
                 </Link>
               </nav>
 
-              {CheckProfile()}
+              <nav className={navbarClasses.NavBtn}>
+                <Link to="/userProfile">
+                  <FaUserCircle className={navbarClasses.Profile} />
+                </Link>
+              </nav>
             </div>
           )}
         </div>
-      
-      
-        
 
         {/* Footer will go below this point! */}
         <footer className={footerClasses.footer}>
           <div className={footerClasses.links}>
-            <p><a href="?">Terms of Use</a></p>
+            <p>
+              <a href="?">Terms of Use</a>
+            </p>
             <p>|</p>
-            <p><a href="?">Privacy</a></p>
+            <p>
+              <a href="?">Privacy</a>
+            </p>
             <p>|</p>
-            <p><a href="?">Accessibility</a></p>
+            <p>
+              <a href="?">Accessibility</a>
+            </p>
             <p>|</p>
-            <p><a href="?">Support</a></p>
+            <p>
+              <a href="?">Support</a>
+            </p>
             <p>|</p>
-            <p>Copyright &#169; 2022 <a href="?">Shirah</a> All rights reserved.</p>
+            <p>
+              Copyright &#169; 2022 <a href="?">Shirah</a> All rights reserved.
+            </p>
           </div>
         </footer>
-        
+
         <div>
           <Routes>
-            <Route path="/" element={<Home />} />
             <Route path="/programs" element={<Programs />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/userProfile" element={<UserProfile />} />
-            <Route path="/admin/usermanagement" element={<ADMINUSERMANAGEMENT/>} />
-            <Route path="/adminDashboard" element={<ADMIN/>}/>
+            <Route
+              path="/admin/usermanagement"
+              element={<ADMINUSERMANAGEMENT />}
+            />
+            <Route path="/adminDashboard" element={<ADMIN />} />
             <Route path="/login" element={<LOGIN />} />
-            <Route path="/consultants" element={<Consultants/>} />
+            <Route path="/consultants" element={<Consultants />} />
+            {defaultRoute()}
           </Routes>
         </div>
       </BrowserRouter>
