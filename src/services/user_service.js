@@ -29,7 +29,8 @@ class UserService {
     })
   }
 
-  updateUserInformation(email, f_name, l_name, address, dob, country, interests, role) {
+  updateUserInformation(email, f_name, l_name, address, dob, country, interests, role, grade) {
+    
     return apiInstance
       .post(config.uniAdminToolServer.user_services_location,
         {
@@ -40,7 +41,8 @@ class UserService {
           "dob": dob,
           "country": country,
           "interests": interests,
-          "roleid": role,
+          "roleid": parseInt(role),
+          "grade": parseInt(grade)
         })
   }
 

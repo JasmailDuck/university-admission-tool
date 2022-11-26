@@ -17,19 +17,20 @@ import USERPROFILEADMINVIEW from './userProfileAdminView';
 
 
 
+
 class userProfileEditorAdmin extends Component {
 
-  
+
   constructor(props) {
-    
+
     super(props);
-    
-    
+
+
     this.getUserInformation = this.getUserInformation.bind(this);
     this.updateInformation = this.updateInformation.bind(this);
     this.deleteUser = this.deleteUser.bind(this);
 
-    
+
     this.setEditing = this.setEditing.bind(this);
     this.setViewing = this.setViewing.bind(this);
 
@@ -52,7 +53,7 @@ class userProfileEditorAdmin extends Component {
     this.onChangeRole = this.onChangeRole.bind(this);
     this.onChangeGrade = this.onChangeGrade.bind(this);
 
-    
+
     this.state = {
       id: sessionStorage.getItem("userId"),
       f_name: "",
@@ -77,7 +78,7 @@ class userProfileEditorAdmin extends Component {
     };
   }
 
-  
+
 
   // These methods are called upon when setting up user profile, calling the API
   setFirstName(firstname) {
@@ -189,7 +190,7 @@ class userProfileEditorAdmin extends Component {
   }
 
   setEditing() {
-    
+
     if (this.state.editing === 0) {
       this.setState({
         editing: 1,
@@ -204,7 +205,7 @@ class userProfileEditorAdmin extends Component {
   }
 
   setViewing() {
-    
+
     if (this.state.viewing === 0) {
       this.setState({
         editing: 0,
@@ -217,19 +218,19 @@ class userProfileEditorAdmin extends Component {
       });
     }
   }
-  
+
   getUserInformation() {
     UserService.getUserInformationByID(this.state.id)
       .then((response) => {
-        this.setFirstName(response.f_name);
-        this.setLastName(response.l_name);
-        this.setAddress(response.address);
-        this.setEmail(response.email);
-        this.setDateOfBirth(response.dob);
-        this.setCountry(response.country);
-        this.setInterests(response.interests);
-        this.setRole(response.role_id);
-        this.setGrade(response.grade);
+        this.setFirstName(response.f_name|| "");
+        this.setLastName(response.l_name|| "");
+        this.setAddress(response.address|| "");
+        this.setEmail(response.email|| "");
+        this.setDateOfBirth(response.dob|| "");
+        this.setCountry(response.country|| "");
+        this.setInterests(response.interests|| "");
+        this.setRole(response.role_id|| 0);
+        this.setGrade(response.grade || 0);
       })
       .catch((error) => {
         console.log(error);
@@ -238,7 +239,7 @@ class userProfileEditorAdmin extends Component {
 
   updateInformation(e) {
     e.preventDefault();
-
+    console.log(e);
     UserService.updateUserInformation(
       this.state.email,
       this.state.f_name,
@@ -247,113 +248,253 @@ class userProfileEditorAdmin extends Component {
       this.state.dob,
       this.state.country,
       this.state.interests,
-      this.state.role
-      //this.state.grade
+      this.state.role,
+      this.state.grade
     )
+    .catch((error) => {console.log(error);})
+    .then (() => {
+      this.setViewing();
+    })
   }
 
   deleteUser() {
-    
+
   }
-  
+
 
 
   componentDidMount() {
     this.getUserInformation();
 
-    
+
   }
 
 
   render() {
-    
+
     //const { message } = this.props;
     const { editing } = this.state;
     const { viewing } = this.state;
-    
 
-    const viewProfile = ()=> {
-      
-      if(viewing) {
-        return(
-          <USERPROFILEADMINVIEW 
-            firstName = {this.state.f_name} 
-            lastName = {this.state.l_name} 
-            address = {this.state.address} 
-            email = {this.state.email} 
-            dob = {this.state.dob} 
-            country = {this.state.country} 
-            interests = {this.state.interests} 
-            grade = {this.state.grade} 
-            role = {this.state.role} 
+
+    const viewProfile = () => {
+
+      if (viewing) {
+        return (
+          <USERPROFILEADMINVIEW
+            firstName={this.state.f_name}
+            lastName={this.state.l_name}
+            address={this.state.address}
+            email={this.state.email}
+            dob={this.state.dob}
+            country={this.state.country}
+            interests={this.state.interests}
+            grade={this.state.grade}
+            role={this.state.role}
           />
         )
       }
     }
-    const editProfile = ()=> {
-      if(editing) {
-        return(
-          <div>
-            asdf
-          </div>
+    const editProfile = () => {
+      if (editing) {
+        return (
+          <form onSubmit={this.updateInformation}>
+            <div id='userContentContainer' className='flex flex-col px-5 mt-5'>
+
+              <div id='userPersonalInformatiionContainer' className=''>
+
+                <div className=' text-xl'>
+                  User Personal Information
+                </div>
+                <div id='userPersonalInfoDataContainer' className='flex'>
+
+
+                  <div className='flex p-2'>
+                    First Name:
+                    <input
+                      type="text"
+                      placeholder={this.state.f_name}
+                      value={this.state.f_name}
+                      onChange={this.onChangeFirstName}
+                      name="firstName"
+                    />
+                  </div>
+
+                  <div className='flex p-2'>
+                    Last Name:
+                    <input
+                      type="text"
+                      placeholder={this.state.l_name}
+                      value={this.state.l_name}
+                      onChange={this.onChangeLastName}
+                      name="lastName"
+                    />
+                  </div>
+
+                  <div className='flex p-2'>
+                    Address:
+                    <input
+                      type="text"
+                      placeholder={this.state.address}
+                      value={this.state.address}
+                      onChange={this.onChangeAddress}
+                      name="address"
+                    />
+                  </div>
+                  <div className='flex p-2'>
+                    Email:
+                    <div className='mx-2'>
+                      {this.state.email}
+                    </div>
+                  </div>
+                  <div className='flex p-2'>
+                    Date Of Birth:
+                    <input
+                      type="text"
+                      onFocus={(e) => (e.target.type = "date")}
+                      placeholder={this.state.dob}
+                      onChange={this.onChangeDateOfBirth}
+                      name="dob"
+                    />
+                  </div>
+                  <div className='flex p-2'>
+                    Country:
+                    <input
+                      type="text"
+                      placeholder={this.state.country}
+                      value={this.state.country}
+                      onChange={this.onChangeCountry}
+                      name="country"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div id='userDataContainer' className=''>
+
+                <div className=' text-xl'>
+                  User Data
+                </div>
+                <div id='userDataContainer' className='flex'>
+
+
+                  <div className='flex p-2'>
+                    Interests:
+                    <input
+                      type="text"
+                      placeholder={this.state.interests}
+                      value={this.state.interests}
+                      onChange={this.onChangeInterests}
+                      name="interests"
+                    />
+                  </div>
+
+
+                </div>
+
+
+
+              </div>
+
+              <div id='userDataAdminContainer' className=''>
+
+                <div className='text-xl'>
+                  User Data Admin Access Only
+                </div>
+
+
+                <div id='userDataContainer' className='flex'>
+
+
+                  <div className='flex p-2'>
+                    Grade:
+                    <input
+                      type="text"
+                      placeholder={this.state.grade}
+                      value={this.state.grade}
+                      onChange={this.onChangeGrade}
+                      name="grade"
+                    />
+                  </div>
+
+                  <div className='flex p-2'>
+                    Role:
+                    <input
+                      type="text"
+                      placeholder={this.state.role}
+                      value={this.state.role}
+                      onChange={this.onChangeRole}
+                      name="role"
+                    />
+                  </div>
+
+                </div>
+
+              </div>
+              <button className='p-3 mx-3 bg-neutral-100 rounded-2xl' type="submit">
+                Confirm Changes
+              </button>
+            </div>
+
+          </form>
         )
       }
     }
 
-    
+
     return (
-    
-    <div className='h-full w-full bg-neutral-100 '>
+
+      <div className='h-full w-full bg-neutral-100 '>
 
         <div className='h-full w-full flex flex-col'>
-            <div className='p-10 text-4xl'>
-                ADMIN DASHBOARD {'>'} USER MANAGEMENT
+          <div className='p-10 text-4xl'>
+            ADMIN DASHBOARD {'>'} USER MANAGEMENT
+          </div>
+
+          <div id='adminToolsContentContainer' className='h-full flex flex-col flex-1 mx-20 mb-20 p-2'>
+
+            <div className='flex text-2xl mb-5'>
+              Profile Editor for User: {this.state.f_name}
             </div>
 
-            <div id='adminToolsContentContainer' className='h-full flex flex-col flex-1 mx-20 mb-20 p-2'>
-                
-                <div className='flex text-2xl mb-5'>
-                    Profile Editor for User: {this.state.f_name}
+            <div className=' flex-1 bg-white rounded-2xl drop-shadow-2xl p-2'>
+
+              <div id='profileOptions' className='' >
+                <div className=' text-xl mb-5'>
+                  Profile Options
                 </div>
 
-                <div className=' flex-1 bg-white rounded-2xl drop-shadow-2xl p-2'>
+                <div id='optionsButtonContainer' className='text-lg'>
+                  <button
+                    onClick={this.setViewing}
+                    className='p-3 mx-3 bg-neutral-100 rounded-2xl'>
+                    View Profile
+                  </button>
 
-                    <div id='profileOptions' className='' >
-                      <div className=' text-xl mb-5'>
-                        Profile Options
-                      </div>
+                  <button
+                    onClick={this.setEditing}
+                    className='p-3 mx-3 bg-neutral-100 rounded-2xl'>
+                    Edit Profile
+                  </button>
 
-                      <div id='optionsButtonContainer' className='text-lg'>
-                          <button
-                            onClick={this.setViewing}
-                            className='p-3 mx-3 bg-neutral-100 rounded-2xl'>
-                              View Profile
-                          </button>
-                          
-                          <button 
-                            onClick={this.setEditing} 
-                            className='p-3 mx-3 bg-neutral-100 rounded-2xl'>
-                              Edit Profile
-                          </button>
-
-                          <button className='p-3 mx-3 bg-neutral-100 rounded-2xl'>Delete Profile</button>
-                          <button className='p-3 mx-3 bg-neutral-100 rounded-2xl'>Suspend Profile</button>
-                      </div>
-                    </div>
-                
-                <div id='contentContainer'>
-                  {viewProfile() || editProfile()} 
+                  <button className='p-3 mx-3 bg-neutral-100 rounded-2xl'>Delete Profile</button>
+                  <button className='p-3 mx-3 bg-neutral-100 rounded-2xl'>Suspend Profile</button>
                 </div>
-              
-                
-                   
-                </div>
+              </div>
+
+              <div id='contentContainer'>
+                {viewProfile() || editProfile()}
+              </div>
+
+
+
             </div>
+          </div>
         </div>
 
-    </div>
-  )
-}
+      </div>
+    )
+  }
 }
 
 
