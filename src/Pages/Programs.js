@@ -31,8 +31,11 @@ class Programs extends Component {
     this.setData = this.setData.bind(this); 
    // this.onChangeSearchUni = this.onChangeSearchUni.bind(this);
     
-
-
+    // When the website is first launch all university and there programs should be displayed 
+    // The university search filter will handle one university at a time , there shold be  a list of all the university name and you are only able to select one 
+    // The program search filter should be multiple select checkbox where the user can select different programs(Such as CS or Math)
+    // The user grade filter will be a clickable button which will show all the minimum requirements(Handled back end )
+    //
     // controls state of Programs.
     this.state = {
       listOfProgram:[
