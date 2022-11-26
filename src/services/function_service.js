@@ -5,11 +5,11 @@ import apiInstance from "../api";
 
 class FunctionService {
 
-  programsList = (university_name) => {
+  listOfUniName(universityName){
 
     
     return apiInstance.get(config.uniAdminToolServer.program_list_location,{
-       params:{ university: university_name }
+       params:{ university: universityName }
        
     })
     .then((response) => {
@@ -17,8 +17,9 @@ class FunctionService {
       return response.data; 
     })
   };
+
   
 }
 
   
-export default FunctionService;
+export default new FunctionService();
