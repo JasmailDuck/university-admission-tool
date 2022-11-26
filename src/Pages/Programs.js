@@ -1,8 +1,21 @@
 import React, { Component } from "react";
 import function_service from "../services/function_service";
 import "../css/Programs.page.css"
+// For the drop down box - university name
+import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+// This is for the University Card 
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Typography from "@mui/material/Typography";
+import Link from '@mui/material/Link';
 
-
+//import { MultiSelect } from "react-multi-select-component";
 
 
 class Programs extends Component {
@@ -12,18 +25,64 @@ class Programs extends Component {
     
     super(props);
     
+    this.handleUniversityName = this.handleUniversityName.bind(this); 
+    this.handleProgramName = this.handleProgramName.bind(this); 
     this.getProgramInformation = this.getProgramInformation.bind(this); 
     this.setData = this.setData.bind(this); 
-    this.onChangeSearchUni = this.onChangeSearchUni.bind(this);
+   // this.onChangeSearchUni = this.onChangeSearchUni.bind(this);
     
-
-
+    // When the website is first launch all university and there programs should be displayed 
+    // The university search filter will handle one university at a time , there shold be  a list of all the university name and you are only able to select one 
+    // The program search filter should be multiple select checkbox where the user can select different programs(Such as CS or Math)
+    // The user grade filter will be a clickable button which will show all the minimum requirements(Handled back end )
+    //
     // controls state of Programs.
     this.state = {
+      listOfProgram:[
+        {
+          value: "Accounting" 
+        },
+        {
+          value: "Automotive Service Technology" 
+        },
+        {
+          value: "Business Administration" 
+        },
+        {
+          value: "Civil Engineering Technology" 
+        },
+        {
+          value: "Chemical Engineering Technology" 
+        },
+        {
+          value: "Computer Science" 
+        },
+        {
+          value: "Bachelor of Computer Information Systems" 
+        },
+        {
+          value: "Nursing" 
+        },
+        {
+          value: "Psychology" 
+        },
+        {
+          value: "Bachelor of Computer Information Systems" 
+        },
+        {
+          value: "Bachelor of Computer Information Systems" 
+        }
+
+      ],
       data: [],
-      search: ""
+      setUniversityProgram: [],
+      setUniversityName: ""
     };
 
+  }
+
+  componentDidMount() {
+    this.getProgramInformation();
   }
   
   
@@ -33,21 +92,42 @@ class Programs extends Component {
     });
   }
   
-  onChangeSearchUni(e){
+  // onChangeSearchUni(e){
+  //   this.setState({
+  //     search: e.target.value
+  //   });
+  // }
+
+  handleUniversityName(e){
+    console.log(e.target.value)
     this.setState({
-      search: e.target.value
+      setUniversityName: e.target.value
     });
   }
 
-  getProgramInformation(e) {
-      e.preventDefault();
+  handleProgramName(e){
+    console.log(e.map((uni) => uni.value))
+    this.setState({
+      setUniversityProgram: this.state.setUniversityName.concat(e.map((uni) => uni.value))
+    });
 
-      if(this.state.search !== ""){
-        function_service.programsList(this.state.search).then((response) =>{
+  };
+
+  getProgramInformation() {
+      // e.preventDefault();
+      
+        function_service.listOfUniName(this.state.setUniversityName).then((response) =>{
           this.setData(response.map((data) => data)) 
-          console.log(this.state.searchParam)
         })
-      }
+      
+
+      
+        // function_service.programsList(this.state.setUniversityProgram).then((response) =>{
+        //   this.setData(response.map((data) => data)) 
+        // })
+    
+       
+      
   }
 
   
@@ -57,26 +137,73 @@ class Programs extends Component {
   
     return(
       <div className = "container">
-        <form onSubmit={this.getProgramInformation}>
+        {/* <form onSubmit={this.getProgramInformation}> */}
            <div className="div1">
-              <input 
-              type="Search University" 
-              placeholder="Search by University name" 
-              name="Search bar"
-              value={this.state.search}
-              onChange={this.onChangeSearchUni}
-              required
-              />
+              <div className="singleSelect">
+                <Box sx={{ minWidth: 120 }}>
+                        <FormControl fullWidth>
+                          <InputLabel id="demo-simple-select-label">University Name</InputLabel>
+                          <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={this.state.setUniversityName}
+                            onChange={this.handleUniversityName}
+                          >
+                            <MenuItem value={"Mount Royal University"}>MRU</MenuItem>
+                            <MenuItem value={"Southern Alberta Institute of Technology"}>SAIT</MenuItem>
+                            <MenuItem value={"University of Alberta"}>University of Alberta</MenuItem>
+                            <MenuItem value={"University of British Columbia"}>University of British Columbia</MenuItem>
+                            <MenuItem value={"University of Calgary"}>University of Calgary</MenuItem>
+                            <MenuItem value={"University of Toronto"}>University of Toronto</MenuItem>
+                            <MenuItem value={"University of Waterloo"}>University of Waterloo</MenuItem>
+                          </Select>
+                        </FormControl>
+                  </Box>
+              </div>
+
+              {/* <div className="multiSelect">
+              <MultiSelect
+                  options={this.state.options}
+                  value={this.state.setUniversityProgram}
+                  onChange={this.handleProgramName}
+                  labelledBy="Select"
+                 />
+              </div> */}
+
+              <button type="submit" onClick={this.getProgramInformation}>Confirm Changes</button> 
             </div>
 
             <div className="div2">
+              {console.log(this.state.data)}
                 {this.state.data.map((university) => {
                   return (
-                    <h1 key={university.id}>{university.university_name} {university.title}</h1>
+                    <Card sx={{ maxWidth: 345}} className= "uni" key={university.id}>
+                        <CardMedia 
+                          className = 'test'
+                          component="img"
+                          height="100"
+                          image= {university.logo}
+                          alt="green iguana"
+                        />
+                        <CardContent>
+                          <Typography gutterBottom variant="h5" component="div">
+                            {university.title}
+                          </Typography>
+                          <Typography variant="body2" color="text.secondary" height={100} >
+                            {university.overview}
+                          </Typography>
+                          <Typography gutterBottom variant={true} component="p" >
+                            {"Location: " + university.reigon + " " + university.country }
+                          </Typography>
+                        </CardContent>
+                        <CardActions>
+                          <Link size="small" href={university.webpage}>Learn more</Link>
+                        </CardActions>
+                    </Card>
+                    //<h1 key={university.id}>{university.university_name} {university.title}</h1>
                   )
               })}
           </div>
-        </form>  
       </div>
     )
   }
