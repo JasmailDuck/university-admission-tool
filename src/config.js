@@ -18,7 +18,9 @@ const config = {
     program_list_location:
       "/programlist",
     get_user_information_id:
-      "/user/adminProfileAccess/"  
+      "/user/adminProfileAccess/",  
+    consultantUsers:
+      "/consultantUsers"
   },
 };
 //35.209.74.28

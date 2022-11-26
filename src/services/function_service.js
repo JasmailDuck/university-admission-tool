@@ -1,9 +1,11 @@
 import config from "../config";
 import apiInstance from "../api";
+import React, { Component } from "react";
 
 
 
-class FunctionService {
+class FunctionService extends Component {
+  
 
   listOfUniName(universityName){
 
@@ -13,13 +15,17 @@ class FunctionService {
        
     })
     .then((response) => {
-      
       return response.data; 
     })
   };
 
-  
+  consultantUsers = (consultantID) => {
+    return apiInstance.get(config.uniAdminToolServer.consultantUsers, {
+      params:{consultant_id: consultantID}
+    }).then((response) => {
+      return response.data;
+    })
+  };
 }
-
   
 export default new FunctionService();
