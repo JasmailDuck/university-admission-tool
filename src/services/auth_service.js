@@ -32,9 +32,6 @@ class AuthService {
 
   deleteUser(email) {
     return apiInstance.delete(config.uniAdminToolServer.user_services_location, {
-      headers: {
-        'Authorization': `Bearer ${TokenService.getLocalAccessToken()}` 
-      },
       data: {
           "userEmail": email
       }

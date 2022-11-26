@@ -1,7 +1,8 @@
 import config from "../config";
 import apiInstance from "../api";
 <<<<<<< Updated upstream
-import TokenService from "./token_service";
+
+
 =======
 import { Component } from "react";
 
@@ -12,12 +13,11 @@ class FunctionService extends Component {
   
 
   programsList = (university_name) => {
-    return apiInstance.post(config.uniAdminToolServer.program_list_location, {
-      "university": university_name
-    }, {
-      headers: {
-        'Authorization': `${TokenService.getLocalAccessToken}` 
-      }
+
+    
+    return apiInstance.get(config.uniAdminToolServer.program_list_location,{
+       params:{ university: university_name }
+       
     })
     .then((response) => {
 <<<<<<< Updated upstream
@@ -39,8 +39,8 @@ class FunctionService extends Component {
       return response.data;
     });
   };
-    
+  
 }
 
   
-export default new FunctionService;
+export default FunctionService;

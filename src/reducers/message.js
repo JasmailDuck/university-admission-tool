@@ -3,7 +3,7 @@ import { SET_MESSAGE, CLEAR_MESSAGE } from "../actions/types";
 const initialState = {};
 
 // This reducer updates the message state when a message action is dispatched from anywhere
-export default function (state = initialState, action) {
+ const message = function (state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
@@ -17,3 +17,4 @@ export default function (state = initialState, action) {
       return state;
   }
 }
+export default message

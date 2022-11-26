@@ -1,0 +1,98 @@
+
+.mainContainer{
+    display:flex;
+    height:95vh;
+    width:100vw;
+}
+
+.leftContainer{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    flex: 60%;
+}
+
+.loginBG{
+    width:80%;
+    height:80%;
+}
+
+.rightContainer{
+    background-color: #D9534F;
+    flex:30%;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.loginLogo{
+    display: flex;
+    justify-content: center;
+}
+
+
+
+input[type="text"],
+input[type="password"]{
+    outline: 0;
+    border-width: 0px 0px 2px;
+    background-color: #F1F1F1;
+    text-align: left;
+    font-size:20px;
+    padding-left:0px;
+}
+
+
+input:focus{
+    border-color:#D9534F;
+}
+
+label[for="loginsign"] p{
+    font-size: 40px;
+    margin-top:0px;
+    margin-bottom:-25px;
+    transform:translateY(-65px);
+}
+
+label[for="email"] p,
+label[for="password"] p{
+    margin-bottom: 0px;
+}
+
+.formContainer{
+    height:85%;
+    width: 75%;
+    background-color: #F1F1F1;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 2px;
+    box-shadow: rgba(0, 0, 0, 0.65) 0px 5px 15px;
+}
+
+.form{
+    display:flex;
+    flex-direction: column;
+    row-gap:20px;
+    width:75%;
+}
+
+.confirm_button{
+    background-color:#D9534F;
+    width:100%;
+    margin-top:25px;
+    padding: 15px 0px 15px 0px;
+    font-size:25px;
+    letter-spacing: 2px;
+    color:#F1F1F1;
+    outline: 0;
+    border-width: 0px;
+}
+
+.othersContainer{
+    text-align: center;
+}
+
+a{
+    color:#D9534F;
+}

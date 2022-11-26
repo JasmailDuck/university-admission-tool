@@ -9,10 +9,14 @@ const config = {
       "/auth",
     logout_location:
       "/logout",
+    refresh_access_token_location:
+      "/refresh",
     user_services_location:
       "/user",
     get_user_info_location:
-      "/user/profile",
+      "/user/unique",
+    send_user_doc_location:
+      "/user/doc",
     program_list_location:
       "/programlist",
     consultantUsers:

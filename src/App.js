@@ -6,17 +6,19 @@ import { FaBars, FaUserCircle } from "react-icons/fa";
 import navbarClasses from "./css/Navbar.module.css";
 import footerClasses from "./css/Footer.module.css";
 
-import Home from "./pages/Home";
-import Programs from "./pages/Programs";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
-import UserProfile from "./pages/UserProfile";
-import AdminProfile from "./pages/UserProfile";
-import Consultants from "./pages/Consultants";
+import Home from "./Pages/Home";
+import Programs from "./Pages/Programs";
+//import Login from "./Pages/Login";
+import Signup from "./Pages/Signup";
+import UserProfile from "./Pages/UserProfile";
+import AdminProfile from "./Pages/UserProfile";
+import ADMINUSERMANAGEMENT from "./Pages/admin-userManagement/adminUserManagement";
+import ADMIN from "./Pages/admin/admin";
+import LOGIN from "./Pages/FrontEndLogIn";
 import { logout } from "./actions/auth";
-import { clearMessage } from "./actions/message";
-
+import EventBus from "./helpers/EventBus";
 import { history } from "./helpers/history";
+import Consultants from "./Pages/Consultants";
 
 
 class App extends Component {
@@ -28,11 +30,6 @@ class App extends Component {
       currentUser: undefined,
       userRole: undefined,
     };
-
-    // whenever the current location changes, this is run and clears any system messages
-    history.listen((location) => {
-      props.dispatch(clearMessage()); // clear message when changing location
-    });
   }
 
   // gets invoked right after first render() lifecyle of React component
@@ -43,8 +40,15 @@ class App extends Component {
       this.setState({
         currentUser: user,
       });
-
     }
+
+    EventBus.on("logout", () => {
+      this.logOut();
+    });
+  }
+
+  componentWillUnmount() {
+    EventBus.remove("logout");
   }
 
   logOut() {
@@ -61,18 +65,22 @@ class App extends Component {
 
     // checks what kind of user is logged in, and will direct them to the according profile
     const CheckProfile = () => {
-      if (userRole === "ADMIN") {
+      if (currentUser && userRole) {
         return (
           <nav className={navbarClasses.NavBtn}>
-            <Link to="/adminProfile">
+            <Link 
+              to="/adminProfile"
+            >
               <FaUserCircle className={navbarClasses.Profile} />
             </Link>
           </nav>
         );
-      } else {
+      } else if (currentUser) {
         return (
           <nav className={navbarClasses.NavBtn}>
-            <Link to="/userProfile">
+            <Link 
+              to="/userProfile"
+            >
               <FaUserCircle className={navbarClasses.Profile} />
             </Link>
           </nav>
@@ -89,7 +97,11 @@ class App extends Component {
 
           {/* This is the Home link*/}
           <div className={navbarClasses.NavMenu}>
-            <Link className={navbarClasses.NavLink} to="/" activestyle="true">
+            <Link 
+              className={navbarClasses.NavLink} 
+              to="/" 
+              activestyle="true"
+            >
               Home
             </Link>
           </div>
@@ -117,15 +129,22 @@ class App extends Component {
           {!currentUser ? (
             <div className={navbarClasses.NavMenu}>
               <nav className={navbarClasses.NavBtn}>
-                <Link className={navbarClasses.NavBtnLink} to="/signup">
+                <Link 
+                  className={navbarClasses.NavBtnLink} 
+                  to="/signup"
+                >
                   Sign up
                 </Link>
               </nav>
               <nav className={navbarClasses.NavBtn}>
-                <Link className={navbarClasses.NavBtnLink} to="/login">
+                <Link 
+                  className={navbarClasses.NavBtnLink} 
+                  to="/login"
+                >
                   Login
                 </Link>
               </nav>
+              
             </div>
           ) : (
             /* is current user is logged in, will show log out and profile on navbar  */
@@ -139,24 +158,45 @@ class App extends Component {
                   Log out
                 </Link>
               </nav>
+              <nav className={navbarClasses.NavBtn}>
+                <Link className={navbarClasses.NavBtnLink} to="/admin/usermanagement">
+                  UserManage
+                </Link>
+              </nav>
+
               {CheckProfile()}
             </div>
           )}
         </div>
+      
+      
+        
 
         {/* Footer will go below this point! */}
         <footer className={footerClasses.footer}>
-          <p>This is a basic footer... please edit me!</p>
+          <div className={footerClasses.links}>
+            <p><a href="?">Terms of Use</a></p>
+            <p>|</p>
+            <p><a href="?">Privacy</a></p>
+            <p>|</p>
+            <p><a href="?">Accessibility</a></p>
+            <p>|</p>
+            <p><a href="?">Support</a></p>
+            <p>|</p>
+            <p>Copyright &#169; 2022 <a href="?">Shirah</a> All rights reserved.</p>
+          </div>
         </footer>
         
         <div>
           <Routes>
-            <Route exact path="/" element={<Home />} />
+            <Route path="/" element={<Home />} />
             <Route path="/programs" element={<Programs />} />
-            <Route exact path="/login" element={<Login />} />
-            <Route exact path="/signup" element={<Signup />} />
+            <Route path="/signup" element={<Signup />} />
             <Route path="/userProfile" element={<UserProfile />} />
             <Route path="/adminProfile" element={<AdminProfile />} />
+            <Route path="/admin/usermanagement" element={<ADMINUSERMANAGEMENT/>} />
+            <Route path="/adminDashboard" element={<ADMIN/>}/>
+            <Route path="/login" element={<LOGIN />} />
             <Route path="/consultants" element={<Consultants/>} />
           </Routes>
         </div>

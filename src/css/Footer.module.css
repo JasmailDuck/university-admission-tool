@@ -1,9 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap');
+
 
 .footer {
   text-align: center;
   padding: 3px;
-  background-color: #63d471;
+  background-color: black;
   position: fixed;
   bottom: 0;
   width: 100%;
+}
+
+.links a {
+  color:white;
+}
+
+.links {
+  color:white;
+  font-family: 'Lato', 'Open-Sans';
+  display:flex;
+  justify-content: center;
+  column-gap: 20px;
 }
