@@ -1,13 +1,8 @@
 import config from "../config";
 import apiInstance from "../api";
-<<<<<<< Updated upstream
+import React, { Component } from "react";
 
 
-=======
-import { Component } from "react";
-
-
->>>>>>> Stashed changes
 
 class FunctionService extends Component {
   
@@ -20,9 +15,6 @@ class FunctionService extends Component {
        
     })
     .then((response) => {
-<<<<<<< Updated upstream
-=======
-      
       return response.data; 
     })
   };
@@ -34,13 +26,6 @@ class FunctionService extends Component {
       return response.data;
     })
   };
->>>>>>> Stashed changes
-  
-      return response.data;
-    });
-  };
-  
 }
-
   
 export default FunctionService;
