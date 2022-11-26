@@ -4,8 +4,7 @@ import { withRouter } from "../helpers/withRouter";
 
 import UserService from "../services/user_service";
 import { deleteUser, logout } from "../actions/auth";
-import EventBus from "../helpers/EventBus";
-import { fileToDataURL, dataURLToFile } from "../helpers/fileHelper";
+import { fileToDataURL } from "../helpers/fileHelper";
 import { setMessage } from "../actions/message";
 
 import classes from "../css/UserProfile.module.css";
@@ -185,12 +184,6 @@ class UserProfile extends Component {
         this.setCountry(response.country);
         this.setInterests(response.interests);
         this.setRole(response.role_id);
-      })
-      .catch((error) => {
-        if (error.response && error.response.status === 401) {
-          EventBus.dispatch("logout");
-          this.sendToLogin();
-        }
       });
   }
   

@@ -37,12 +37,11 @@ const setup = (store) => {
 
           // will dispatch the Refresh token, then update a new one when expired
           try {
-            const rs = await axiosInstance.get(config.uniAdminToolServer.refresh_access_token_location);
-
-            const { accessToken } = rs.data;
-
-            dispatch(refreshToken(accessToken));
-            TokenService.updateLocalAccessToken(accessToken);
+            axiosInstance.get(config.uniAdminToolServer.refresh_access_token_location)
+              .then((response) => {
+                dispatch(refreshToken(response.data));
+                TokenService.updateLocalAccessToken(response.data);
+              });
 
             return axiosInstance(originalConfig);
           } catch (_error) {

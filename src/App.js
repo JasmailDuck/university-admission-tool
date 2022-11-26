@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { BrowserRouter, Routes, Route, Link, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link, Navigate, Outlet, useLocation } from "react-router-dom";
 import { FaBars, FaUserCircle } from "react-icons/fa";
 
 import navbarClasses from "./css/Navbar.module.css";
@@ -12,7 +12,6 @@ import ADMINUSERMANAGEMENT from "./Pages/admin-userManagement/adminUserManagemen
 import ADMIN from "./Pages/admin/admin";
 import LOGIN from "./Pages/FrontEndLogIn";
 import { logout } from "./actions/auth";
-import EventBus from "./helpers/EventBus";
 import { history } from "./helpers/history";
 import Consultants from "./Pages/Consultants";
 
@@ -36,14 +35,6 @@ class App extends Component {
         currentUser: user,
       });
     }
-
-    EventBus.on("logout", () => {
-      this.logOut();
-    });
-  }
-
-  componentWillUnmount() {
-    EventBus.remove("logout");
   }
 
   logOut() {
@@ -53,26 +44,42 @@ class App extends Component {
     });
   }
 
+  // This method stops a user from using the back button on the website to get to login page
+  // while logged in. also stops user from typing in login while logged in so they cant
+  // get to the page that way either.
+  // Used in render, and parent of routes that require user to be logged in.
+  RequireAuth = () => {
+    let location = useLocation();
+  
+    if (!this.state.currentUser) {
+      // Redirect them to the /login page, but save the current location they were
+      // trying to go to when they were redirected. This allows us to send them
+      // along to that page after they login, which is a nicer user experience
+      // than dropping them off on the home page.
+      return <Navigate to="/login" state={{ from: location }} />;
+    }
+  
+    return <Outlet />;
+  }
+
   render() {
     const { currentUser } = this.state;
 
     const defaultRoute = () => {
       if (currentUser) {
-        return <Route path="*" element={<Navigate to="/userProfile" />} />
+        return <Route path="*" element={<Navigate to="/userProfile" />} />;
       } else {
-        return <Route path="*" element={<Navigate to="/login" />} />
+        return <Route path="*" element={<Navigate to="/login" />} />;
       }
-    }
+    };
 
     //all the pages that are in the website. Each has a different route leads to
     //a page guided by the nav bar.
     return (
       <BrowserRouter location={history.location} navigator={history}>
-        <div className={navbarClasses.Nav}>
-          <FaBars className={navbarClasses.Bars} />
-
-          {/* Change this later! right now its showing if not current user */}
-          {currentUser && (
+        {currentUser && (
+          <div className={navbarClasses.Nav}>
+            <FaBars className={navbarClasses.Bars} />
             <div className={navbarClasses.NavMenu}>
               <Link
                 className={navbarClasses.NavLink}
@@ -82,34 +89,15 @@ class App extends Component {
                 Programs
               </Link>
             </div>
-          )}
-          <div className={navbarClasses.NavMenu}>
-            <Link
-              className={navbarClasses.NavLink}
-              to="/Consultants"
-              activestyle="true"
-            >
-              Consultants
-            </Link>
-          </div>
-
-          {/* if current user is not logged in, will show signup and login on navbar  */}
-
-          {!currentUser ? (
             <div className={navbarClasses.NavMenu}>
-              <nav className={navbarClasses.NavBtn}>
-                <Link className={navbarClasses.NavBtnLink} to="/signup">
-                  Sign up
-                </Link>
-              </nav>
-              <nav className={navbarClasses.NavBtn}>
-                <Link className={navbarClasses.NavBtnLink} to="/login">
-                  Login
-                </Link>
-              </nav>
+              <Link
+                className={navbarClasses.NavLink}
+                to="/Consultants"
+                activestyle="true"
+              >
+                Consultants
+              </Link>
             </div>
-          ) : (
-            /* is current user is logged in, will show log out and profile on navbar  */
             <div className={navbarClasses.NavMenu}>
               <nav className={navbarClasses.NavBtn}>
                 <Link
@@ -128,15 +116,14 @@ class App extends Component {
                   UserManage
                 </Link>
               </nav>
-
               <nav className={navbarClasses.NavBtn}>
                 <Link to="/userProfile">
                   <FaUserCircle className={navbarClasses.Profile} />
                 </Link>
               </nav>
             </div>
-          )}
-        </div>
+          </div>
+        )}
 
         {/* Footer will go below this point! */}
         <footer className={footerClasses.footer}>
@@ -164,19 +151,18 @@ class App extends Component {
         </footer>
 
         <div>
-          <Routes>
-            <Route path="/programs" element={<Programs />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/userProfile" element={<UserProfile />} />
-            <Route
-              path="/admin/usermanagement"
-              element={<ADMINUSERMANAGEMENT />}
-            />
-            <Route path="/adminDashboard" element={<ADMIN />} />
-            <Route path="/login" element={<LOGIN />} />
-            <Route path="/consultants" element={<Consultants />} />
-            {defaultRoute()}
-          </Routes>
+            <Routes>
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/login" element={<LOGIN />} />
+              <Route element={<this.RequireAuth />}>
+                <Route path="/programs" element={<Programs />} />
+                <Route path="/userProfile" element={<UserProfile />} />
+                <Route path="/admin/usermanagement" element={<ADMINUSERMANAGEMENT />} />
+                <Route path="/adminDashboard" element={<ADMIN />} />
+                <Route path="/consultants" element={<Consultants />} />
+              </Route>
+              {defaultRoute()}
+            </Routes>
         </div>
       </BrowserRouter>
     );

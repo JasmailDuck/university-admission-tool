@@ -128,7 +128,7 @@ class Login extends Component {
 
                 {/*Others*/}
                 <div className={classes.othersContainer}>
-                    <p>Don't have an account? <a href="?">Sign Up here!</a> </p>
+                    <p>Don't have an account? <a href="/signup">Sign Up here!</a> </p>
                 </div>
                 
             </form>

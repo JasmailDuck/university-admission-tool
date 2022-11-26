@@ -278,6 +278,9 @@ class Signup extends Component {
 
                 {/* Signup button */}
                 <button className={classes.confirm_button}>Sign up</button>
+                <div >
+                    <p>Already have an account? <a href="/login">Log in here!</a> </p>
+                </div>
               </div>
             )}
 
