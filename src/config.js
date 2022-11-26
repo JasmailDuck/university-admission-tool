@@ -15,6 +15,8 @@ const config = {
       "/user/profile",
     program_list_location:
       "/programlist",
+    consultantUsers:
+      "/consultantUsers"
   },
 };
 //35.209.74.28
