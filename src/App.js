@@ -19,6 +19,7 @@ import { logout } from "./actions/auth";
 import EventBus from "./helpers/EventBus";
 import { history } from "./helpers/history";
 import Consultants from "./Pages/Consultants";
+import USERPROFILEEDITORADMIN from "./Pages/admin-userManagement/cmpnts/userProfileEditorAdmin";
 
 
 class App extends Component {
@@ -159,8 +160,8 @@ class App extends Component {
                 </Link>
               </nav>
               <nav className={navbarClasses.NavBtn}>
-                <Link className={navbarClasses.NavBtnLink} to="/admin/usermanagement">
-                  UserManage
+                <Link className={navbarClasses.NavBtnLink} to="/adminDashboard">
+                  Admin Tools Icon
                 </Link>
               </nav>
 
@@ -198,6 +199,7 @@ class App extends Component {
             <Route path="/adminDashboard" element={<ADMIN/>}/>
             <Route path="/login" element={<LOGIN />} />
             <Route path="/consultants" element={<Consultants/>} />
+            <Route path="/admin/usermanagement/userEditor" element={<USERPROFILEEDITORADMIN/>} />
           </Routes>
         </div>
       </BrowserRouter>

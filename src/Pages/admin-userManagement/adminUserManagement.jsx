@@ -7,8 +7,12 @@ import USER_SERVICE from '../../services/user_service'
 
 import DATABASELISTVIEW from './cmpnts/databaseListView'
 
+const USER_PROFILE_VIEWER_ADMIN_PAGE = '/admin/usermanagement/userEditor'
 
 class adminUserManagement extends Component {
+
+    
+
     state = {
         test: []
     }
@@ -25,7 +29,7 @@ class adminUserManagement extends Component {
 
 render() {
     return (
-    <div className='h-screen w-screen bg-neutral-100 '>
+    <div className='h-full w-full bg-neutral-100 '>
 
         <div className='h-full w-full flex flex-col'>
             <div className='p-10 text-4xl'>
@@ -38,13 +42,13 @@ render() {
                     User Management
                 </div>
 
-                <div className=' flex-1 bg-white rounded-2xl drop-shadow-2xl'>
+                <div className=' flex-1 bg-white rounded-2xl drop-shadow-2xl p-2 overflow-y-scroll'>
                     
                 <DATABASELISTHEADER id="ID" firstName="First Name" lastName="Last Name" address="Address" email="Email" dob="Date Of Birth" country="Country" interests="Interests" role="Role"  />
 
                 {
                     this.state.test.map(testd =>
-                        <DATABASELISTVIEW id={testd.userID} firstName={testd.f_name} lastName={testd.l_name} address={testd.address} email={testd.email} dob={testd.dob} country={testd.country} interests={testd.interests} role={testd.role_id}  />
+                        <DATABASELISTVIEW id={testd.userID} firstName={testd.f_name} lastName={testd.l_name} address={testd.address} email={testd.email} dob={testd.dob} country={testd.country} interests={testd.interests} role={testd.role_id} page={USER_PROFILE_VIEWER_ADMIN_PAGE}  />
                     )
                 }
                 

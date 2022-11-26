@@ -19,6 +19,8 @@ const config = {
       "/user/doc",
     program_list_location:
       "/programlist",
+    get_user_information_id:
+      "/user/adminProfileAccess/"  
   },
 };
 //35.209.74.28
