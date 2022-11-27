@@ -21,7 +21,7 @@ class UserService {
       });
   }
 
-  updateUserInformation(email, f_name, l_name, address, dob, country, interests, role) {
+  updateUserInformation(email, f_name, l_name, address, dob, country, interests ) {
     return apiInstance
       .post(config.uniAdminToolServer.user_services_location,
         {
@@ -32,25 +32,20 @@ class UserService {
           "dob": dob,
           "country": country,
           "interests": interests,
-          "roleid": role,
         })
   }
 
-  sendUserDocument(file) {
+  sendUserDocument(file, fileName) {
     return apiInstance
       .post(config.uniAdminToolServer.send_user_doc_location,
         {
           "file": file,
+          "file_name": fileName,
         })
         .then((response) => {
           return response.data;
         });
   }
-
-  // Used to check what role the user has
-  getUserType() {
-    return apiInstance.get(config.uniAdminToolServer.confirm_user_type_location);
-  };
 
 }
 

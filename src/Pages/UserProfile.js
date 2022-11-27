@@ -5,7 +5,6 @@ import { withRouter } from "../helpers/withRouter";
 import UserService from "../services/user_service";
 import { deleteUser, logout } from "../actions/auth";
 import { fileToDataURL } from "../helpers/fileHelper";
-import { setMessage } from "../actions/message";
 
 import classes from "../css/UserProfile.module.css";
 
@@ -34,7 +33,6 @@ class UserProfile extends Component {
     this.onChangeDateOfBirth = this.onChangeDateOfBirth.bind(this);
     this.onChangeCountry = this.onChangeCountry.bind(this);
     this.onChangeInterests = this.onChangeInterests.bind(this);
-    this.onChangeRole = this.onChangeRole.bind(this);
 
 
     this.state = {
@@ -49,14 +47,8 @@ class UserProfile extends Component {
       fileName: "",
       selectedFile: null,
       fileString: "",
+      message: "",
       editing: 0,
-      e_f_name: "",
-      e_l_name: "",
-      e_address: "",
-      e_dob: "",
-      e_country: "",
-      e_interests: "",
-      e_role: "",
     };
   }
 
@@ -152,12 +144,6 @@ class UserProfile extends Component {
     });
   }
 
-  onChangeRole(e) {
-    this.setState({
-      role: e.target.value,
-    });
-  }
-
   // Changes the editing state, allowing different forms to be shown whether editing or not.
   setEditing() {
     if (this.state.editing === 0) {
@@ -200,8 +186,7 @@ class UserProfile extends Component {
       this.state.address,
       this.state.dob,
       this.state.country,
-      this.state.interests,
-      this.state.role
+      this.state.interests
     ).then(() => {
       this.setEditing();
     });
@@ -229,24 +214,43 @@ class UserProfile extends Component {
 
   // On file upload (click the upload button)
   onFileUpload = () => {
-    try {
-      var fileString = fileToDataURL(this.state.selectedFile);
+      var file = this.state.selectedFile;
 
-      setTimeout(() => {
-        fileString.then((result) => {
-          UserService.sendUserDocument(result);
+      if (file.type !== 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' &&
+          file.typ !== 'application/msword' &&
+          file.type !== '.xml' &&
+          file.type !== '.docx' &&
+          file.type !== '.doc' &&
+          file.type !== 'application/pdf') {
+            this.setState({
+              message: "This file cannot be uploaded!"
+            });
+      } else {
+        try {
+          var fileString = fileToDataURL(this.state.selectedFile);
+          var fileName = this.state.selectedFile.name;
+    
+          setTimeout(() => {
+            fileString.then((result) => {
+              UserService.sendUserDocument(result, fileName);
+              this.setState({
+                message: "File has been uploaded!"
+              });
+            })
+          }, 200);
 
-        })
-      }, 200);
+        } catch (e) {
+          this.setState({
+            message: "Error uploading file!"
+          });
+        }
 
-    } catch (e) {
-      this.props.dispatch(setMessage("No Document Selected!"));
-    }
+      }
   };
 
   // File content to be displayed after
   // file upload is complete
-  fileData = () => {
+  fileData() {
     if (this.state.selectedFile) {
       return (
         <div>
@@ -272,7 +276,7 @@ class UserProfile extends Component {
   };
 
   render() {
-    const { message } = this.props;
+    const { message } = this.state;
     const { editing } = this.state;
 
     // File content to be displayed after
@@ -312,14 +316,21 @@ class UserProfile extends Component {
               <p>{this.state.interests}</p>
             </div>
             <div>
-              <h3>Role ID</h3>
-              <p>{this.state.role}</p>
-            </div>
-            <div>
               <h3>Files</h3>
-              <input type="file" onChange={this.onFileChange} />
+              {/* accepts pdf and anything related to a word document */}
+              <input 
+                type="file" 
+                onChange={this.onFileChange} 
+                accept="application/pdf,.doc,.docx,.xml,application/msword,
+                  application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+              />
               {this.fileData()}
               <button className={classes.button} onClick={this.onFileUpload} type="button">Upload File</button>
+              {message && (
+                <div>
+                  <div>{message}</div>
+                </div>
+              )}
             </div>
           </div>
         );
@@ -386,15 +397,6 @@ class UserProfile extends Component {
                   name="interests"
                 />
 
-                <h4>Current Role: {this.state.role}</h4>
-                <input 
-                  type="text" 
-                  placeholder={this.state.role}
-                  value={this.state.role}
-                  onChange={this.onChangeRole}
-                  name="role" 
-                />
-
                 <button className={classes.button} type="submit">
                   Confirm Changes
                 </button>
@@ -427,12 +429,6 @@ class UserProfile extends Component {
             Delete Account
           </button>
         </div>
-        {/* message on sign up confirmation or error */}
-        {message && (
-          <div>
-            <div>{message}</div>
-          </div>
-        )}
       </>
     );
   }
