@@ -20,7 +20,11 @@ const config = {
     get_user_information_id:
       "/user/adminProfileAccess/",  
     consultantUsers:
-      "/consultantUsers"
+      "/consultantUsers",
+
+    get_all_files:
+      "/files"
+
   },
 };
 //35.209.74.28

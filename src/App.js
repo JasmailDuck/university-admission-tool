@@ -15,6 +15,7 @@ import { logout } from "./actions/auth";
 import { history } from "./helpers/history";
 import Consultants from "./Pages/Consultants";
 import USERPROFILEEDITORADMIN from "./Pages/admin-userManagement/cmpnts/userProfileEditorAdmin";
+import ADMINFILEMANAGEMENT from "./Pages/admin-userFileManagement/adminFileManagement";
 
 class App extends Component {
   constructor(props) {
@@ -158,6 +159,7 @@ class App extends Component {
                 <Route path="/adminDashboard" element={<ADMIN />} />
                 <Route path="/consultants" element={<Consultants />} />
                 <Route path="/admin/usermanagement/userEditor" element={<USERPROFILEEDITORADMIN/>} />
+                <Route path="/admin/filemanagement" element={<ADMINFILEMANAGEMENT/>} />
               </Route>
               {defaultRoute()}
             </Routes>

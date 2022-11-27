@@ -5,7 +5,6 @@ import FILEMANAGEMENTICON from '../../assets/database-file-icon.svg'
 import PROGRMAMANAGEMENTICON from '../../assets/university-svgrepo-com.svg'
 
 const USERMANAGEMENTPAGE = '/admin/usermanagement'
-
 const FILEMANAGEMENTPAGE = '/admin/filemanagement'
 const PROGRAMMANAGEMENTPAGE = '/admin/programmanagement'
 
