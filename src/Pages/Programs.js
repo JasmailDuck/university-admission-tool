@@ -16,7 +16,7 @@ import Typography from "@mui/material/Typography";
 import Link from '@mui/material/Link';
 
 //import { MultiSelect } from "react-multi-select-component";
-
+import Multiselect from "multiselect-react-dropdown";
 
 class Programs extends Component {
   
@@ -38,42 +38,7 @@ class Programs extends Component {
     //
     // controls state of Programs.
     this.state = {
-      listOfProgram:[
-        {
-          value: "Accounting" 
-        },
-        {
-          value: "Automotive Service Technology" 
-        },
-        {
-          value: "Business Administration" 
-        },
-        {
-          value: "Civil Engineering Technology" 
-        },
-        {
-          value: "Chemical Engineering Technology" 
-        },
-        {
-          value: "Computer Science" 
-        },
-        {
-          value: "Bachelor of Computer Information Systems" 
-        },
-        {
-          value: "Nursing" 
-        },
-        {
-          value: "Psychology" 
-        },
-        {
-          value: "Bachelor of Computer Information Systems" 
-        },
-        {
-          value: "Bachelor of Computer Information Systems" 
-        }
-
-      ],
+      listOfProgram:["Accounting","Automotive Service Technology","Business Administration","Civil Engineering Technology","Chemical Engineering Technology","Computer Science","Bachelor of Computer Information Systems","Nursing","Psychology"],
       data: [],
       setUniversityProgram: [],
       setUniversityName: ""
@@ -92,11 +57,7 @@ class Programs extends Component {
     });
   }
   
-  // onChangeSearchUni(e){
-  //   this.setState({
-  //     search: e.target.value
-  //   });
-  // }
+
 
   handleUniversityName(e){
     console.log(e.target.value)
@@ -105,29 +66,36 @@ class Programs extends Component {
     });
   }
 
-  handleProgramName(e){
-    console.log(e.map((uni) => uni.value))
+  handleProgramName(programName){
+    console.log(programName)
+
     this.setState({
-      setUniversityProgram: this.state.setUniversityName.concat(e.map((uni) => uni.value))
-    });
+          setUniversityProgram: programName
+         
+        }); 
 
   };
 
   getProgramInformation() {
       // e.preventDefault();
-      
-        function_service.listOfUniName(this.state.setUniversityName).then((response) =>{
-          this.setData(response.map((data) => data)) 
-        })
-      
+     
+
+        if(this.state.setUniversityName !== ""){
+          function_service.listOfUniName(this.state.setUniversityName).then((response) =>{
+            this.setData(response.map((data) => data)) 
+          })
+        }
+          
+  
+        if(this.state.setUniversityProgram.length > 0){
+         console.log(this.state.setUniversityProgram); 
+          function_service.listOfProgramName(this.state.setUniversityProgram).then((response) =>{
+            this.setData(response.map((data) => data)) 
+          })
+        }
 
       
-        // function_service.programsList(this.state.setUniversityProgram).then((response) =>{
-        //   this.setData(response.map((data) => data)) 
-        // })
-    
-       
-      
+           
   }
 
   
@@ -161,14 +129,18 @@ class Programs extends Component {
                   </Box>
               </div>
 
-              {/* <div className="multiSelect">
-              <MultiSelect
-                  options={this.state.options}
-                  value={this.state.setUniversityProgram}
-                  onChange={this.handleProgramName}
-                  labelledBy="Select"
+              <div className="multiSelect">
+              <Multiselect
+                  options={this.state.listOfProgram}
+                  selectedValues={this.state.setUniversityProgram}
+                  //onChange={this.handleProgramName}
+                  // labelledBy="Select"
+                  isObject={false}
+                  onRemove={this.handleProgramName}
+                  onSelect={this.handleProgramName}
+                  showCheckbox
                  />
-              </div> */}
+              </div>
 
               <button type="submit" onClick={this.getProgramInformation}>Confirm Changes</button> 
             </div>

@@ -19,6 +19,8 @@ const config = {
       "/user/doc",
     program_list_location:
       "/programlist",
+    university_name:
+      "/programlist/filter/title", 
   },
 };
 //35.209.74.28
