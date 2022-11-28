@@ -62,7 +62,8 @@ class Programs extends Component {
   handleUniversityName(e){
     console.log(e.target.value)
     this.setState({
-      setUniversityName: e.target.value
+      setUniversityName: e.target.value,
+      setUniversityProgram: ""
     });
   }
 
@@ -70,7 +71,8 @@ class Programs extends Component {
     console.log(programName)
 
     this.setState({
-          setUniversityProgram: programName
+        setUniversityName: "",   
+        setUniversityProgram: programName
          
         }); 
 

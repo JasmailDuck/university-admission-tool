@@ -20,9 +20,8 @@ class FunctionService {
 
   listOfProgramName(programName){
     console.log(programName);
-    return apiInstance.get(config.uniAdminToolServer.university_name,{
-      body: { filterArray : programName } 
-      
+    return apiInstance.post(config.uniAdminToolServer.university_name,{
+      filterArray : programName
    })
    .then((response) => {
      
