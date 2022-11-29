@@ -4,10 +4,14 @@ import DATABASELISTHEADER from './cmpnts/databaseListHeader'
 import { Component } from 'react';
 
 import FILE_SERVICE from '../../services/file_service';
+import { dataURLToFile } from '../../helpers/fileHelper';
 import {Buffer} from 'buffer';
-
-
 import DATABASELISTVIEWFILE from './cmpnts/databaseListViewFile';
+const FILEPAGE = "/admin/filemanagement/view"
+
+
+
+
 
 //const USER_PROFILE_VIEWER_ADMIN_PAGE = '/admin/usermanagement/userEditor'
 
@@ -47,9 +51,10 @@ render() {
                     
                 <DATABASELISTHEADER id="File ID" email="Email" fileName="File Name" file="File"  />
 
+                
                 {
                     this.state.files.map(userFile =>
-                        <DATABASELISTVIEWFILE id={userFile.fileID} email={userFile.email} fileName={userFile.file_name} file={Buffer.from(userFile.file, 'base64').toString('ascii')}   />
+                        <DATABASELISTVIEWFILE id={userFile.fileID} email={userFile.email} fileName={userFile.file_name} page={FILEPAGE} file={dataURLToFile(Buffer.from(userFile.file, 'base64').toString('ascii'), userFile.file_name).type}   />
                     )
                 }
                 

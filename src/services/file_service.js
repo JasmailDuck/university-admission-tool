@@ -3,9 +3,11 @@ import apiInstance from "../api";
 
 class FileService {
 
-  getUserInformationLocation() {
+  getFileByID(id) {
+    console.log(id);
     return apiInstance
-      .get(config.uniAdminToolServer.user_services_location)
+      .post(config.uniAdminToolServer.get_file_user,
+        {"id": id})
       .then((response) => {
   
         return response.data;
