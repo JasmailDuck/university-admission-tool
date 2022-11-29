@@ -19,7 +19,7 @@ const config = {
       "/user/doc",
     program_list_location:
       "/programlist",
-    university_name:
+    program_list_university_name_location:
       "/programlist/filter/title", 
   },
 };

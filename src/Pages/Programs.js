@@ -45,8 +45,11 @@ class Programs extends Component {
     };
 
   }
+  
+
 
   componentDidMount() {
+
     this.getProgramInformation();
   }
   
@@ -80,7 +83,11 @@ class Programs extends Component {
 
   getProgramInformation() {
       // e.preventDefault();
-     
+      if(this.state.setUniversityName === "" && this.state.setUniversityProgram.length === 0){
+        function_service.getAllUniversity().then((response) =>{
+          this.setData(response.map((data) => data)) 
+        })
+      }else{
 
         if(this.state.setUniversityName !== ""){
           function_service.listOfUniName(this.state.setUniversityName).then((response) =>{
@@ -95,8 +102,7 @@ class Programs extends Component {
             this.setData(response.map((data) => data)) 
           })
         }
-
-      
+      }
            
   }
 
@@ -131,17 +137,18 @@ class Programs extends Component {
                   </Box>
               </div>
 
-              <div className="multiSelect">
-              <Multiselect
-                  options={this.state.listOfProgram}
-                  selectedValues={this.state.setUniversityProgram}
-                  //onChange={this.handleProgramName}
-                  // labelledBy="Select"
-                  isObject={false}
-                  onRemove={this.handleProgramName}
-                  onSelect={this.handleProgramName}
-                  showCheckbox
-                 />
+              <div className="programMultiSelect">
+                <Multiselect
+                    placeholder="Pick a program"
+                    options={this.state.listOfProgram}
+                    selectedValues={this.state.setUniversityProgram}
+                    //onChange={this.handleProgramName}
+                    // labelledBy="Select"
+                    isObject={false}
+                    onRemove={this.handleProgramName}
+                    onSelect={this.handleProgramName}
+                    // showCheckbox
+                />
               </div>
 
               <button type="submit" onClick={this.getProgramInformation}>Confirm Changes</button> 

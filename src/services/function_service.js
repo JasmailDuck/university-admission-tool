@@ -5,6 +5,14 @@ import apiInstance from "../api";
 
 class FunctionService {
 
+  getAllUniversity(){
+    return apiInstance.get(config.uniAdminToolServer.program_list_location)
+    .then((response) => {
+      
+      return response.data; 
+    })
+  };
+
   listOfUniName(universityName){
 
     
@@ -20,7 +28,7 @@ class FunctionService {
 
   listOfProgramName(programName){
     console.log(programName);
-    return apiInstance.post(config.uniAdminToolServer.university_name,{
+    return apiInstance.post(config.uniAdminToolServer.program_list_university_name_location,{
       filterArray : programName
    })
    .then((response) => {
