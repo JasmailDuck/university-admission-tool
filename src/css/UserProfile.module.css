@@ -17,15 +17,17 @@
 }
 
 .headerContainer{
+    margin-top:50px;
     background: linear-gradient(to right top, #d9534f, #da5652, #dc5956, #dd5c59, #de5f5c, #e06663,
      #e16e6b, #e27572, #e3827f, #e48e8c, #e49a98, #e3a6a5);
     width:90vw;
     border-radius:15px 15px 0px 0px;
-    height:50vh;
+    height:40vh;
     display:flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    box-shadow: -16px -15px 15px -3px rgba(0,0,0,0.1);
 }
 
 .headerText{
@@ -39,7 +41,7 @@
 }
 
 .headerSign{
-    font-size:50px;
+    font-size:70px;
 }
 
 .headerImg{
@@ -47,6 +49,7 @@
     display:flex;
     align-items: center;
     justify-content: center;
+    padding-bottom:65px;
 }
 
 
@@ -60,9 +63,11 @@
     flex-direction:row;
     align-items: flex-start;
     border-radius: 0px 0px 15px 15px;
+    box-shadow: -16px 10px 15px -3px rgba(0,0,0,0.1);
 }
 
 .leftContainer{
+    box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);
     display:flex;
     flex-direction:column;
     flex:15%;
@@ -108,4 +113,59 @@
 
 .rightContainer{
     flex:60%;
+    background-color:#F1F1F1;
+    border-radius: 15px 0px 15px 0px;
+    box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);
+}
+
+.accountOverview > h1{
+    font-size:50px;
+    font-weight: bold;
+}
+
+.accountOverview > h2{
+    font-size:30px;
+    font-weight:bold;
+}
+
+.accountOverview{
+    display:flex;
+    flex-direction:column;
+    row-gap:30px;
+    padding-left:50px;
+    padding-top:20px;
+    align-items: left;
+    height:90vh;
+}
+
+.accountItems{
+    display:flex;
+    flex-direction:row;
+    font-size:20px;
+}
+
+.accountItems > h1{
+    flex:40%;
+}
+
+.accountItems > p {
+    flex:60%;
+}
+
+.editProfileContainer{
+    display:flex;
+    flex-direction:column;
+    height:90vh;
+}
+
+.editForm{
+    display:flex;
+    flex-direction:column;
+    row-gap:10px;
+}
+
+.filesContainer{
+    display:flex;
+    height:90vh;
+    flex-direction:column;
 }
