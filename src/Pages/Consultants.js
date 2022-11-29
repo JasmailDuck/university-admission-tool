@@ -23,10 +23,6 @@ class Consultants extends Component {
         apiResponse.map((user) =>{
           updatedUser.push(user)
         })
-        // apiResponse.map((user) => {
-        //   console.log(this.getFiles(user.email, user));  
-        // })
-        // console.log(updatedUser)
          this.setState({users: updatedUser})
     });
     });
@@ -39,8 +35,7 @@ class Consultants extends Component {
         <header>
           <h1>Consultants</h1>
             <div className = "Table">
-              <DrawTable users={this.state.users}></DrawTable>  
-              {console.log(this.state.users)}
+              <DrawTable users={this.state.users}></DrawTable>
             </div> 
         </header>
       </div>

@@ -9,14 +9,11 @@ import IconButton from "@mui/material/IconButton";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { Collapse } from "@mui/material";
-import Typography from "@mui/material/Typography";
-import user_service from "../../services/user_service";
-import { dataURLToFile } from "../../helpers/fileHelper";
 
 // npm install @mui/icons-material @mui/material @emotion/styled @emotion/react
 
 
-function CreateRows(user, ) {
+function CreateRows(user) {
   const [open, setOpen] = React.useState(false);
   return (
     <TableBody>
@@ -25,7 +22,7 @@ function CreateRows(user, ) {
           <IconButton
             aria-label="expand row"
             size="small"
-            onClick={() => {setOpen(!open); }}
+            onClick={() => {setOpen(!open) }}
           >
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
@@ -37,25 +34,18 @@ function CreateRows(user, ) {
         <TableCell>{user.country}</TableCell>
       </TableRow>
       <Collapse in={open}>
-      {/* <TableRow><TableCell>
-      </TableCell>{user.files}</TableRow> */}
+      {/* {getFiles(user)} */}
       </Collapse>
     </TableBody>
   );
 }
 
-async function getFiles(email, user) {
-  
-  user.files = [];
-   await user_service.getAllFiles(email).then((resp) => {
-    if (resp.length > 0) {
-      resp.map((index) => {
-        user.files.push(dataURLToFile(index.dataURL, index.name));
-
+async function getFiles(user) {
+    if (user.files.length > 0) {
+      user.files.map((file) => {
+        <h1>{file.name}</h1>
       });
     }
-  }).then(() => {return user})
-  
 }
 
 export default function GenerateTable(props) {
@@ -73,14 +63,8 @@ export default function GenerateTable(props) {
           <TableCell> Country </TableCell>
         </TableRow>
       </TableHead>
-{/* let returnedUser = getFiles(user.email, user);
-        returnedUser.then((user) =>{
-          if(returnedUser != undefined){ */}
       {props.users.map((user) => {
-  
-        return CreateRows(user);  
-      
-        
+        return CreateRows(user);        
       })}
     </Table>
   );
