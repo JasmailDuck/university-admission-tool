@@ -234,7 +234,7 @@ class UserProfile extends Component {
 
       setTimeout(() => {
         fileString.then((result) => {
-          UserService.sendUserDocument(result);
+          UserService.sendUserDocument(result, this.state.selectedFile.name);
 
         })
       }, 200);
