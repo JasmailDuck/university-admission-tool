@@ -20,7 +20,9 @@ const config = {
     program_list_location:
       "/programlist",
     program_list_university_name_location:
-      "/programlist/filter/title", 
+      "/programlist/filter/title",
+    program_list_grade_location:
+      "/programlist/filter/grade"   
   },
 };
 //35.209.74.28

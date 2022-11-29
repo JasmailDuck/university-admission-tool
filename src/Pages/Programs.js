@@ -31,6 +31,7 @@ class Programs extends Component {
     this.setData = this.setData.bind(this); 
     this.setListOfUniName= this.setListOfUniName.bind(this);
     this.setListOfProgram= this.setListOfProgram.bind(this); 
+    this.getUserGradeReq= this.getUserGradeReq.bind(this); 
    // this.onChangeSearchUni = this.onChangeSearchUni.bind(this);
     
     // When the website is first launch all university and there programs should be displayed 
@@ -77,6 +78,7 @@ class Programs extends Component {
     })
   }
 
+  
   handleUniversityName(e){
     this.setState({
       setUniversityName: e.target.value,
@@ -93,6 +95,14 @@ class Programs extends Component {
         }); 
 
   };
+
+  getUserGradeReq(){
+    function_service.userGradeRequirement().then((response) =>{
+      this.setData(response.map((data) => data))
+    })
+  }
+  
+
 
   getProgramInformation() {
       // e.preventDefault();
@@ -163,7 +173,12 @@ class Programs extends Component {
                     // showCheckbox
                 />
               </div>
+              
+              <div className="minGrade">
 
+              <button  type="submit" onClick={this.getUserGradeReq}>Click to see illegible programs</button>          
+              </div>                
+              
               <button type="submit" onClick={this.getProgramInformation}>Confirm Changes</button> 
             </div>
 

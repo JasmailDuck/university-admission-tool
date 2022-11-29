@@ -36,6 +36,13 @@ class FunctionService {
    })
   }
 
+  userGradeRequirement(){
+    return apiInstance.get(config.uniAdminToolServer.program_list_grade_location)
+    .then((response) => {
+      
+      return response.data; 
+    })
+  }
 }
 
   
