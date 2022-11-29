@@ -27,6 +27,7 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    box-shadow: -16px -15px 15px -3px rgba(0,0,0,0.1);
 }
 
 .headerText{
@@ -62,9 +63,11 @@
     flex-direction:row;
     align-items: flex-start;
     border-radius: 0px 0px 15px 15px;
+    box-shadow: -16px 10px 15px -3px rgba(0,0,0,0.1);
 }
 
 .leftContainer{
+    box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);
     display:flex;
     flex-direction:column;
     flex:15%;
@@ -112,6 +115,7 @@
     flex:60%;
     background-color:#F1F1F1;
     border-radius: 15px 0px 15px 0px;
+    box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);
 }
 
 .accountOverview > h1{
@@ -164,8 +168,4 @@
     display:flex;
     height:90vh;
     flex-direction:column;
-}
-
-.deleteBtn{
-    display:none;
 }
