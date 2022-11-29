@@ -4,6 +4,7 @@ import {withRouter} from "../helpers/withRouter";
 import { signup } from "../actions/auth";
 
 import classes from "../css/Signup.module.css";
+import signupBG from "../images/signup.png";
 
 class Signup extends Component {
   constructor(props) {
@@ -191,107 +192,118 @@ class Signup extends Component {
 
     return (
       <>
-        <h1 className={classes.signin_title}>Sign up</h1>
+        <div className={classes.mainContainer}>
+          <div className={classes.leftContainer}>
+            <img className={classes.signupBG} src={signupBG} alt="signup pic"/>
+          </div>
 
-        <div className={classes.form}>
-          <form onSubmit={this.handleSignup}>
-            {!this.state.successful && (
-              <div className={classes.container}>
-                {/* First name input */}
-                <label htmlFor="firstName">
-                  <b>First Name*</b>
-                </label>
-                <input
-                  type="text"
-                  placeholder="Enter First Name"
-                  name="firstName"
-                  value={this.state.f_name}
-                  onChange={this.onChangeFirstName}
-                  required
-                />
+          <div className={classes.rightContainer}>
+            <h1 className={classes.signin_title}>Create a Shirah Profile</h1>
 
-                {/* Last name input */}
-                <label htmlFor="lastName">
-                  <b>Last Name*</b>
-                </label>
-                <input
-                  type="text"
-                  placeholder="Enter Last Name"
-                  name="lastName"
-                  value={this.state.l_name}
-                  onChange={this.onChangeLastName}
-                  required
-                />
+            <div className={classes.form}>
+              <form onSubmit={this.handleSignup}>
+                {!this.state.successful && (
+                  <div className={classes.inputContainer}>
+                    {/* First name input */}
+                    <label htmlFor="firstName">
+                      <p>First Name*</p>
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Enter First Name"
+                      name="firstName"
+                      value={this.state.f_name}
+                      onChange={this.onChangeFirstName}
+                      required
+                    />
 
-                {/* Email input */}
-                <label htmlFor="email">
-                  <b>Email*</b>
-                </label>
-                <input
-                  type="email"
-                  placeholder="Email@email.com"
-                  name="email"
-                  value={this.state.email}
-                  onChange={this.onChangeEmail}
-                  onKeyUp={this.handleEmailValidation}
-                  required
-                />
-                <p className={classes.input_error}>
-                  {this.state.emailErrorMessage}
-                </p>
+                    {/* Last name input */}
+                    <label htmlFor="lastName">
+                      <p>Last Name*</p>
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Enter Last Name"
+                      name="lastName"
+                      value={this.state.l_name}
+                      onChange={this.onChangeLastName}
+                      required
+                    />
 
-                {/* Password input */}
-                <div>
-                  <label htmlFor="password">
-                    <b>Password*</b>
-                  </label>
-                  <input
-                    type="password"
-                    name="password"
-                    value={this.state.password}
-                    onChange={this.onChangePassword}
-                    onKeyUp={this.handlePasswordValidation}
-                    required
-                  />
-                  <p className={classes.input_error}>
-                    {this.state.passwordErrorMessage}
-                  </p>
-                </div>
+                    {/* Email input */}
+                    <label htmlFor="email">
+                      <p>Email*</p>
+                    </label>
+                    <input
+                      type="email"
+                      placeholder="Email@email.com"
+                      name="email"
+                      value={this.state.email}
+                      onChange={this.onChangeEmail}
+                      onKeyUp={this.handleEmailValidation}
+                      required
+                    />
+                    <p className={classes.input_error}>
+                      {this.state.emailErrorMessage}
+                    </p>
 
-                {/* Password again input */}
-                <div>
-                  <label htmlFor="confirmPassword">
-                    <b>Password Again*</b>
-                  </label>
-                  <input
-                    type="password"
-                    name="confirmPassword"
-                    value={this.state.confirmPassword}
-                    onChange={this.onChangeConfirmPassword}
-                    onKeyUp={this.handlePasswordValidation}
-                    required
-                  />
-                  <p className={classes.input_error}>
-                    {this.state.confirmPasswordErrorMessage}
-                  </p>
-                </div>
+                    {/* Password input */}
+                    <div>
+                      <label htmlFor="password">
+                        <p>Password*</p>
+                      </label>
+                      <input
+                        type="password"
+                        name="password"
+                        placeholder="&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;" 
+                        value={this.state.password}
+                        onChange={this.onChangePassword}
+                        onKeyUp={this.handlePasswordValidation}
+                        required
+                      />
+                      <p className={classes.input_error}>
+                        {this.state.passwordErrorMessage}
+                      </p>
+                    </div>
 
-                {/* Signup button */}
-                <button className={classes.confirm_button}>Sign up</button>
-                <div >
-                    <p>Already have an account? <a href="/login">Log in here!</a> </p>
-                </div>
-              </div>
-            )}
+                    {/* Password again input */}
+                    <div>
+                      <label htmlFor="confirmPassword">
+                        <p>Confirm Password*</p>
+                      </label>
+                      <input
+                        type="password"
+                        name="confirmPassword"
+                        placeholder="&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;" 
+                        value={this.state.confirmPassword}
+                        onChange={this.onChangeConfirmPassword}
+                        onKeyUp={this.handlePasswordValidation}
+                        required
+                      />
+                      <p className={classes.input_error}>
+                        {this.state.confirmPasswordErrorMessage}
+                      </p>
+                    </div>
 
-            {/* message on sign up confirmation or error */}
-            {message && (
-              <div>
-                <div>{message}</div>
-              </div>
-            )}
-          </form>
+                    {/* Signup button */}
+                    <button className={classes.confirm_button}>Sign up</button>
+                    <div >
+                        <p className={classes.others}>Already have an account? <a href="/login">Log in here!</a> </p>
+                    </div>
+                  </div>
+                )}
+
+                {/* message on sign up confirmation or error */}
+                {message && (
+                  <div>
+                    <div>{message}</div>
+                  </div>
+                )}
+              </form>
+            </div>
+          </div>
         </div>
+        
       </>
     );
   }
