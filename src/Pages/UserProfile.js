@@ -7,7 +7,6 @@ import UserService from "../services/user_service";
 import { deleteUser, logout } from "../actions/auth";
 import { fileToDataURL } from "../helpers/fileHelper";
 import { setMessage } from "../actions/message";
-
 import classes from "../css/UserProfile.module.css";
 import studentLogo from "../images/studentLogo.png";
 import profileLogo from "../images/profileLogo.png";
@@ -306,17 +305,29 @@ class UserProfile extends Component {
     const editProfileFormat = () => {
       if (editing === 0 && files === 0) {
         return (
-          <div className={classes.rightContainer}>
-          <div>
-            <div>
-              <button className={classes.button} onClick={this.setEditing} type='button'>Edit Profile</button>
-            </div>
-            <h3>Name</h3>
-            <p>
-              {this.state.f_name} {this.state.l_name}
-            </p>
+        <div className={classes.accountOverview}>
+          <h1>Account Overview</h1>
+          <h2>Profile</h2>
+          <div className={classes.accountItems}>
+            <h1>Name</h1>
+            <p>{this.state.f_name} {this.state.l_name}</p>
           </div>
-          <div>
+          <div className={classes.accountItems}>
+            <h1>Email</h1>
+            <p>{this.state.email}</p>
+          </div>
+          <div className={classes.accountItems}>
+            <h1>Birthday</h1>
+            <p>{this.state.dob}</p>
+          </div>
+          <div className={classes.accountItems}>
+            <h1>Country/Origin</h1>
+            <p>{this.state.country}</p>
+          </div>
+          <div className={classes.editProfileBtn}>
+              <button className={classes.button} onClick={this.setEditing} type='button'>Edit Profile</button>
+          </div>
+          {/* <div>
             <h3>Address</h3>
             <p>{this.state.address}</p>
           </div>
@@ -340,30 +351,29 @@ class UserProfile extends Component {
           <div>
             <h3>Role ID</h3>
             <p>{this.state.role}</p>
-          </div>
-          <div>
-            <h3>Files</h3>
-            <input type="file" onChange={this.onFileChange} />
-            {this.fileData()}
-            <button className={classes.button} onClick={this.onFileUpload} type="button">Upload File</button>
-          </div>
+          </div> */}
         </div>
         );
         
       } 
       else if(files === 1 && editing === 0){
         return (
-          <div><p>hi</p></div>
+          <div className={classes.filesContainer}>
+            <h3>Files</h3>
+            <input type="file" onChange={this.onFileChange} />
+            {this.fileData()}
+            <button className={classes.button} onClick={this.onFileUpload} type="button">Upload File</button>
+          </div>
         )
       }
       else if(editing === 1 && files !== 1) {
         return (   
-          <div>        
+          <div className={classes.editProfileContainer}>        
             <div>
               <button className={classes.button} onClick={this.setEditing} type='button'>Back</button>
             </div>
             <form onSubmit={this.updateInformation}>
-              <div>
+              <div className={classes.editForm}>
                 
                 <h4>Current First Name: {this.state.f_name}</h4>
                 <input
@@ -482,7 +492,7 @@ class UserProfile extends Component {
             </div>
         </div>
 
-        <div>
+        <div className={classes.deleteBtn}>
           <button 
             className={classes.button}
             style={{ margin: 50 }} 

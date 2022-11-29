@@ -40,7 +40,7 @@
 }
 
 .headerSign{
-    font-size:50px;
+    font-size:70px;
 }
 
 .headerImg{
@@ -110,4 +110,62 @@
 
 .rightContainer{
     flex:60%;
+    background-color:#F1F1F1;
+    border-radius: 15px 0px 15px 0px;
+}
+
+.accountOverview > h1{
+    font-size:50px;
+    font-weight: bold;
+}
+
+.accountOverview > h2{
+    font-size:30px;
+    font-weight:bold;
+}
+
+.accountOverview{
+    display:flex;
+    flex-direction:column;
+    row-gap:30px;
+    padding-left:50px;
+    padding-top:20px;
+    align-items: left;
+    height:90vh;
+}
+
+.accountItems{
+    display:flex;
+    flex-direction:row;
+    font-size:20px;
+}
+
+.accountItems > h1{
+    flex:40%;
+}
+
+.accountItems > p {
+    flex:60%;
+}
+
+.editProfileContainer{
+    display:flex;
+    flex-direction:column;
+    height:90vh;
+}
+
+.editForm{
+    display:flex;
+    flex-direction:column;
+    row-gap:10px;
+}
+
+.filesContainer{
+    display:flex;
+    height:90vh;
+    flex-direction:column;
+}
+
+.deleteBtn{
+    display:none;
 }
