@@ -4,6 +4,7 @@ import DATABASELISTHEADER from './cmpnts/databaseListHeader'
 import { Component } from 'react';
 
 import FILE_SERVICE from '../../services/file_service';
+import {Buffer} from 'buffer';
 
 
 import DATABASELISTVIEWFILE from './cmpnts/databaseListViewFile';
@@ -48,7 +49,7 @@ render() {
 
                 {
                     this.state.files.map(userFile =>
-                        <DATABASELISTVIEWFILE id={userFile.fileID} email={userFile.email} fileName={userFile.file_name} file="{userFile.file}"   />
+                        <DATABASELISTVIEWFILE id={userFile.fileID} email={userFile.email} fileName={userFile.file_name} file={Buffer.from(userFile.file, 'base64').toString('ascii')}   />
                     )
                 }
                 
