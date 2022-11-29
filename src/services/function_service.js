@@ -7,6 +7,14 @@ import React, { Component } from "react";
 class FunctionService extends Component {
   
 
+  getAllUniversity(){
+    return apiInstance.get(config.uniAdminToolServer.program_list_location)
+    .then((response) => {
+      
+      return response.data; 
+    })
+  };
+
   listOfUniName(universityName){
 
     
@@ -19,6 +27,25 @@ class FunctionService extends Component {
     })
   };
 
+  listOfProgramName(programName){
+    return apiInstance.post(config.uniAdminToolServer.program_list_university_name_location,{
+      filterArray : programName
+   })
+   .then((response) => {
+     
+     return response.data; 
+   })
+  }
+
+  userGradeRequirement(){
+    return apiInstance.get(config.uniAdminToolServer.program_list_grade_location)
+    .then((response) => {
+      
+      return response.data; 
+    })
+  }
+
+
   consultantUsers = (consultantID) => {
     return apiInstance.get(config.uniAdminToolServer.consultantUsers, {
       params:{consultant_id: consultantID}
@@ -26,6 +53,6 @@ class FunctionService extends Component {
       return response.data;
     })
   };
-}
-  
+
+}  
 export default new FunctionService();

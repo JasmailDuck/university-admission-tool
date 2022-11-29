@@ -30,7 +30,11 @@ const config = {
     get_all_user_files: 
       "/files",
     get_spec_user_files:
-      "/consultantUsers/files"
+      "/consultantUsers/files",
+    program_list_university_name_location:
+      "/programlist/filter/title",
+    program_list_grade_location:
+      "/programlist/filter/grade"   
   },
 };
 //35.209.74.28

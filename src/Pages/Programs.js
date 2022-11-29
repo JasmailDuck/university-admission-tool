@@ -16,7 +16,7 @@ import Typography from "@mui/material/Typography";
 import Link from '@mui/material/Link';
 
 //import { MultiSelect } from "react-multi-select-component";
-
+import Multiselect from "multiselect-react-dropdown";
 
 class Programs extends Component {
   
@@ -29,6 +29,9 @@ class Programs extends Component {
     this.handleProgramName = this.handleProgramName.bind(this); 
     this.getProgramInformation = this.getProgramInformation.bind(this); 
     this.setData = this.setData.bind(this); 
+    this.setListOfUniName= this.setListOfUniName.bind(this);
+    this.setListOfProgram= this.setListOfProgram.bind(this); 
+    this.getUserGradeReq= this.getUserGradeReq.bind(this); 
    // this.onChangeSearchUni = this.onChangeSearchUni.bind(this);
     
     // When the website is first launch all university and there programs should be displayed 
@@ -38,42 +41,9 @@ class Programs extends Component {
     //
     // controls state of Programs.
     this.state = {
-      listOfProgram:[
-        {
-          value: "Accounting" 
-        },
-        {
-          value: "Automotive Service Technology" 
-        },
-        {
-          value: "Business Administration" 
-        },
-        {
-          value: "Civil Engineering Technology" 
-        },
-        {
-          value: "Chemical Engineering Technology" 
-        },
-        {
-          value: "Computer Science" 
-        },
-        {
-          value: "Bachelor of Computer Information Systems" 
-        },
-        {
-          value: "Nursing" 
-        },
-        {
-          value: "Psychology" 
-        },
-        {
-          value: "Bachelor of Computer Information Systems" 
-        },
-        {
-          value: "Bachelor of Computer Information Systems" 
-        }
-
-      ],
+      
+      listOfUniName:[],
+      listOfProgram:[],
       data: [],
       setUniversityProgram: [],
       setUniversityName: ""
@@ -85,49 +55,85 @@ class Programs extends Component {
     this.getProgramInformation();
   }
   
+
+
+  componentDidMount() {
+
+    this.getProgramInformation();
+  }
   
+  // 
   setData(programInfo){
     this.setState({
-      data:programInfo
+      data:programInfo,
     });
   }
   
-  // onChangeSearchUni(e){
-  //   this.setState({
-  //     search: e.target.value
-  //   });
-  // }
-
-  handleUniversityName(e){
-    console.log(e.target.value)
+  // This method will get all the unique university names 
+  setListOfUniName(uniName){
     this.setState({
-      setUniversityName: e.target.value
+      listOfUniName:[...new Set(uniName.map((value) => value.university_name))]
+    })
+  }
+  // This method will get all the unique program names 
+  setListOfProgram(programName){
+    this.setState({
+      listOfProgram:[...new Set(programName.map((value) => value.title))]
+    })
+  }
+
+  
+  handleUniversityName(e){
+    this.setState({
+      setUniversityName: e.target.value,
+      setUniversityProgram: ""
     });
   }
 
-  handleProgramName(e){
-    console.log(e.map((uni) => uni.value))
+  handleProgramName(programName){
+   
     this.setState({
-      setUniversityProgram: this.state.setUniversityName.concat(e.map((uni) => uni.value))
-    });
+        setUniversityName: "",   
+        setUniversityProgram: programName
+         
+        }); 
 
   };
 
+  getUserGradeReq(){
+    function_service.userGradeRequirement().then((response) =>{
+      this.setData(response.map((data) => data))
+    })
+  }
+  
+
+
   getProgramInformation() {
       // e.preventDefault();
-      
-        function_service.listOfUniName(this.state.setUniversityName).then((response) =>{
-          this.setData(response.map((data) => data)) 
+      if(this.state.setUniversityName === "" && this.state.setUniversityProgram.length === 0){
+        function_service.getAllUniversity().then((response) =>{
+          this.setData(response.map((data) => data))
+          this.setListOfUniName(response.map((data) => data))
+          this.setListOfProgram(response.map((data) => data))
+          
         })
-      
+      }else{
 
-      
-        // function_service.programsList(this.state.setUniversityProgram).then((response) =>{
-        //   this.setData(response.map((data) => data)) 
-        // })
-    
-       
-      
+        if(this.state.setUniversityName !== ""){
+          function_service.listOfUniName(this.state.setUniversityName).then((response) =>{
+            this.setData(response.map((data) => data)) 
+          })
+        }
+          
+  
+        if(this.state.setUniversityProgram.length > 0){
+         console.log(this.state.setUniversityProgram); 
+          function_service.listOfProgramName(this.state.setUniversityProgram).then((response) =>{
+            this.setData(response.map((data) => data)) 
+          })
+        }
+      }
+           
   }
 
   
@@ -148,34 +154,42 @@ class Programs extends Component {
                             id="demo-simple-select"
                             value={this.state.setUniversityName}
                             onChange={this.handleUniversityName}
-                          >
-                            <MenuItem value={"Mount Royal University"}>MRU</MenuItem>
-                            <MenuItem value={"Southern Alberta Institute of Technology"}>SAIT</MenuItem>
-                            <MenuItem value={"University of Alberta"}>University of Alberta</MenuItem>
-                            <MenuItem value={"University of British Columbia"}>University of British Columbia</MenuItem>
-                            <MenuItem value={"University of Calgary"}>University of Calgary</MenuItem>
-                            <MenuItem value={"University of Toronto"}>University of Toronto</MenuItem>
-                            <MenuItem value={"University of Waterloo"}>University of Waterloo</MenuItem>
+                          > 
+                            {this.state.listOfUniName.map((uniName) =>{
+                              return(<MenuItem value={uniName}>{uniName}</MenuItem>)
+                            })}
+
                           </Select>
                         </FormControl>
                   </Box>
               </div>
 
-              {/* <div className="multiSelect">
-              <MultiSelect
-                  options={this.state.options}
-                  value={this.state.setUniversityProgram}
-                  onChange={this.handleProgramName}
-                  labelledBy="Select"
-                 />
-              </div> */}
+              <div className="programMultiSelect">
+                <Multiselect
+                    placeholder="Pick a program"
+                    options={this.state.listOfProgram}
+                    selectedValues={this.state.setUniversityProgram}
+                    //onChange={this.handleProgramName}
+                    // labelledBy="Select"
+                    isObject={false}
+                    onRemove={this.handleProgramName}
+                    onSelect={this.handleProgramName}
+                    // showCheckbox
+                />
+              </div>
+              
+              <div className="minGrade">
 
+              <button  type="submit" onClick={this.getUserGradeReq}>Click to see illegible programs</button>          
+              </div>                
+              
               <button type="submit" onClick={this.getProgramInformation}>Confirm Changes</button> 
             </div>
 
             <div className="div2">
-              {console.log(this.state.data)}
+              
                 {this.state.data.map((university) => {
+                  //console.log(this.state.listOfUniName)
                   return (
                     <Card sx={{ maxWidth: 345}} className= "uni" key={university.id}>
                         <CardMedia 
