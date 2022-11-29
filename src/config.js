@@ -26,7 +26,11 @@ const config = {
       "/files",
 
     get_file_user:
-      "/files/all"
+      "/files/all",
+    get_all_user_files: 
+      "/files",
+    get_spec_user_files:
+      "/consultantUsers/files"
   },
 };
 //35.209.74.28

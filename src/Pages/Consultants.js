@@ -1,45 +1,47 @@
 import React, { Component } from "react";
 import UserService from "../services/user_service";
 import function_service from "../services/function_service.js";
+import DrawTable from "./consultants/drawTable"
+
+
+
 class Consultants extends Component {
   constructor(props) {
     super(props);
-    this.drawList = this.drawList.bind(this);
     this.state = {
-      users: [],
+      users: []
     };
   }
   componentDidMount() {
-    this.test();
+    this.pullFromAPI()
   }
 
-  test() {
-    UserService.getUserInformation().then((response) => {
-      console.log(function_service);
-      function_service.consultantUsers(response.userID).then((apiResponse) => {
-        this.setState({ users: apiResponse });
-        this.drawList();
-      });
+   pullFromAPI() {
+     UserService.getUserInformation().then((response) => {
+      function_service.consultantUsers(response.userID).then((apiResponse) =>{
+        var updatedUser = [];
+        apiResponse.map((user) =>{
+          updatedUser.push(user)
+        })
+        // apiResponse.map((user) => {
+        //   console.log(this.getFiles(user.email, user));  
+        // })
+        // console.log(updatedUser)
+         this.setState({users: updatedUser})
+    });
     });
   }
 
-  drawList = () => {
-    this.state.users.forEach((user) => {
-      // make HTML
-      console.log(user);
-    });
-  };
 
   render() {
     return (
       <div>
         <header>
           <h1>Consultants</h1>
-          <div className="users">
-            {this.state.users.map((actualUser) => {
-              return <h3>{actualUser.f_name}</h3>;
-            })}
-          </div>
+            <div className = "Table">
+              <DrawTable users={this.state.users}></DrawTable>  
+              {console.log(this.state.users)}
+            </div> 
         </header>
       </div>
     );
