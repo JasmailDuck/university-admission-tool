@@ -46,12 +46,20 @@
 .inputContainer > input[type="text"],
 .inputContainer > div > input[type="password"]{
     outline: 0;
+    border: 1px solid black;
     border-width: 0px 0px 2px;
     background-color: #FFFFFF;
     text-align: left;
     font-size:20px;
     padding-left:0px;
     width:100%;
+    -webkit-transition: 0.5s;
+    transition:0.5s;
+}
+
+.inputContainer > input:focus,
+.inputContainer > div > input:focus{
+  border-color:#D9534F;
 }
 
 .inputContainer > input[type="text"]::placeholder{
@@ -63,7 +71,10 @@ label > p{
 }
 
 .inputContainer > input[type="email"]{
+  border: 1px solid black;
   border-width: 0px 0px 2px;
+  -webkit-transition: 0.5s;
+  transition:0.5s;
 }
 
 .others{
@@ -72,11 +83,9 @@ label > p{
 
 .inputContainer > input[type="email"]:focus{
   outline: 0;
+  border-color:#D9534F;
 }
 
-input:focus{
-    border-color:#D9534F;
-}
 
 .confirm_button{
     background-color:#D9534F;

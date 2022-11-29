@@ -16,6 +16,7 @@ import { history } from "./helpers/history";
 import Consultants from "./Pages/Consultants";
 import USERPROFILEEDITORADMIN from "./Pages/admin-userManagement/cmpnts/userProfileEditorAdmin";
 import ADMINFILEMANAGEMENT from "./Pages/admin-userFileManagement/adminFileManagement";
+import logoIMG from "./images/testIcon.png";
 
 class App extends Component {
   constructor(props) {
@@ -78,10 +79,19 @@ class App extends Component {
     //a page guided by the nav bar.
     return (
       <BrowserRouter location={history.location} navigator={history}>
-        {currentUser && (
+        {currentUser && (  
           <div className={navbarClasses.Nav}>
-            <FaBars className={navbarClasses.Bars} />
-            <div className={navbarClasses.NavMenu}>
+            <div className={navbarClasses.navLogo}>
+              <Link
+                className={navbarClasses.NavLinkLogo}
+                to="/programs"
+                activestyle="true"
+              >
+                <img className={navbarClasses.logoIMG} src={logoIMG} alt="logo pic"/>
+              </Link>
+            </div>
+
+            <div className={navbarClasses.navMenu}>
               <Link
                 className={navbarClasses.NavLink}
                 to="/programs"
@@ -89,8 +99,7 @@ class App extends Component {
               >
                 Programs
               </Link>
-            </div>
-            <div className={navbarClasses.NavMenu}>
+
               <Link
                 className={navbarClasses.NavLink}
                 to="/Consultants"
@@ -98,27 +107,22 @@ class App extends Component {
               >
                 Consultants
               </Link>
-            </div>
-            <div className={navbarClasses.NavMenu}>
-              <nav className={navbarClasses.NavBtn}>
-                <Link
+
+              <Link
                   className={navbarClasses.NavBtnLink}
                   to="/login"
                   onClick={this.logOut}
                 >
                   Log out
-                </Link>
-              </nav>
-              <nav className={navbarClasses.NavBtn}>
-                <Link className={navbarClasses.NavBtnLink} to="/adminDashboard">
+              </Link>
+
+              <Link className={navbarClasses.NavBtnLink} to="/adminDashboard">
                   Admin Tools Icon
-                </Link>
-              </nav>
-              <nav className={navbarClasses.NavBtn}>
-                <Link to="/userProfile">
+              </Link>
+
+              <Link to="/userProfile">
                   <FaUserCircle className={navbarClasses.Profile} />
-                </Link>
-              </nav>
+              </Link>
             </div>
           </div>
         )}

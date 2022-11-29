@@ -269,7 +269,7 @@ class Signup extends Component {
                     {/* Password again input */}
                     <div>
                       <label htmlFor="confirmPassword">
-                        <p>Password Again*</p>
+                        <p>Confirm Password*</p>
                       </label>
                       <input
                         type="password"

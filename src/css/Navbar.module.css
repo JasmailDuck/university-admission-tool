@@ -1,102 +1,56 @@
-.Nav {
-    background: #63d471;
-    height: 100px;
-    display: flex;
-    padding: 0.2rem calc((100vw - 1000px) / 2);
-    z-index: 12;
-  }
-  
-  .Bars {
-    display: none;
-  }
-  
-  .Profile {
-    font-size: 3rem;
-    cursor: pointer;
-    color: #5f5757;
-    display: flex;
-  }
-  
-  .NavMenu {
-    display: flex;
-    align-items: center;
-    margin-right: -24px;
-  }
-  
-  .Logo {
-    font-size: 3rem;
-    display: flex;
-    align-items: center;
-  }
-  
-  .NavLink {
-    color: #5f5757;
-    display: flex;
-    align-items: center;
-    font-size: 16pt;
-    text-decoration: none;
-    padding: 0 2rem;
-    height: 100%;
-    cursor: pointer;
-  }
-  
-  .NavLink:active {
-    color: #000000;
-  }
-  
-  .NavBtn {
-    display: flex;
-    align-items: center;
-    margin-left: 24px;
-  }
-  
-  .NavBtnLink {
-    border-radius: 4px;
-    background: #5f5757;
-    padding: 12px 30px;
-    color: #000000;
-    outline: none;
-    border: none;
-    cursor: pointer;
-    font-size: 16pt;
-    transition: all 0.2s ease-in-out;
-    text-decoration: none;
-    margin-left: 24px;
-  }
-  
-  .NavBtnLink:hover {
-    transition: all 0.2s ease-in-out;
-    background: #808080;
-  }
-  
-  .Profile:hover,
-  .Logo:hover,
-  .NavLink:hover {
-    transition: all 0.2s ease-in-out;
-    color: #808080;
-  }
-  
-  @media screen and (max-width: 768px) {
-    .Bars {
-      display: block;
-      position: absolute;
-      top: 0;
-      right: 0;
-      transform: translate(-100%, 75%);
-      font-size: 2.5rem;
-      cursor: pointer;
-    }
-  
-    .NavMenu {
-      display: none;
-    }
-  
-    .Logo {
-      display: none;
-    }
-  
-    .NavBtn {
-      display: none;
-    }
-  }
-  
+.Nav{
+  display:flex;
+  flex-direction:row;
+  justify-content: center;
+  align-items: center;
+  column-gap:15vw;
+  font-size:20px;
+  font-weight:bold;
+  height:10vh;
+}
+
+.navLogo{
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  flex:50%;
+}
+
+.navMenu{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  column-gap:45px;
+  flex:70%;
+}
+
+.NavLink, .NavBtnLink{
+  color:black;
+  -webkit-transition: 0.5s;
+  transition:0.5s;
+}
+
+.NavLink:hover, .NavBtnLink:hover{
+  color:#D9534F;
+}
+
+
+.inputContainer > input[type="email"]{
+  border: 1px solid black;
+  border-width: 0px 0px 2px;
+  -webkit-transition: 0.5s;
+  transition:0.5s;
+}
+
+.others{
+  text-align: center;
+}
+
+.inputContainer > input[type="email"]:focus{
+  outline: 0;
+  border-color:#D9534F;
+}
+
+.Profile{
+  font-size:2em;
+}
