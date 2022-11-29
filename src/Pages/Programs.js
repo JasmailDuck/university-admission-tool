@@ -29,6 +29,8 @@ class Programs extends Component {
     this.handleProgramName = this.handleProgramName.bind(this); 
     this.getProgramInformation = this.getProgramInformation.bind(this); 
     this.setData = this.setData.bind(this); 
+    this.setListOfUniName= this.setListOfUniName.bind(this);
+    this.setListOfProgram= this.setListOfProgram.bind(this); 
    // this.onChangeSearchUni = this.onChangeSearchUni.bind(this);
     
     // When the website is first launch all university and there programs should be displayed 
@@ -38,7 +40,9 @@ class Programs extends Component {
     //
     // controls state of Programs.
     this.state = {
-      listOfProgram:["Accounting","Automotive Service Technology","Business Administration","Civil Engineering Technology","Chemical Engineering Technology","Computer Science","Bachelor of Computer Information Systems","Nursing","Psychology"],
+      
+      listOfUniName:[],
+      listOfProgram:[],
       data: [],
       setUniversityProgram: [],
       setUniversityName: ""
@@ -53,17 +57,27 @@ class Programs extends Component {
     this.getProgramInformation();
   }
   
-  
+  // 
   setData(programInfo){
     this.setState({
-      data:programInfo
+      data:programInfo,
     });
   }
   
-
+  // This method will get all the unique university names 
+  setListOfUniName(uniName){
+    this.setState({
+      listOfUniName:[...new Set(uniName.map((value) => value.university_name))]
+    })
+  }
+  // This method will get all the unique program names 
+  setListOfProgram(programName){
+    this.setState({
+      listOfProgram:[...new Set(programName.map((value) => value.title))]
+    })
+  }
 
   handleUniversityName(e){
-    console.log(e.target.value)
     this.setState({
       setUniversityName: e.target.value,
       setUniversityProgram: ""
@@ -71,8 +85,7 @@ class Programs extends Component {
   }
 
   handleProgramName(programName){
-    console.log(programName)
-
+   
     this.setState({
         setUniversityName: "",   
         setUniversityProgram: programName
@@ -85,7 +98,10 @@ class Programs extends Component {
       // e.preventDefault();
       if(this.state.setUniversityName === "" && this.state.setUniversityProgram.length === 0){
         function_service.getAllUniversity().then((response) =>{
-          this.setData(response.map((data) => data)) 
+          this.setData(response.map((data) => data))
+          this.setListOfUniName(response.map((data) => data))
+          this.setListOfProgram(response.map((data) => data))
+          
         })
       }else{
 
@@ -124,14 +140,18 @@ class Programs extends Component {
                             id="demo-simple-select"
                             value={this.state.setUniversityName}
                             onChange={this.handleUniversityName}
-                          >
-                            <MenuItem value={"Mount Royal University"}>MRU</MenuItem>
+                          > 
+                            {this.state.listOfUniName.map((uniName) =>{
+                              return(<MenuItem value={uniName}>{uniName}</MenuItem>)
+                            })}
+
+                            {/* <MenuItem value={"Mount Royal University"}>MRU</MenuItem>
                             <MenuItem value={"Southern Alberta Institute of Technology"}>SAIT</MenuItem>
                             <MenuItem value={"University of Alberta"}>University of Alberta</MenuItem>
                             <MenuItem value={"University of British Columbia"}>University of British Columbia</MenuItem>
                             <MenuItem value={"University of Calgary"}>University of Calgary</MenuItem>
                             <MenuItem value={"University of Toronto"}>University of Toronto</MenuItem>
-                            <MenuItem value={"University of Waterloo"}>University of Waterloo</MenuItem>
+                            <MenuItem value={"University of Waterloo"}>University of Waterloo</MenuItem> */}
                           </Select>
                         </FormControl>
                   </Box>
@@ -155,8 +175,9 @@ class Programs extends Component {
             </div>
 
             <div className="div2">
-              {console.log(this.state.data)}
+              
                 {this.state.data.map((university) => {
+                  //console.log(this.state.listOfUniName)
                   return (
                     <Card sx={{ maxWidth: 345}} className= "uni" key={university.id}>
                         <CardMedia 

@@ -27,7 +27,6 @@ class FunctionService {
   };
 
   listOfProgramName(programName){
-    console.log(programName);
     return apiInstance.post(config.uniAdminToolServer.program_list_university_name_location,{
       filterArray : programName
    })
