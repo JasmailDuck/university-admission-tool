@@ -22,6 +22,7 @@ class UserProfile extends Component {
     this.onFileUpload = this.onFileUpload.bind(this);
     // binding of all set state methods
     this.setEditing = this.setEditing.bind(this);
+    this.setFiles = this.setFiles.bind(this);
     this.setFirstName = this.setFirstName.bind(this);
     this.setLastName = this.setLastName.bind(this);
     this.setAddress = this.setAddress.bind(this);
@@ -53,6 +54,7 @@ class UserProfile extends Component {
       selectedFile: null,
       fileString: "",
       editing: 0,
+      files: 0,
       e_f_name: "",
       e_l_name: "",
       e_address: "",
@@ -74,6 +76,7 @@ class UserProfile extends Component {
       f_name: firstname,
     });
   }
+  
 
   setLastName(lastname) {
     this.setState({
@@ -163,15 +166,34 @@ class UserProfile extends Component {
 
   // Changes the editing state, allowing different forms to be shown whether editing or not.
   setEditing() {
+
     if (this.state.editing === 0) {
       this.setState({
         editing: 1,
+        files: 0
       });
     } else {
       this.setState({
-        editing: 0,
+        editing: 0
       });
     }
+    console.log(this.state.files, this.state.editing);
+  }
+
+   // Changes the editing state, allowing different forms to be shown whether editing or not.
+   setFiles() {
+
+    if (this.state.files === 0) {
+      this.setState({
+        files: 1,
+        editing: 0
+      });
+    } else {
+      this.setState({
+        files: 0
+      });
+    }
+    
   }
 
   // make API call to get information of user with current access token
@@ -277,96 +299,64 @@ class UserProfile extends Component {
   render() {
     const { message } = this.props;
     const { editing } = this.state;
+    const { files } = this.state;
 
     // File content to be displayed after
     // file upload is complete
     const editProfileFormat = () => {
-      if (!editing) {
+      if (editing === 0 && files === 0) {
         return (
-          <div className={classes.mainContainer}>
-            <div className={classes.headerContainer}>
-              <div className={classes.headerText}>
-                <h1 className={classes.headerSign}>Hello,&nbsp; {this.state.f_name}!</h1> 
-                <p>Welcome to your profile! Feel free to edit your profile or upload your documents!</p>
-              </div>
-              <div className={classes.headerImg}>
-                <img className={classes.studentLogo} src={studentLogo} alt="logo pic"/>
-              </div>
+          <div className={classes.rightContainer}>
+          <div>
+            <div>
+              <button className={classes.button} onClick={this.setEditing} type='button'>Edit Profile</button>
             </div>
-
-            <div className={classes.profileContainer}>
-              <div className={classes.leftContainer}>
-                <div className={classes.profileLogo}>
-                  <img src={profileLogo} className={classes.profileLogo} alt="profile logo"></img>
-                </div>
-                <div className={classes.profileName}>
-                  <h1>{this.state.f_name} {this.state.l_name}</h1>
-                </div>
-                <div className={classes.profileOptions}>
-                  <div className={classes.profileChoice}>
-                    <FaAddressCard></FaAddressCard>
-                    <p>Account Overview</p>
-                  </div>
-
-                  <div className={classes.profileChoice}>
-                    <FaAddressCard></FaAddressCard>
-                    <p>Edit Profile</p>
-                  </div>
-
-                  <div className={classes.profileChoice}>
-                    <FaAddressCard></FaAddressCard>
-                    <p>Files</p>
-                  </div>
-                  
-                </div>
-              </div>
-              <div className={classes.rightContainer}>
-                <div>
-                  <div>
-                    <button className={classes.button} onClick={this.setEditing} type='button'>Edit Profile</button>
-                  </div>
-                  <h3>Name</h3>
-                  <p>
-                    {this.state.f_name} {this.state.l_name}
-                  </p>
-                </div>
-                <div>
-                  <h3>Address</h3>
-                  <p>{this.state.address}</p>
-                </div>
-                <div>
-                  <h3>Email</h3>
-                  <p>{this.email}</p>
-                  <p>{this.state.email}</p>
-                </div>
-                <div>
-                  <h3>Date of Birth</h3>
-                  <p>{this.state.dob}</p>
-                </div>
-                <div>
-                  <h3>Country</h3>
-                  <p>{this.state.country}</p>
-                </div>
-                <div>
-                  <h3>Interests</h3>
-                  <p>{this.state.interests}</p>
-                </div>
-                <div>
-                  <h3>Role ID</h3>
-                  <p>{this.state.role}</p>
-                </div>
-                <div>
-                  <h3>Files</h3>
-                  <input type="file" onChange={this.onFileChange} />
-                  {this.fileData()}
-                  <button className={classes.button} onClick={this.onFileUpload} type="button">Upload File</button>
-                </div>
-              </div>
-            </div>
-            
+            <h3>Name</h3>
+            <p>
+              {this.state.f_name} {this.state.l_name}
+            </p>
           </div>
+          <div>
+            <h3>Address</h3>
+            <p>{this.state.address}</p>
+          </div>
+          <div>
+            <h3>Email</h3>
+            <p>{this.email}</p>
+            <p>{this.state.email}</p>
+          </div>
+          <div>
+            <h3>Date of Birth</h3>
+            <p>{this.state.dob}</p>
+          </div>
+          <div>
+            <h3>Country</h3>
+            <p>{this.state.country}</p>
+          </div>
+          <div>
+            <h3>Interests</h3>
+            <p>{this.state.interests}</p>
+          </div>
+          <div>
+            <h3>Role ID</h3>
+            <p>{this.state.role}</p>
+          </div>
+          <div>
+            <h3>Files</h3>
+            <input type="file" onChange={this.onFileChange} />
+            {this.fileData()}
+            <button className={classes.button} onClick={this.onFileUpload} type="button">Upload File</button>
+          </div>
+        </div>
         );
-      } else {
+        
+      } 
+      else if(files === 1 && editing === 0){
+        return (
+          <div><p>hi</p></div>
+        )
+      }
+      else if(editing === 1 && files !== 1) {
         return (   
           <div>        
             <div>
@@ -450,10 +440,46 @@ class UserProfile extends Component {
 
     return (
       <>
-        
+        <div className={classes.mainContainer}>
+            <div className={classes.headerContainer}>
+              <div className={classes.headerText}>
+                <h1 className={classes.headerSign}>Hello,&nbsp; {this.state.f_name}!</h1> 
+                <p>Welcome to your profile! Feel free to edit your profile or upload your documents!</p>
+              </div>
+              <div className={classes.headerImg}>
+                <img className={classes.studentLogo} src={studentLogo} alt="logo pic"/>
+              </div>
+            </div>
+            <div className={classes.profileContainer}>
+              <div className={classes.leftContainer}>
+                  <div className={classes.profileLogo}>
+                    <img src={profileLogo} className={classes.profileLogo} alt="profile logo"></img>
+                  </div>
+                  <div className={classes.profileName}>
+                    <h1>{this.state.f_name} {this.state.l_name}</h1>
+                  </div>
+                  <div className={classes.profileOptions}>
+                    <div className={classes.profileChoice}>
+                      <FaAddressCard></FaAddressCard>
+                      <p>Account Overview</p>
+                    </div>
 
-        <div>
-          {editProfileFormat()}
+                    <div onClick={this.setEditing} className={classes.profileChoice}>
+                      <FaAddressCard></FaAddressCard>
+                      <p>Edit Profile</p>
+                    </div>
+
+                    <div onClick={this.setFiles} className={classes.profileChoice}>
+                      <FaAddressCard></FaAddressCard>
+                      <p>Files</p>
+                    </div>
+                    
+                  </div>
+                </div>
+                <div className={classes.rightContainer}>
+                  {editProfileFormat()}
+                </div>
+            </div>
         </div>
 
         <div>

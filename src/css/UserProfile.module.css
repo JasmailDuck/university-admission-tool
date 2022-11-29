@@ -17,11 +17,12 @@
 }
 
 .headerContainer{
+    margin-top:50px;
     background: linear-gradient(to right top, #d9534f, #da5652, #dc5956, #dd5c59, #de5f5c, #e06663,
      #e16e6b, #e27572, #e3827f, #e48e8c, #e49a98, #e3a6a5);
     width:90vw;
     border-radius:15px 15px 0px 0px;
-    height:50vh;
+    height:40vh;
     display:flex;
     flex-direction: row;
     justify-content: center;
@@ -47,6 +48,7 @@
     display:flex;
     align-items: center;
     justify-content: center;
+    padding-bottom:65px;
 }
 
 
