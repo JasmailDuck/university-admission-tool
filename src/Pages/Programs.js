@@ -145,13 +145,6 @@ class Programs extends Component {
                               return(<MenuItem value={uniName}>{uniName}</MenuItem>)
                             })}
 
-                            {/* <MenuItem value={"Mount Royal University"}>MRU</MenuItem>
-                            <MenuItem value={"Southern Alberta Institute of Technology"}>SAIT</MenuItem>
-                            <MenuItem value={"University of Alberta"}>University of Alberta</MenuItem>
-                            <MenuItem value={"University of British Columbia"}>University of British Columbia</MenuItem>
-                            <MenuItem value={"University of Calgary"}>University of Calgary</MenuItem>
-                            <MenuItem value={"University of Toronto"}>University of Toronto</MenuItem>
-                            <MenuItem value={"University of Waterloo"}>University of Waterloo</MenuItem> */}
                           </Select>
                         </FormControl>
                   </Box>
