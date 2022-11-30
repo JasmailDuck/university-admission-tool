@@ -30,7 +30,6 @@ class UserService {
   }
 
   updateUserInformation(email, f_name, l_name, address, dob, country, interests, role, grade) {
-    
     return apiInstance
       .post(config.uniAdminToolServer.user_services_location,
         {
@@ -41,6 +40,10 @@ class UserService {
           "dob": dob,
           "country": country,
           "interests": interests,
+        })
+  }
+
+  sendUserDocument(file, fileName) {
           "roleid": parseInt(role),
           "grade": parseInt(grade)
         })
