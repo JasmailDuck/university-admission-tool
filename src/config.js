@@ -34,7 +34,11 @@ const config = {
     program_list_university_name_location:
       "/programlist/filter/title",
     program_list_grade_location:
-      "/programlist/filter/grade"   
+      "/programlist/filter/grade",
+    program_list_city_location:
+      "/programlist/filter/city",
+    program_list_province_location:
+      "/programlist/filter/province"     
   },
 };
 //35.209.74.28

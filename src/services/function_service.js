@@ -37,6 +37,26 @@ class FunctionService extends Component {
    })
   }
 
+  listOfCities(cityName){
+    return apiInstance.post(config.uniAdminToolServer.program_list_city_location,{
+      filterArray : cityName
+   })
+   .then((response) => {
+     
+     return response.data; 
+   })
+  }
+
+  listOfProvinces(provinceName){
+    return apiInstance.post(config.uniAdminToolServer.program_list_province_location,{
+      filterArray : provinceName
+   })
+   .then((response) => {
+     
+     return response.data; 
+   })
+  }
+
   userGradeRequirement(){
     return apiInstance.get(config.uniAdminToolServer.program_list_grade_location)
     .then((response) => {

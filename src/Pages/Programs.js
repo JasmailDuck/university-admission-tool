@@ -26,12 +26,16 @@ class Programs extends Component {
     super(props);
     
     this.handleUniversityName = this.handleUniversityName.bind(this); 
-    this.handleProgramName = this.handleProgramName.bind(this); 
-    this.getProgramInformation = this.getProgramInformation.bind(this); 
+    this.handleProgramName = this.handleProgramName.bind(this);
+    this.handleCity = this.handleCity.bind(this); 
+    this.handleProvince = this.handleProvince.bind(this); 
     this.setData = this.setData.bind(this); 
     this.setListOfUniName= this.setListOfUniName.bind(this);
-    this.setListOfProgram= this.setListOfProgram.bind(this); 
+    this.setListOfProgram= this.setListOfProgram.bind(this);
+    this.setListOfCity= this.setListOfCity.bind(this); 
+    this.setListOfProvince= this.setListOfProvince.bind(this); 
     this.getUserGradeReq= this.getUserGradeReq.bind(this); 
+    this.getProgramInformation = this.getProgramInformation.bind(this);
    // this.onChangeSearchUni = this.onChangeSearchUni.bind(this);
     
     // When the website is first launch all university and there programs should be displayed 
@@ -44,8 +48,12 @@ class Programs extends Component {
       
       listOfUniName:[],
       listOfProgram:[],
+      listOfProvince:[],
+      listOfCity:[],
       data: [],
       setUniversityProgram: [],
+      setCity: [],
+      setProvince: [],
       setUniversityName: ""
     };
 
@@ -55,12 +63,6 @@ class Programs extends Component {
     this.getProgramInformation();
   }
   
-
-
-  componentDidMount() {
-
-    this.getProgramInformation();
-  }
   
   // 
   setData(programInfo){
@@ -81,23 +83,53 @@ class Programs extends Component {
       listOfProgram:[...new Set(programName.map((value) => value.title))]
     })
   }
+// This method will get all the unique cities  
+  setListOfCity(cityName){
+    this.setState({
+      listOfCity:[...new Set(cityName.map((value) => value.city))]
+    })
+  }
 
-  
+  setListOfProvince(provinceName){
+    this.setState({
+      listOfProvince:[...new Set(provinceName.map((value) => value.province))]
+    })
+  }
+
+  handleCity(cityName){
+    this.setState({
+      setCity: cityName,
+      setUniversityProgram: "",
+      setUniversityName: "",
+      setProvince: ""
+    });
+  }
+
+  handleProvince(provinceName){
+    this.setState({
+      setProvince: provinceName,
+      setUniversityProgram: "",
+      setUniversityName: "",
+      setCity: ""
+    });
+  }
+
   handleUniversityName(e){
     this.setState({
       setUniversityName: e.target.value,
-      setUniversityProgram: ""
+      setUniversityProgram: "",
+      setCity: "",
+      setProvince: ""
     });
   }
 
   handleProgramName(programName){
-   
     this.setState({
         setUniversityName: "",   
-        setUniversityProgram: programName
-         
+        setUniversityProgram: programName,
+        setCity: "",
+        setProvince: ""
         }); 
-
   };
 
   getUserGradeReq(){
@@ -110,12 +142,16 @@ class Programs extends Component {
 
   getProgramInformation() {
       // e.preventDefault();
-      if(this.state.setUniversityName === "" && this.state.setUniversityProgram.length === 0){
+      if(this.state.setUniversityName === "" && 
+         this.state.setUniversityProgram.length === 0 && 
+         this.state.setCity.length === 0 && 
+         this.state.setProvince.length === 0){
         function_service.getAllUniversity().then((response) =>{
           this.setData(response.map((data) => data))
           this.setListOfUniName(response.map((data) => data))
           this.setListOfProgram(response.map((data) => data))
-          
+          this.setListOfCity(response.map((data) => data))
+          this.setListOfProvince(response.map((data) => data))
         })
       }else{
 
@@ -127,11 +163,23 @@ class Programs extends Component {
           
   
         if(this.state.setUniversityProgram.length > 0){
-         console.log(this.state.setUniversityProgram); 
           function_service.listOfProgramName(this.state.setUniversityProgram).then((response) =>{
             this.setData(response.map((data) => data)) 
           })
         }
+
+        if(this.state.setCity.length > 0){
+           function_service.listOfCities(this.state.setCity).then((response) =>{
+             this.setData(response.map((data) => data)) 
+           })
+         }
+
+         if(this.state.setProvince.length > 0){
+          console.log(this.state.setProvince); 
+           function_service.listOfProvinces(this.state.setProvince).then((response) =>{
+             this.setData(response.map((data) => data)) 
+           })
+         }
       }
            
   }
@@ -174,7 +222,35 @@ class Programs extends Component {
                     isObject={false}
                     onRemove={this.handleProgramName}
                     onSelect={this.handleProgramName}
-                    // showCheckbox
+                    showCheckbox
+                />
+              </div>
+
+              <div className="cityMultiSelect">
+                <Multiselect
+                    placeholder="Pick a city"
+                    options={this.state.listOfCity}
+                    selectedValues={this.state.setCity}
+                    //onChange={this.handleProgramName}
+                    // labelledBy="Select"
+                    isObject={false}
+                    onRemove={this.handleCity}
+                    onSelect={this.handleCity}
+                    showCheckbox       
+                />
+              </div>
+
+              <div className="provinceMultiSelect">
+                <Multiselect
+                    placeholder="Pick a province"
+                    options={this.state.listOfProvince}
+                    selectedValues={this.state.setProvince}
+                    //onChange={this.handleProgramName}
+                    // labelledBy="Select"
+                    isObject={false}
+                    onRemove={this.handleProvince}
+                    onSelect={this.handleProvince}
+                    showCheckbox       
                 />
               </div>
               
@@ -189,7 +265,7 @@ class Programs extends Component {
             <div className="div2">
               
                 {this.state.data.map((university) => {
-                  //console.log(this.state.listOfUniName)
+                  console.log(this.state.data)
                   return (
                     <Card sx={{ maxWidth: 345}} className= "uni" key={university.id}>
                         <CardMedia 
@@ -207,7 +283,7 @@ class Programs extends Component {
                             {university.overview}
                           </Typography>
                           <Typography gutterBottom variant={true} component="p" >
-                            {"Location: " + university.reigon + " " + university.country }
+                            {"Location: " + university.city + "," + university.province + "," + university.country }
                           </Typography>
                         </CardContent>
                         <CardActions>
