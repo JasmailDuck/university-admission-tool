@@ -14,6 +14,10 @@ import LOGIN from "./Pages/FrontEndLogIn";
 import { logout } from "./actions/auth";
 import { history } from "./helpers/history";
 import Consultants from "./Pages/Consultants";
+import USERPROFILEEDITORADMIN from "./Pages/admin-userManagement/cmpnts/userProfileEditorAdmin";
+import ADMINFILEMANAGEMENT from "./Pages/admin-userFileManagement/adminFileManagement";
+import FILEVIEW from "./Pages/admin-userFileManagement/cmpnts/fileView";
+import logoIMG from "./images/testIcon.png";
 
 class App extends Component {
   constructor(props) {
@@ -76,10 +80,19 @@ class App extends Component {
     //a page guided by the nav bar.
     return (
       <BrowserRouter location={history.location} navigator={history}>
-        {currentUser && (
+        {currentUser && (  
           <div className={navbarClasses.Nav}>
-            <FaBars className={navbarClasses.Bars} />
-            <div className={navbarClasses.NavMenu}>
+            <div className={navbarClasses.navLogo}>
+              <Link
+                className={navbarClasses.NavLinkLogo}
+                to="/programs"
+                activestyle="true"
+              >
+                <img className={navbarClasses.logoIMG} src={logoIMG} alt="logo pic"/>
+              </Link>
+            </div>
+
+            <div className={navbarClasses.navMenu}>
               <Link
                 className={navbarClasses.NavLink}
                 to="/programs"
@@ -87,8 +100,7 @@ class App extends Component {
               >
                 Programs
               </Link>
-            </div>
-            <div className={navbarClasses.NavMenu}>
+
               <Link
                 className={navbarClasses.NavLink}
                 to="/Consultants"
@@ -96,30 +108,22 @@ class App extends Component {
               >
                 Consultants
               </Link>
-            </div>
-            <div className={navbarClasses.NavMenu}>
-              <nav className={navbarClasses.NavBtn}>
-                <Link
+
+              <Link
                   className={navbarClasses.NavBtnLink}
                   to="/login"
                   onClick={this.logOut}
                 >
                   Log out
-                </Link>
-              </nav>
-              <nav className={navbarClasses.NavBtn}>
-                <Link
-                  className={navbarClasses.NavBtnLink}
-                  to="/admin/usermanagement"
-                >
-                  UserManage
-                </Link>
-              </nav>
-              <nav className={navbarClasses.NavBtn}>
-                <Link to="/userProfile">
+              </Link>
+
+              <Link className={navbarClasses.NavBtnLink} to="/adminDashboard">
+                  Admin Tools Icon
+              </Link>
+
+              <Link to="/userProfile">
                   <FaUserCircle className={navbarClasses.Profile} />
-                </Link>
-              </nav>
+              </Link>
             </div>
           </div>
         )}
@@ -159,6 +163,9 @@ class App extends Component {
                 <Route path="/admin/usermanagement" element={<ADMINUSERMANAGEMENT />} />
                 <Route path="/adminDashboard" element={<ADMIN />} />
                 <Route path="/consultants" element={<Consultants />} />
+                <Route path="/admin/usermanagement/userEditor" element={<USERPROFILEEDITORADMIN/>} />
+                <Route path="/admin/filemanagement" element={<ADMINFILEMANAGEMENT/>} />
+                <Route path="/admin/filemanagement/view" element={<FILEVIEW/>} />
               </Route>
               {defaultRoute()}
             </Routes>

@@ -10,15 +10,30 @@ form{
     grid-row-gap: 10px;
     }
     
-  .div1 { 
+.div1 { 
     grid-area: 1 / 1 / 4 / 2; 
-  }
+}
     
-  .div2 { 
+.div2 { 
     grid-area: 1 / 2 / 4 / 4; 
     display: inline-flex;
     flex-direction: row;
     flex-wrap: wrap;
     gap: 50px;
-  }
+}
   
+.cardMedia{
+  object-fit: scale-down;
+}
+
+.MuiTypography-root {
+  overflow: auto;
+}
+
+.MuiTypography-h5{
+  font-size: 1rem;
+}
+.div2 .MuiCardMedia-img{
+  height: 100px;
+  object-fit: scale-down;
+}

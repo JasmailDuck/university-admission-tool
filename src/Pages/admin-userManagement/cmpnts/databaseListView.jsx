@@ -1,8 +1,18 @@
-import React from 'react'
+import React, {useCallback} from 'react'
+import { useNavigate } from 'react-router-dom';
 
-function databaseListView(props) {
+
+
+function DatabaseListView(props) {
+  const navigate = useNavigate();
+  //const handleOnClick = useCallback(() => sessionStorage.setItem(), navigate(props.page, [navigate]))
+  const handleOnClick = () => {
+    sessionStorage.setItem("userId", props.id)
+    navigate(props.page)
+  }
+
   return (
-    <div className='flex text-l p-3 bg-neutral-100'>
+    <div onClick={handleOnClick} className='flex text-l p-3 bg-neutral-100'>
         <div className='flex-1'>{props.id}</div>
         <div className='flex-1'>{props.firstName}</div>
         <div className='flex-1'>{props.address}</div>
@@ -15,4 +25,4 @@ function databaseListView(props) {
   )
 }
 
-export default databaseListView
+export default DatabaseListView

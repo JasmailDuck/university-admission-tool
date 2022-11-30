@@ -1,12 +1,15 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "../helpers/withRouter";
+import {FaAddressCard} from "react-icons/fa";
 
 import UserService from "../services/user_service";
 import { deleteUser, logout } from "../actions/auth";
 import { fileToDataURL } from "../helpers/fileHelper";
 
 import classes from "../css/UserProfile.module.css";
+import studentLogo from "../images/studentLogo.png";
+import profileLogo from "../images/profileLogo.png";
 
 class UserProfile extends Component {
   constructor(props) {
@@ -18,6 +21,7 @@ class UserProfile extends Component {
     this.onFileUpload = this.onFileUpload.bind(this);
     // binding of all set state methods
     this.setEditing = this.setEditing.bind(this);
+    this.setFiles = this.setFiles.bind(this);
     this.setFirstName = this.setFirstName.bind(this);
     this.setLastName = this.setLastName.bind(this);
     this.setAddress = this.setAddress.bind(this);
@@ -63,6 +67,7 @@ class UserProfile extends Component {
       f_name: firstname,
     });
   }
+  
 
   setLastName(lastname) {
     this.setState({
@@ -146,15 +151,34 @@ class UserProfile extends Component {
 
   // Changes the editing state, allowing different forms to be shown whether editing or not.
   setEditing() {
+
     if (this.state.editing === 0) {
       this.setState({
         editing: 1,
+        files: 0
       });
     } else {
       this.setState({
-        editing: 0,
+        editing: 0
       });
     }
+    console.log(this.state.files, this.state.editing);
+  }
+
+   // Changes the editing state, allowing different forms to be shown whether editing or not.
+   setFiles() {
+
+    if (this.state.files === 0) {
+      this.setState({
+        files: 1,
+        editing: 0
+      });
+    } else {
+      this.setState({
+        files: 0
+      });
+    }
+    
   }
 
   // make API call to get information of user with current access token
@@ -244,7 +268,6 @@ class UserProfile extends Component {
             message: "Error uploading file!"
           });
         }
-
       }
   };
 
@@ -278,12 +301,39 @@ class UserProfile extends Component {
   render() {
     const { message } = this.state;
     const { editing } = this.state;
+    const { files } = this.state;
 
     // File content to be displayed after
     // file upload is complete
     const editProfileFormat = () => {
-      if (!editing) {
+      if (editing === 0 && files === 0) {
         return (
+        <div className={classes.accountOverview}>
+          <h1>Account Overview</h1>
+          <h2>Profile</h2>
+          <div className={classes.accountItems}>
+            <h1>Name</h1>
+            <p>{this.state.f_name} {this.state.l_name}</p>
+          </div>
+          <div className={classes.accountItems}>
+            <h1>Email</h1>
+            <p>{this.state.email}</p>
+          </div>
+          <div className={classes.accountItems}>
+            <h1>Birthday</h1>
+            <p>{this.state.dob}</p>
+          </div>
+          <div className={classes.accountItems}>
+            <h1>Country/Origin</h1>
+            <p>{this.state.country}</p>
+          </div>
+          <div className={classes.editProfileBtn}>
+              <button className={classes.button} onClick={this.setEditing} type='button'>Edit Profile</button>
+          </div>
+          {/* <div>
+            <h3>Address</h3>
+            <p>{this.state.address}</p>
+          </div>
           <div>
             <div>
               <div>
@@ -333,15 +383,44 @@ class UserProfile extends Component {
               )}
             </div>
           </div>
+          <div>
+            <h3>Date of Birth</h3>
+            <p>{this.state.dob}</p>
+          </div>
+          <div>
+            <h3>Country</h3>
+            <p>{this.state.country}</p>
+          </div>
+          <div>
+            <h3>Interests</h3>
+            <p>{this.state.interests}</p>
+          </div>
+          <div>
+            <h3>Role ID</h3>
+            <p>{this.state.role}</p>
+          </div> */}
+        </div>
         );
-      } else {
+        
+      } 
+      else if(files === 1 && editing === 0){
+        return (
+          <div className={classes.filesContainer}>
+            <h3>Files</h3>
+            <input type="file" onChange={this.onFileChange} />
+            {this.fileData()}
+            <button className={classes.button} onClick={this.onFileUpload} type="button">Upload File</button>
+          </div>
+        )
+      }
+      else if(editing === 1 && files !== 1) {
         return (   
-          <div>        
+          <div className={classes.editProfileContainer}>        
             <div>
               <button className={classes.button} onClick={this.setEditing} type='button'>Back</button>
             </div>
             <form onSubmit={this.updateInformation}>
-              <div>
+              <div className={classes.editForm}>
                 
                 <h4>Current First Name: {this.state.f_name}</h4>
                 <input
@@ -409,17 +488,49 @@ class UserProfile extends Component {
 
     return (
       <>
-        <div>
-          <header>
-            <h1>User Profile</h1>
-          </header>
+        <div className={classes.mainContainer}>
+            <div className={classes.headerContainer}>
+              <div className={classes.headerText}>
+                <h1 className={classes.headerSign}>Hello,&nbsp; {this.state.f_name}!</h1> 
+                <p>Welcome to your profile! Feel free to edit your profile or upload your documents!</p>
+              </div>
+              <div className={classes.headerImg}>
+                <img className={classes.studentLogo} src={studentLogo} alt="logo pic"/>
+              </div>
+            </div>
+            <div className={classes.profileContainer}>
+              <div className={classes.leftContainer}>
+                  <div className={classes.profileLogo}>
+                    <img src={profileLogo} className={classes.profileLogo} alt="profile logo"></img>
+                  </div>
+                  <div className={classes.profileName}>
+                    <h1>{this.state.f_name} {this.state.l_name}</h1>
+                  </div>
+                  <div className={classes.profileOptions}>
+                    <div className={classes.profileChoice}>
+                      <FaAddressCard></FaAddressCard>
+                      <p>Account Overview</p>
+                    </div>
+
+                    <div onClick={this.setEditing} className={classes.profileChoice}>
+                      <FaAddressCard></FaAddressCard>
+                      <p>Edit Profile</p>
+                    </div>
+
+                    <div onClick={this.setFiles} className={classes.profileChoice}>
+                      <FaAddressCard></FaAddressCard>
+                      <p>Files</p>
+                    </div>
+                    
+                  </div>
+                </div>
+                <div className={classes.rightContainer}>
+                  {editProfileFormat()}
+                </div>
+            </div>
         </div>
 
-        <div>
-          {editProfileFormat()}
-        </div>
-
-        <div>
+        <div className={classes.deleteBtn}>
           <button 
             className={classes.button}
             style={{ margin: 50 }} 
