@@ -56,6 +56,15 @@ class FunctionService extends Component {
      return response.data; 
    })
   }
+  listOfDurations(setYear){
+    return apiInstance.post(config.uniAdminToolServer.program_list_duration_location,{
+      filterArray : setYear
+    })
+    .then((response) => {
+      
+      return response.data; 
+    })
+  }
 
   userGradeRequirement(){
     return apiInstance.get(config.uniAdminToolServer.program_list_grade_location)
@@ -64,7 +73,6 @@ class FunctionService extends Component {
       return response.data; 
     })
   }
-
 
   consultantUsers = (consultantID) => {
     return apiInstance.get(config.uniAdminToolServer.consultantUsers, {

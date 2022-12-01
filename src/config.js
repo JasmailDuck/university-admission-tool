@@ -38,7 +38,9 @@ const config = {
     program_list_city_location:
       "/programlist/filter/city",
     program_list_province_location:
-      "/programlist/filter/province"     
+      "/programlist/filter/province",
+      program_list_duration_location:
+      "/programlist/filter/duration"      
   },
 };
 //35.209.74.28

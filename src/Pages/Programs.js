@@ -16,12 +16,14 @@ import Typography from "@mui/material/Typography";
 import Link from '@mui/material/Link';
 
 //import { MultiSelect } from "react-multi-select-component";
+
 import Multiselect from "multiselect-react-dropdown";
+import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
 
 class Programs extends Component {
   
   constructor(props) {
-    //const [searchTerm,setSearchTerm] = useState('');
     
     super(props);
     
@@ -29,20 +31,21 @@ class Programs extends Component {
     this.handleProgramName = this.handleProgramName.bind(this);
     this.handleCity = this.handleCity.bind(this); 
     this.handleProvince = this.handleProvince.bind(this); 
-    this.setData = this.setData.bind(this); 
+    this.handleDuration = this.handleDuration.bind(this); 
+    this.setData = this.setData.bind(this);
+    this.setYear = this.setYear.bind(this); 
     this.setListOfUniName= this.setListOfUniName.bind(this);
     this.setListOfProgram= this.setListOfProgram.bind(this);
     this.setListOfCity= this.setListOfCity.bind(this); 
     this.setListOfProvince= this.setListOfProvince.bind(this); 
     this.getUserGradeReq= this.getUserGradeReq.bind(this); 
     this.getProgramInformation = this.getProgramInformation.bind(this);
-   // this.onChangeSearchUni = this.onChangeSearchUni.bind(this);
     
     // When the website is first launch all university and there programs should be displayed 
-    // The university search filter will handle one university at a time , there shold be  a list of all the university name and you are only able to select one 
+    // The university search filter will handle one university at a time , there shold be  a list of all the university name 
     // The program search filter should be multiple select checkbox where the user can select different programs(Such as CS or Math)
     // The user grade filter will be a clickable button which will show all the minimum requirements(Handled back end )
-    //
+
     // controls state of Programs.
     this.state = {
       
@@ -54,7 +57,9 @@ class Programs extends Component {
       setUniversityProgram: [],
       setCity: [],
       setProvince: [],
-      setUniversityName: ""
+      setUniversityName: "",
+      checkedYear: [false,false],
+      setYear:[]
     };
 
   }
@@ -70,26 +75,32 @@ class Programs extends Component {
       data:programInfo,
     });
   }
-  
+
+  // Using spread operator(three dots) you are able to iterate and remove duplicate elements from the array
   // This method will get all the unique university names 
   setListOfUniName(uniName){
     this.setState({
       listOfUniName:[...new Set(uniName.map((value) => value.university_name))]
     })
   }
+  
+  // Using spread operator(three dots) you are able to iterate and remove duplicate elements from the array
   // This method will get all the unique program names 
   setListOfProgram(programName){
     this.setState({
       listOfProgram:[...new Set(programName.map((value) => value.title))]
     })
   }
-// This method will get all the unique cities  
+
+  // Using spread operator(three dots) you are able to iterate and remove duplicate elements from the array
+  // This method will get all the unique cities  
   setListOfCity(cityName){
     this.setState({
       listOfCity:[...new Set(cityName.map((value) => value.city))]
     })
   }
-
+  // Using spread operator(three dots) you are able to iterate and remove duplicate elements from the array
+  // This method will get all unique province 
   setListOfProvince(provinceName){
     this.setState({
       listOfProvince:[...new Set(provinceName.map((value) => value.province))]
@@ -101,7 +112,9 @@ class Programs extends Component {
       setCity: cityName,
       setUniversityProgram: "",
       setUniversityName: "",
-      setProvince: ""
+      setProvince: "",
+      setYear: "",
+      checkedYear:[false,false]
     });
   }
 
@@ -110,7 +123,9 @@ class Programs extends Component {
       setProvince: provinceName,
       setUniversityProgram: "",
       setUniversityName: "",
-      setCity: ""
+      setCity: "",
+      setYear: "",
+      checkedYear:[false,false]
     });
   }
 
@@ -119,7 +134,9 @@ class Programs extends Component {
       setUniversityName: e.target.value,
       setUniversityProgram: "",
       setCity: "",
-      setProvince: ""
+      setProvince: "",
+      setYear: "",
+      checkedYear:[false,false]
     });
   }
 
@@ -128,9 +145,39 @@ class Programs extends Component {
         setUniversityName: "",   
         setUniversityProgram: programName,
         setCity: "",
-        setProvince: ""
+        setProvince: "",
+        setYear: "",
+        checkedYear:[false,false]
         }); 
   };
+  
+  handleDuration(programYear){
+    console.log(programYear)
+    this.setState({
+        setUniversityName: "",   
+        setUniversityProgram: "",
+        setCity: "",
+        setProvince: "",
+        checkedYear:[programYear.target.id === "4" ? !this.state.checkedYear[0] : this.state.checkedYear[0],programYear.target.id === "2" ? !this.state.checkedYear[1] : this.state.checkedYear[1] ], 
+        //setYear: [this.state.checkedYear[0]  && this.state.checkedYear[1]  ? ('4','2') : programYear.target.id]
+        setYear:[programYear.target.id]
+      }); 
+  };
+
+  setYear(){
+    
+    if(this.state.checkedYear[0]  && this.state.checkedYear[1] ){
+      return ['4','2']
+    }
+
+    if(this.state.checkedYear[0] === true && this.state.checkedYear[1] === false){
+      return ['4']
+    }
+
+    if(this.state.checkedYear[0] === false && this.state.checkedYear[1] === true){
+      return ['2']
+    }
+  }
 
   getUserGradeReq(){
     function_service.userGradeRequirement().then((response) =>{
@@ -141,11 +188,11 @@ class Programs extends Component {
 
 
   getProgramInformation() {
-      // e.preventDefault();
       if(this.state.setUniversityName === "" && 
          this.state.setUniversityProgram.length === 0 && 
          this.state.setCity.length === 0 && 
-         this.state.setProvince.length === 0){
+         this.state.setProvince.length === 0 &&
+         this.state.setYear.length === 0){
         function_service.getAllUniversity().then((response) =>{
           this.setData(response.map((data) => data))
           this.setListOfUniName(response.map((data) => data))
@@ -180,6 +227,14 @@ class Programs extends Component {
              this.setData(response.map((data) => data)) 
            })
          }
+
+         if(this.state.setYear.length > 0){
+          console.log(this.state.setYear);
+          console.log(this.state.checkedYear);
+           function_service.listOfDurations(this.setYear()).then((response) =>{
+             this.setData(response.map((data) => data)) 
+           })
+         }
       }
            
   }
@@ -191,7 +246,6 @@ class Programs extends Component {
   
     return(
       <div className = "container">
-        {/* <form onSubmit={this.getProgramInformation}> */}
            <div className="div1">
               <div className="singleSelect">
                 <Box sx={{ minWidth: 120 }}>
@@ -217,8 +271,6 @@ class Programs extends Component {
                     placeholder="Pick a program"
                     options={this.state.listOfProgram}
                     selectedValues={this.state.setUniversityProgram}
-                    //onChange={this.handleProgramName}
-                    // labelledBy="Select"
                     isObject={false}
                     onRemove={this.handleProgramName}
                     onSelect={this.handleProgramName}
@@ -231,8 +283,6 @@ class Programs extends Component {
                     placeholder="Pick a city"
                     options={this.state.listOfCity}
                     selectedValues={this.state.setCity}
-                    //onChange={this.handleProgramName}
-                    // labelledBy="Select"
                     isObject={false}
                     onRemove={this.handleCity}
                     onSelect={this.handleCity}
@@ -245,13 +295,25 @@ class Programs extends Component {
                     placeholder="Pick a province"
                     options={this.state.listOfProvince}
                     selectedValues={this.state.setProvince}
-                    //onChange={this.handleProgramName}
-                    // labelledBy="Select"
                     isObject={false}
                     onRemove={this.handleProvince}
                     onSelect={this.handleProvince}
                     showCheckbox       
                 />
+              </div>
+              
+              <div className="durationCheckBox">
+              <Box sx={{ display: 'flex', flexDirection: 'row'}}>
+                <FormControlLabel
+                  label="4 year program"
+                  control={<Checkbox  id="4" checked={this.state.checkedYear[0]} onChange={this.handleDuration} />}
+                  
+                />
+                <FormControlLabel
+                  label="2 year program"
+                  control={<Checkbox  id="2" checked={this.state.checkedYear[1]} onChange={this.handleDuration} />}
+                />
+              </Box>         
               </div>
               
               <div className="minGrade">
@@ -265,7 +327,7 @@ class Programs extends Component {
             <div className="div2">
               
                 {this.state.data.map((university) => {
-                  console.log(this.state.data)
+                
                   return (
                     <Card sx={{ maxWidth: 345}} className= "uni" key={university.id}>
                         <CardMedia 
@@ -290,7 +352,6 @@ class Programs extends Component {
                           <Link size="small" href={university.webpage}>Learn more</Link>
                         </CardActions>
                     </Card>
-                    //<h1 key={university.id}>{university.university_name} {university.title}</h1>
                   )
               })}
           </div>
