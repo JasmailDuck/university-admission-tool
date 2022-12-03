@@ -6,7 +6,7 @@ import {FaAddressCard} from "react-icons/fa";
 import UserService from "../services/user_service";
 import { deleteUser, logout } from "../actions/auth";
 import { fileToDataURL } from "../helpers/fileHelper";
-
+import { setMessage } from "../actions/message";
 import classes from "../css/UserProfile.module.css";
 import studentLogo from "../images/studentLogo.png";
 import profileLogo from "../images/profileLogo.png";
@@ -37,6 +37,7 @@ class UserProfile extends Component {
     this.onChangeDateOfBirth = this.onChangeDateOfBirth.bind(this);
     this.onChangeCountry = this.onChangeCountry.bind(this);
     this.onChangeInterests = this.onChangeInterests.bind(this);
+    this.onChangeRole = this.onChangeRole.bind(this);
 
 
     this.state = {
@@ -51,8 +52,15 @@ class UserProfile extends Component {
       fileName: "",
       selectedFile: null,
       fileString: "",
-      message: "",
       editing: 0,
+      files: 0,
+      e_f_name: "",
+      e_l_name: "",
+      e_address: "",
+      e_dob: "",
+      e_country: "",
+      e_interests: "",
+      e_role: "",
     };
   }
 
@@ -149,6 +157,12 @@ class UserProfile extends Component {
     });
   }
 
+  onChangeRole(e) {
+    this.setState({
+      role: e.target.value,
+    });
+  }
+
   // Changes the editing state, allowing different forms to be shown whether editing or not.
   setEditing() {
 
@@ -210,7 +224,8 @@ class UserProfile extends Component {
       this.state.address,
       this.state.dob,
       this.state.country,
-      this.state.interests
+      this.state.interests,
+      this.state.role
     ).then(() => {
       this.setEditing();
     });
@@ -238,42 +253,24 @@ class UserProfile extends Component {
 
   // On file upload (click the upload button)
   onFileUpload = () => {
-      var file = this.state.selectedFile;
+    try {
+      var fileString = fileToDataURL(this.state.selectedFile);
 
-      if (file.type !== 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' &&
-          file.typ !== 'application/msword' &&
-          file.type !== '.xml' &&
-          file.type !== '.docx' &&
-          file.type !== '.doc' &&
-          file.type !== 'application/pdf') {
-            this.setState({
-              message: "This file cannot be uploaded!"
-            });
-      } else {
-        try {
-          var fileString = fileToDataURL(this.state.selectedFile);
-          var fileName = this.state.selectedFile.name;
-    
-          setTimeout(() => {
-            fileString.then((result) => {
-              UserService.sendUserDocument(result, fileName);
-              this.setState({
-                message: "File has been uploaded!"
-              });
-            })
-          }, 200);
+      setTimeout(() => {
+        fileString.then((result) => {
+          UserService.sendUserDocument(result, this.state.selectedFile.name);
 
-        } catch (e) {
-          this.setState({
-            message: "Error uploading file!"
-          });
-        }
-      }
+        })
+      }, 200);
+
+    } catch (e) {
+      this.props.dispatch(setMessage("No Document Selected!"));
+    }
   };
 
   // File content to be displayed after
   // file upload is complete
-  fileData() {
+  fileData = () => {
     if (this.state.selectedFile) {
       return (
         <div>
@@ -299,7 +296,7 @@ class UserProfile extends Component {
   };
 
   render() {
-    const { message } = this.state;
+    const { message } = this.props;
     const { editing } = this.state;
     const { files } = this.state;
 
@@ -335,53 +332,9 @@ class UserProfile extends Component {
             <p>{this.state.address}</p>
           </div>
           <div>
-            <div>
-              <div>
-                <button className={classes.button} onClick={this.setEditing} type='button'>Edit Profile</button>
-              </div>
-              <h3>Name</h3>
-              <p>
-                {this.state.f_name} {this.state.l_name}
-              </p>
-            </div>
-            <div>
-              <h3>Address</h3>
-              <p>{this.state.address}</p>
-            </div>
-            <div>
-              <h3>Email</h3>
-              <p>{this.email}</p>
-              <p>{this.state.email}</p>
-            </div>
-            <div>
-              <h3>Date of Birth</h3>
-              <p>{this.state.dob}</p>
-            </div>
-            <div>
-              <h3>Country</h3>
-              <p>{this.state.country}</p>
-            </div>
-            <div>
-              <h3>Interests</h3>
-              <p>{this.state.interests}</p>
-            </div>
-            <div>
-              <h3>Files</h3>
-              {/* accepts pdf and anything related to a word document */}
-              <input 
-                type="file" 
-                onChange={this.onFileChange} 
-                accept="application/pdf,.doc,.docx,.xml,application/msword,
-                  application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-              />
-              {this.fileData()}
-              <button className={classes.button} onClick={this.onFileUpload} type="button">Upload File</button>
-              {message && (
-                <div>
-                  <div>{message}</div>
-                </div>
-              )}
-            </div>
+            <h3>Email</h3>
+            <p>{this.email}</p>
+            <p>{this.state.email}</p>
           </div>
           <div>
             <h3>Date of Birth</h3>
@@ -476,6 +429,15 @@ class UserProfile extends Component {
                   name="interests"
                 />
 
+                <h4>Current Role: {this.state.role}</h4>
+                <input 
+                  type="text" 
+                  placeholder={this.state.role}
+                  value={this.state.role}
+                  onChange={this.onChangeRole}
+                  name="role" 
+                />
+
                 <button className={classes.button} type="submit">
                   Confirm Changes
                 </button>
@@ -540,6 +502,12 @@ class UserProfile extends Component {
             Delete Account
           </button>
         </div>
+        {/* message on sign up confirmation or error */}
+        {message && (
+          <div>
+            <div>{message}</div>
+          </div>
+        )}
       </>
     );
   }
