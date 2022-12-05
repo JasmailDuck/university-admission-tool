@@ -1,25 +1,63 @@
-form{
-  display: contents;
-}
 
 .container {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    grid-template-rows: repeat(3, 1fr);
-    grid-column-gap: 10px;
-    grid-row-gap: 10px;
+    display: flex;
+    flex-direction:column;
+    align-items: center;
+    justify-content: center;
+    max-width:100vw;
+    padding-bottom:100px;
     }
     
 .div1 { 
-    grid-area: 1 / 1 / 4 / 2; 
+   display:flex;
+   align-items: center;
+   justify-content: center;
+   flex-direction: column;
 }
+
+.uniSelect{
+  height:100%;
+  width:100%;
+}
+
+span.chip.false{
+  background-color:#D9534F;
+}
+
+.searchWrapper{
+  width:300px;
+  
+}
+
+.topRow{
+  display:flex;
+  flex-direction: row;
+  column-gap: 10px;
+}
+
+.bottomRow{
+  display:flex;
+  flex-direction: row;
+}
+
+.minGrade{
+  display:flex;
+  column-gap:20px;
+}
+
     
 .div2 { 
-    grid-area: 1 / 2 / 4 / 6; 
-    display: inline-flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 50px;
+  background-color: #F1F1F1;
+    padding-top:50px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    column-gap:30px;
+    row-gap:30px;
+}
+
+.uni{
+  overflow-y:auto;
+  height:375px;
 }
   
 .cardMedia{
@@ -31,9 +69,10 @@ form{
 }
 
 .MuiTypography-h5{
-  font-size: 1rem;
+  font-size: 1.5rem;
 }
 .div2 .MuiCardMedia-img{
+  padding-top:10px;
   height: 100px;
   object-fit: scale-down;
 }
