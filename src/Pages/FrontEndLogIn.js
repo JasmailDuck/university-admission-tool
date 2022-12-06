@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Navigate } from "react-router-dom";
-import {withRouter} from "../helpers/withRouter";
+import { withRouter } from "../helpers/withRouter";
 import { connect } from "react-redux";
 
 import { login } from "../actions/auth";
@@ -28,14 +28,14 @@ class Login extends Component {
     this.setState({
       email: e.target.value,
     });
-  };
+  }
 
   // Changes state value of password as info is typed into the input field
   onChangePassword(e) {
     this.setState({
       password: e.target.value,
     });
-  };
+  }
 
   // Called when user clicks log in button with filled information, sending the entered information to an API.
   // which then checks if they are valid, and sends them to the database
@@ -44,7 +44,7 @@ class Login extends Component {
 
     this.setState({
       loading: true,
-    })
+    });
 
     const { dispatch } = this.props;
 
@@ -56,7 +56,7 @@ class Login extends Component {
         })
         .catch(() => {
           this.setState({
-            loading: false
+            loading: false,
           });
         });
     } else {
@@ -72,82 +72,83 @@ class Login extends Component {
 
   // renders HTML to the web page, and enables reading props and state and return our JSX code to the root of the app.
   render() {
-
-    //Message used to be here
-    const {isLoggedIn} = this.props;
+    const { message } = this.props;
+    const { isLoggedIn } = this.props;
 
     if (isLoggedIn) {
-      return <Navigate to="/userProfile" />
+      return <Navigate to="/userProfile" />;
     }
 
     return (
       <>
+        <div className={classes.mainContainer}>
+          <div className={classes.leftContainer}>
+            <img className={classes.loginBG} src={loginBG} alt="login pic" />
+          </div>
 
-      <div className={classes.mainContainer}>
-      <div className={classes.leftContainer}>
-        <img className={classes.loginBG} src={loginBG} alt="login pic"/>
-      </div>
-
-      <div className={classes.rightContainer}>
-          <div className={classes.formContainer}>
-            <form className={classes.form} onSubmit={this.handleLogin}>
-    
+          <div className={classes.rightContainer}>
+            <div className={classes.formContainer}>
+              <form className={classes.form} onSubmit={this.handleLogin}>
                 <label className={classes.loginLogo} htmlFor="loginsign">
-                    <p>Log In</p>
+                  <p>Log In</p>
                 </label>
                 {/*Email input*/}
                 <div className={classes.emailContainer}>
-                    <label htmlFor="email">
-                        <p>Email</p>
-                    </label>
-                    <input type="text"
-                     placeholder="johndoe@abc.ca" 
-                    name="email" value={this.state.email} onChange={this.onChangeEmail} required />
+                  <label htmlFor="email">
+                    <p>Email</p>
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="johndoe@abc.ca"
+                    name="email"
+                    value={this.state.email}
+                    onChange={this.onChangeEmail}
+                    required
+                  />
                 </div>
-                
                 {/*Password input*/}
                 <div className={classes.passwordContainer}>
-                    <label htmlFor="password">
-                        <p>Password</p>
-                    </label>
-                    <input type="password" 
-                     placeholder="&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;" 
-                     className="login_pass" name="password" value={this.state.password} onChange={this.onChangePassword} required />
+                  <label htmlFor="password">
+                    <p>Password</p>
+                  </label>
+                  <input
+                    type="password"
+                    placeholder="&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;"
+                    className="login_pass"
+                    name="password"
+                    value={this.state.password}
+                    onChange={this.onChangePassword}
+                    required
+                  />
                 </div>
-            
-
+                {/* message on log in confirmation or error */}
+                {message && (
+                  <div>
+                    <div>{message}</div>
+                  </div>
+                )}
                 {/* Login button */}
                 <div className={classes.loginButtonContainer}>
-                    <button className={classes.confirm_button} disabled={this.state.loading}>
-                    {this.state.loading && (
-                    <span></span>
-                        )}
+                  <button
+                    className={classes.confirm_button}
+                    disabled={this.state.loading}
+                  >
+                    {this.state.loading && <span></span>}
                     <span>Login</span>
-                </button>
+                  </button>
                 </div>
-
                 {/*Others*/}
                 <div className={classes.othersContainer}>
-                    <p>Don't have an account? <a href="/signup">Sign Up here!</a> </p>
+                  <p>
+                    Don't have an account? <a href="/signup">Sign Up here!</a>{" "}
+                  </p>
                 </div>
-                
-            </form>
+              </form>
+            </div>
           </div>
-      </div>
-
-        {/* message on why login did not work */}
-        {/*message && (
-              <div>
-                <div>
-                  {message}
-                </div>
-              </div>
-            )*/}
-      </div>
-
-      
-    </>
-    )
+        </div>
+      </>
+    );
   }
 }
 
@@ -157,7 +158,7 @@ function mapStateToProps(state) {
   const { message } = state.message;
   return {
     isLoggedIn,
-    message
+    message,
   };
 }
 
