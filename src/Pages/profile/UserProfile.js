@@ -1,15 +1,23 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { withRouter } from "../helpers/withRouter";
+import { withRouter } from "../../helpers/withRouter";
 import { FaAddressCard } from "react-icons/fa";
 
-import UserService from "../services/user_service";
-import { deleteUser, logout } from "../actions/auth";
-import { fileToDataURL } from "../helpers/fileHelper";
-import { setMessage } from "../actions/message";
-import classes from "../css/UserProfile.module.css";
-import studentLogo from "../images/studentLogo.png";
-import profileLogo from "../images/profileLogo.png";
+import UserService from "../../services/user_service";
+import { deleteUser, logout } from "../../actions/auth";
+import { fileToDataURL } from "../../helpers/fileHelper";
+import { setMessage } from "../../actions/message";
+import classes from "../../css/UserProfile.module.css";
+import studentLogo from "../../images/studentLogo.png";
+import profileLogo from "../../images/profileLogo.png";
+
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import Slide from "@mui/material/Slide";
 
 class UserProfile extends Component {
   constructor(props) {
@@ -31,6 +39,8 @@ class UserProfile extends Component {
     this.setInformation = this.setInformation.bind(this);
     this.setEditing = this.setEditing.bind(this);
     this.setFiles = this.setFiles.bind(this);
+    this.openConfirmBox = this.openConfirmBox.bind(this);
+    this.closeConfirmBox = this.closeConfirmBox.bind(this);
     // binding of all on change state methods
     this.onChangeFirstName = this.onChangeFirstName.bind(this);
     this.onChangeLastName = this.onChangeLastName.bind(this);
@@ -54,6 +64,7 @@ class UserProfile extends Component {
       fileString: "",
       editing: 0,
       files: 0,
+      confirmBox: false,
     };
   }
 
@@ -141,6 +152,18 @@ class UserProfile extends Component {
     }
   }
 
+  openConfirmBox() {
+    this.setState({
+      confirmBox: true,
+    });
+  }
+
+  closeConfirmBox() {
+    this.setState({
+      confirmBox: false,
+    });
+  }
+
   // These methods are called upon when editing the user profile, changed the value of a form to send
   // to the api
 
@@ -216,7 +239,7 @@ class UserProfile extends Component {
       this.state.interests,
       this.state.role
     ).then(() => {
-      this.setEditing();
+      this.setInformation();
     });
   }
 
@@ -242,7 +265,11 @@ class UserProfile extends Component {
 
   // On file upload (click the upload button)
   onFileUpload = () => {
-    try {
+    if (this.state.selectedFile === null) {
+      this.props.dispatch(
+        setMessage("No Document Selected! (only pdfs accepted)")
+      );
+    } else if (this.state.selectedFile.type === "application/pdf") {
       var fileString = fileToDataURL(this.state.selectedFile);
 
       setTimeout(() => {
@@ -250,8 +277,10 @@ class UserProfile extends Component {
           UserService.sendUserDocument(result, this.state.selectedFile.name);
         });
       }, 200);
-    } catch (e) {
-      this.props.dispatch(setMessage("No Document Selected!"));
+    } else {
+      this.props.dispatch(
+        setMessage("Wrong Document Selected! (only pdfs accepted)")
+      );
     }
   };
 
@@ -286,6 +315,12 @@ class UserProfile extends Component {
     const { message } = this.props;
     const { editing } = this.state;
     const { files } = this.state;
+    const { confirmBox } = this.state;
+
+    // Enables the transition for the confirmation box when deleting account
+    const Transition = React.forwardRef(function Transition(props, ref) {
+      return <Slide direction="up" ref={ref} {...props} />;
+    });
 
     // File content to be displayed after
     // file upload is complete
@@ -319,7 +354,11 @@ class UserProfile extends Component {
         return (
           <div className={classes.filesContainer}>
             <h3>Files</h3>
-            <input type="file" onChange={this.onFileChange} />
+            <input
+              type="file"
+              accept="application/pdf"
+              onChange={this.onFileChange}
+            />
             {this.fileData()}
             <button
               className={classes.button}
@@ -328,6 +367,11 @@ class UserProfile extends Component {
             >
               Upload File
             </button>
+            {message && (
+              <div>
+                <div>{message}</div>
+              </div>
+            )}
           </div>
         );
       } else if (editing === 1 && files === 0) {
@@ -464,26 +508,46 @@ class UserProfile extends Component {
                   <FaAddressCard></FaAddressCard>
                   <p>Files</p>
                 </div>
+
+                <div
+                  onClick={this.openConfirmBox}
+                  className={classes.profileChoice}
+                  id={classes.deleteAccount}
+                >
+                  <FaAddressCard></FaAddressCard>
+                  <p>Delete Account</p>
+                </div>
               </div>
             </div>
             <div className={classes.rightContainer}>{editProfileFormat()}</div>
           </div>
         </div>
 
-        <div className={classes.deleteBtn}>
-          <button
-            className={classes.button}
-            style={{ margin: 50 }}
-            onClick={this.deleteUser}
-            type="button"
-          >
-            Delete Account
-          </button>
-        </div>
-        {/* message on sign up confirmation or error */}
-        {message && (
+        {confirmBox && (
           <div>
-            <div>{message}</div>
+            <Dialog
+              open={true}
+              TransitionComponent={Transition}
+              keepMounted
+              onClose={this.closeConfirmBox}
+              aria-describedby="alert-dialog-slide-description"
+            >
+              <DialogTitle>
+                {"Are you sure you want to delete your account?"}
+              </DialogTitle>
+              <DialogContent>
+                <DialogContentText id="alert-dialog-slide-description">
+                  Deleting your account will remove all your saved personal
+                  information, including all your uploaded documents. They will
+                  not be recoverable, and you must make another account and
+                  upload them again.
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions className={classes.confirmBox}>
+                <Button onClick={this.closeConfirmBox}>DO NOT DELETE</Button>
+                <Button onClick={this.deleteUser}>I AGREE TO DELETE</Button>
+              </DialogActions>
+            </Dialog>
           </div>
         )}
       </>

@@ -7,7 +7,7 @@ import navbarClasses from "./css/Navbar.module.css";
 import footerClasses from "./css/Footer.module.css";
 import Programs from "./Pages/Programs";
 import Signup from "./Pages/Signup";
-import UserProfile from "./Pages/UserProfile";
+import UserProfile from "./Pages/profile/UserProfile";
 import ADMINUSERMANAGEMENT from "./Pages/admin-userManagement/adminUserManagement";
 import ADMIN from "./Pages/admin/admin";
 import LOGIN from "./Pages/FrontEndLogIn";
