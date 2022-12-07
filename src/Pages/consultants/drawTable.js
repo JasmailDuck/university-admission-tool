@@ -10,8 +10,9 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { Collapse } from "@mui/material";
 import Box from '@mui/material/Box';
 import '../../css/Consultant.css';
-import Checkbox from '@mui/material/Checkbox';
 import function_service from '../../services/function_service'
+import {Document, Page} from 'react-pdf'
+import TextField from '@mui/material/TextField';
 function CreateRows(user) {
   const [open, setOpen] = React.useState(false);
   return (
@@ -33,9 +34,9 @@ function CreateRows(user) {
         <TableCell>{user.country}</TableCell>
       </TableRow>
       <TableRow>
-      <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+      <TableCell style={{ paddingBottom: 0 }} colSpan={6}>
         <Collapse in={open} unmountOnExit>
-          <Box>
+          <Box className="files">
             {GetFiles(user)}
           </Box>
         </Collapse>
@@ -48,25 +49,61 @@ function CreateRows(user) {
 function GetFiles(user) {
     return user.files.map((file) => {
       var isChecked = checkReviewed(file)
+      var comments = file.comments
       return (
       <TableCell className="file">
-        {file.name}
-        <input
-        defaultChecked = {isChecked}
-        type = "checkbox"  
-        onChange={(event) => {isChecked = !isChecked; event.target.checked = isChecked;
-        console.log(event.target.checked)}}/>
-        Reviewed
+        <h1>{file.name}</h1>
+        {/* <div>
+      <Document file={file.name} >
+        <Page pageNumber={1} />
+      </Document>
+      <p>
+        Page {1} of {5}
+      </p>
+    </div> */}
+        <br></br>
+        <TextField
+          id="outlined-multiline-flexible "
+          className="comments"
+          label="Comments"
+          multiline
+          defaultValue= {comments}
+          maxRows={5}
+          onChange={(e) => {comments = e.target.value; console.log(comments)}}
+        />
+        <br></br>
+        <div className="input">
+        <label>
+          <input
+            defaultChecked = {isChecked}
+            type = "checkbox"  
+            onChange={(event) => {isChecked = !isChecked; event.target.checked = isChecked;
+            console.log(event.target.checked)}}
+          />
+          Reviewed
+        </label>
+        </div>
+        <br></br>
+        <div className="buttons">
+        <button id = {file.id}>View</button>
         <button
           id = {file.id} 
-          onClick={e =>handleReviewed(isChecked,e)}
+          className = "save"
+          onClick={e =>handleReviewed(isChecked,e, comments)}
         >
           Save
         </button>
+        </div>
       </TableCell>
       )
     });
 }
+
+// function showPdf(file) {
+//   return (
+    
+//   );
+// }
 
 function checkReviewed(file) {
   if (file.reviewed === 0 || file.reviewed === null) {
@@ -76,14 +113,14 @@ function checkReviewed(file) {
   
 }
 
-function handleReviewed(isChecked, e) {
+function handleReviewed(isChecked, e, comments) {
   console.log(isChecked)
   var reviewBit = 0;
   if (isChecked) {
     reviewBit = 1
   }
   
-  function_service.setReview(e.target.id, reviewBit).then((resp) =>{
+  function_service.setReview(e.target.id, reviewBit, comments).then((resp) =>{
       console.log('TEST')
     })
 }
