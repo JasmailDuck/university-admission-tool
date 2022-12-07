@@ -2,13 +2,14 @@ import * as React from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import IconButton from "@mui/material/IconButton";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { Collapse } from "@mui/material";
+import Box from '@mui/material/Box';
+import '../../css/Consultant.css'
 
 // npm install @mui/icons-material @mui/material @emotion/styled @emotion/react
 
@@ -33,19 +34,23 @@ function CreateRows(user) {
         <TableCell>{user.dob}</TableCell>
         <TableCell>{user.country}</TableCell>
       </TableRow>
-      <Collapse in={open}>
-      {/* {getFiles(user)} */}
-      </Collapse>
+      <TableRow>
+      <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+        <Collapse in={open} unmountOnExit>
+          <Box>
+            {getFiles(user)}
+          </Box>
+        </Collapse>
+      </TableCell>
+      </TableRow>
     </TableBody>
   );
 }
 
-async function getFiles(user) {
-    if (user.files.length > 0) {
-      user.files.map((file) => {
-        <h1>{file.name}</h1>
+ function getFiles(user) {
+       return user.files.map((file) => {
+        return (<TableCell className="file">{file.name}</TableCell>)
       });
-    }
 }
 
 export default function GenerateTable(props) {
