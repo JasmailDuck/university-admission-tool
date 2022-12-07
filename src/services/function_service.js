@@ -82,5 +82,13 @@ class FunctionService extends Component {
     })
   };
 
+  setReview = (id, reviewState) => {
+    
+    return apiInstance.patch(config.uniAdminToolServer.setReviewed, {
+        id: id,
+        reviewed: reviewState
+    })
+  }
+
 }  
 export default new FunctionService();

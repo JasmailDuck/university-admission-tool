@@ -9,11 +9,9 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { Collapse } from "@mui/material";
 import Box from '@mui/material/Box';
-import '../../css/Consultant.css'
-
-// npm install @mui/icons-material @mui/material @emotion/styled @emotion/react
-
-
+import '../../css/Consultant.css';
+import Checkbox from '@mui/material/Checkbox';
+import function_service from '../../services/function_service'
 function CreateRows(user) {
   const [open, setOpen] = React.useState(false);
   return (
@@ -38,7 +36,7 @@ function CreateRows(user) {
       <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
         <Collapse in={open} unmountOnExit>
           <Box>
-            {getFiles(user)}
+            {GetFiles(user)}
           </Box>
         </Collapse>
       </TableCell>
@@ -47,15 +45,50 @@ function CreateRows(user) {
   );
 }
 
- function getFiles(user) {
-       return user.files.map((file) => {
-        return (<TableCell className="file">{file.name}</TableCell>)
-      });
+function GetFiles(user) {
+    return user.files.map((file) => {
+      var isChecked = checkReviewed(file)
+      return (
+      <TableCell className="file">
+        {file.name}
+        <input
+        defaultChecked = {isChecked}
+        type = "checkbox"  
+        onChange={(event) => {isChecked = !isChecked; event.target.checked = isChecked;
+        console.log(event.target.checked)}}/>
+        Reviewed
+        <button
+          id = {file.id} 
+          onClick={e =>handleReviewed(isChecked,e)}
+        >
+          Save
+        </button>
+      </TableCell>
+      )
+    });
+}
+
+function checkReviewed(file) {
+  if (file.reviewed === 0 || file.reviewed === null) {
+    return false
+  } else 
+    return true
+  
+}
+
+function handleReviewed(isChecked, e) {
+  console.log(isChecked)
+  var reviewBit = 0;
+  if (isChecked) {
+    reviewBit = 1
+  }
+  
+  function_service.setReview(e.target.id, reviewBit).then((resp) =>{
+      console.log('TEST')
+    })
 }
 
 export default function GenerateTable(props) {
-  
-
   return (
     <Table>
       <TableHead>
