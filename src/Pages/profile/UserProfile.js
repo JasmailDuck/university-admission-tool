@@ -275,6 +275,9 @@ class UserProfile extends Component {
       setTimeout(() => {
         fileString.then((result) => {
           UserService.sendUserDocument(result, this.state.selectedFile.name);
+          this.props.dispatch(
+            setMessage("Document uploaded!")
+          );
         });
       }, 200);
     } else {
