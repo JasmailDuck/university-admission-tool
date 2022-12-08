@@ -24,6 +24,9 @@ const config = {
   
     get_all_files:
       "/files",
+    
+    delete_File:
+    "/files/admin/delete/",
 
     get_file_user:
       "/files/all",
