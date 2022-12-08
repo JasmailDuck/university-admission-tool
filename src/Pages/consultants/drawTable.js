@@ -53,14 +53,6 @@ function GetFiles(user) {
       return (
       <TableCell className="file">
         <h1>{file.name}</h1>
-        {/* <div>
-      <Document file={file.name} >
-        <Page pageNumber={1} />
-      </Document>
-      <p>
-        Page {1} of {5}
-      </p>
-    </div> */}
         <br></br>
         <TextField
           id="outlined-multiline-flexible "
@@ -85,7 +77,7 @@ function GetFiles(user) {
         </div>
         <br></br>
         <div className="buttons">
-        <button id = {file.id}>View</button>
+        <button id = {file.id} onClick={e => showFile(file)}>View</button>
         <button
           id = {file.id} 
           className = "save"
@@ -99,12 +91,9 @@ function GetFiles(user) {
     });
 }
 
-// function showPdf(file) {
-//   return (
-    
-//   );
-// }
-
+function showFile() {
+  
+}
 function checkReviewed(file) {
   if (file.reviewed === 0 || file.reviewed === null) {
     return false
