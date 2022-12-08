@@ -245,29 +245,36 @@ class Programs extends Component {
    
   
     return(
-      <div className = "container">
+      <div className="container">
            <div className="div1">
+
+            <div className="topRow">
               <div className="singleSelect">
-                <Box sx={{ minWidth: 120 }}>
-                        <FormControl fullWidth>
-                          <InputLabel id="demo-simple-select-label">University Name</InputLabel>
-                          <Select
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            value={this.state.setUniversityName}
-                            onChange={this.handleUniversityName}
-                          > 
-                            {this.state.listOfUniName.map((uniName) =>{
-                              return(<MenuItem value={uniName}>{uniName}</MenuItem>)
-                            })}
+                  <Box sx={{ minWidth: 120 }}>
+                          <FormControl  fullWidth>
+                            <InputLabel id="demo-simple-select-label">University Name</InputLabel>
+                            <Select 
+                              className="uniSelect"
+                              labelId="demo-simple-select-label"
+                              id="demo-simple-select"
+                              value={this.state.setUniversityName}
+                              onChange={this.handleUniversityName}
+                            > 
+                              {this.state.listOfUniName.map((uniName) =>{
+                                return(<MenuItem value={uniName}>{uniName}</MenuItem>)
+                              })}
 
-                          </Select>
-                        </FormControl>
-                  </Box>
-              </div>
+                            </Select>
+                          </FormControl>
+                    </Box>
+                </div>
 
+            </div>
+
+            <div className="middleRow">
               <div className="programMultiSelect">
-                <Multiselect
+                <Multiselect 
+                    className="testClass"
                     placeholder="Pick a program"
                     options={this.state.listOfProgram}
                     selectedValues={this.state.setUniversityProgram}
@@ -301,37 +308,44 @@ class Programs extends Component {
                     showCheckbox       
                 />
               </div>
-              
+            </div>
+
+            <div className="bottomRow">
               <div className="durationCheckBox">
-              <Box sx={{ display: 'flex', flexDirection: 'row'}}>
-                <FormControlLabel
-                  label="4 year program"
-                  control={<Checkbox  id="4" checked={this.state.checkedYear[0]} onChange={this.handleDuration} />}
-                  
-                />
-                <FormControlLabel
-                  label="2 year program"
-                  control={<Checkbox  id="2" checked={this.state.checkedYear[1]} onChange={this.handleDuration} />}
-                />
-              </Box>         
+                <Box sx={{ display: 'flex', flexDirection: 'row'}}>
+                  <FormControlLabel
+                    label="4 year program"
+                    control={<Checkbox  id="4" checked={this.state.checkedYear[0]} onChange={this.handleDuration} />}
+                    
+                  />
+                  <FormControlLabel
+                    label="2 year program"
+                    control={<Checkbox  id="2" checked={this.state.checkedYear[1]} onChange={this.handleDuration} />}
+                  />
+                </Box>         
               </div>
               
               <div className="minGrade">
 
-              <button  type="submit" onClick={this.getUserGradeReq}>Click to see illegible programs</button>          
-              </div>                
-              
-              <button type="submit" onClick={this.getProgramInformation}>Confirm Changes</button> 
+                <button  type="submit" onClick={this.getUserGradeReq}>Click to see eligible programs</button>                         
+                
+                <button type="submit" onClick={this.getProgramInformation}>Confirm Changes</button> 
+              </div>
+             </div>
             </div>
+              
+              
+              
 
             <div className="div2">
               
                 {this.state.data.map((university) => {
                 
                   return (
-                    <Card sx={{ maxWidth: 345}} className= "uni" key={university.id}>
+                    <div className="cardChild">
+                      <Card sx={{ maxWidth: 345 }} className="uni" key={university.id}>
                         <CardMedia 
-                          className = 'test'
+                          className='test'
                           component="img"
                           height="100"
                           image= {university.logo}
@@ -344,14 +358,18 @@ class Programs extends Component {
                           <Typography variant="body2" color="text.secondary" height={100} >
                             {university.overview}
                           </Typography>
-                          <Typography gutterBottom variant={true} component="p" >
-                            {"Location: " + university.city + "," + university.province + "," + university.country }
+                          <Typography class="locationText" gutterBottom variant={true} component="p" >
+                            {"Location: " + university.city + ", " + university.province + ", " + university.country }
                           </Typography>
                         </CardContent>
+
                         <CardActions>
                           <Link size="small" href={university.webpage} target="_blank">Learn more</Link>
+
                         </CardActions>
                     </Card>
+                    </div>
+                    
                   )
               })}
           </div>
