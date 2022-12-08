@@ -11,8 +11,9 @@ import { Collapse } from "@mui/material";
 import Box from '@mui/material/Box';
 import '../../css/Consultant.css';
 import function_service from '../../services/function_service'
-import {Document, Page} from 'react-pdf'
 import TextField from '@mui/material/TextField';
+import fileView from "../admin-userFileManagement/cmpnts/fileView";
+
 function CreateRows(user) {
   const [open, setOpen] = React.useState(false);
   return (
@@ -91,8 +92,8 @@ function GetFiles(user) {
     });
 }
 
-function showFile() {
-  
+function showFile(file) {
+    sessionStorage.setItem("id", file.id)
 }
 function checkReviewed(file) {
   if (file.reviewed === 0 || file.reviewed === null) {
