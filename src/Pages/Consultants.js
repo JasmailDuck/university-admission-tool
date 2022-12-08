@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import UserService from "../services/user_service";
 import function_service from "../services/function_service.js";
 import DrawTable from "./consultants/drawTable"
+import '../css/Consultant.css';
 
 
 
@@ -33,7 +34,7 @@ class Consultants extends Component {
     return (
       <div>
         <header>
-          <h1>Consultants</h1>
+          <h1 className="title">Consultants</h1>
             <div className = "Table">
               <DrawTable users={this.state.users}></DrawTable>
             </div> 
