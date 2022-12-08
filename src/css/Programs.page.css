@@ -13,6 +13,7 @@
    align-items: center;
    justify-content: center;
    flex-direction: column;
+   row-gap:20px;
 }
 
 .uniSelect{
@@ -20,18 +21,44 @@
   width:100%;
 }
 
+
+#testClass{
+  outline: 0;
+  border-width: 0px 0px 2px;
+}
+
 span.chip.false{
   background-color:#D9534F;
 }
 
-.searchWrapper{
+.div1 .provinceMultiSelect .search-wrapper,
+.div1 .cityMultiSelect .search-wrapper,
+.div1 .programMultiSelect .search-wrapper{
+  border-width: 0px 0px 2px;
   width:300px;
+}
+
+.div1 .singleSelect .MuiOutlinedInput-notchedOutline{
+  border-width: 0px 0px 2px;
+}
+
+.singleSelect{
+  width: 62vw;
   
+}
+
+input#search_input.searchBox {
+  background-color: #FFFFFF;
 }
 
 .topRow{
   display:flex;
   flex-direction: row;
+  column-gap: 10px;
+}
+
+.middleRow{
+  display:Flex;
   column-gap: 10px;
 }
 
@@ -47,7 +74,6 @@ span.chip.false{
 
     
 .div2 { 
-  background-color: #F1F1F1;
     padding-top:50px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -58,6 +84,10 @@ span.chip.false{
 .uni{
   overflow-y:auto;
   height:375px;
+}
+
+.cardChild{
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
   
 .cardMedia{
@@ -75,4 +105,12 @@ span.chip.false{
   padding-top:10px;
   height: 100px;
   object-fit: scale-down;
+}
+
+.locationText{
+  padding-top:5px;
+}
+
+.linkText{
+  padding-left:15px;
 }

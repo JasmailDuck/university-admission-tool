@@ -251,7 +251,7 @@ class Programs extends Component {
             <div className="topRow">
               <div className="singleSelect">
                   <Box sx={{ minWidth: 120 }}>
-                          <FormControl fullWidth>
+                          <FormControl  fullWidth>
                             <InputLabel id="demo-simple-select-label">University Name</InputLabel>
                             <Select 
                               className="uniSelect"
@@ -269,8 +269,12 @@ class Programs extends Component {
                     </Box>
                 </div>
 
+            </div>
+
+            <div className="middleRow">
               <div className="programMultiSelect">
-                <Multiselect
+                <Multiselect 
+                    className="testClass"
                     placeholder="Pick a program"
                     options={this.state.listOfProgram}
                     selectedValues={this.state.setUniversityProgram}
@@ -354,11 +358,11 @@ class Programs extends Component {
                           <Typography variant="body2" color="text.secondary" height={100} >
                             {university.overview}
                           </Typography>
-                          <Typography gutterBottom variant={true} component="p" >
+                          <Typography class="locationText" gutterBottom variant={true} component="p" >
                             {"Location: " + university.city + ", " + university.province + ", " + university.country }
                           </Typography>
                         </CardContent>
-                        <CardActions>
+                        <CardActions class="linkText">
                           <Link size="small" href={university.webpage}>Learn more</Link>
                         </CardActions>
                     </Card>
