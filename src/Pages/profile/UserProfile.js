@@ -19,6 +19,13 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
 
+import styled, { keyframes } from "styled-components";
+import { fadeInUp } from "react-animations";
+const FadeInUpAnimation = keyframes`${fadeInUp}`;
+const FadeInUpDiv = styled.div`
+  animation: 1.3s ${FadeInUpAnimation};
+`;
+
 class UserProfile extends Component {
   constructor(props) {
     super(props);
@@ -127,7 +134,7 @@ class UserProfile extends Component {
     if (this.state.editing === 1 || this.state.files === 1) {
       this.setState({
         editing: 0,
-        files: 0,
+        files: 0
       });
     }
   }
@@ -137,7 +144,7 @@ class UserProfile extends Component {
     if (this.state.editing === 0) {
       this.setState({
         editing: 1,
-        files: 0,
+        files: 0
       });
     }
   }
@@ -292,7 +299,7 @@ class UserProfile extends Component {
   fileData = () => {
     if (this.state.selectedFile) {
       return (
-        <div>
+        <div className={classes.fileDetails}>
           <h2>File Details:</h2>
           <p>File Name: {this.state.selectedFile.name}</p>
 
@@ -328,9 +335,11 @@ class UserProfile extends Component {
     // File content to be displayed after
     // file upload is complete
     const editProfileFormat = () => {
+      
       if (editing === 0 && files === 0) {
         return (
-          <div className={classes.accountOverview}>
+          <FadeInUpDiv>
+              <div className={classes.accountOverview}>
             <h1>Account Overview</h1>
             <h2>Profile</h2>
             <div className={classes.accountItems}>
@@ -360,17 +369,25 @@ class UserProfile extends Component {
               <p>{this.state.interests}</p>
             </div>
           </div>
+          </FadeInUpDiv>
+          
         );
       } else if (files === 1 && editing === 0) {
         return (
+          <FadeInUpDiv>
           <div className={classes.filesContainer}>
-            <h3>Files</h3>
+            <h1>Files</h1>
+            <h2>Add your documents here! Note: Only PDF files are allowed!</h2>
+            <div className={classes.filesView}>
             <input
+              className="fileBtn"
               type="file"
               accept="application/pdf"
               onChange={this.onFileChange}
             />
             {this.fileData()}
+            </div>
+            
             <button
               className={classes.button}
               onClick={this.onFileUpload}
@@ -384,87 +401,110 @@ class UserProfile extends Component {
               </div>
             )}
           </div>
+          </FadeInUpDiv>
+          
         );
       } else if (editing === 1 && files === 0) {
         return (
-          <div className={classes.editProfileContainer}>
-            <form onSubmit={this.updateInformation}>
+          <FadeInUpDiv>
+              <div className={classes.editProfileContainer}>
+              <h1>Edit Profile</h1>
+              <h2>Feel free to make changes to your profile!</h2>
+              <form onSubmit={this.updateInformation}>
               <div className={classes.editForm}>
-                <h4>Current First Name: {this.state.f_name}</h4>
-                <input
-                  type="text"
-                  placeholder={this.state.f_name}
-                  value={this.state.f_name}
-                  onChange={this.onChangeFirstName}
-                  name="firstName"
-                />
+                <div className={classes.nameRow}>
+                  <input
+                    type="text"
+                    className={classes.inputName}
+                    placeholder={this.state.f_name}
+                    value={this.state.f_name}
+                    onChange={this.onChangeFirstName}
+                    name="firstName"
+                  />
 
-                <h4>Current Last Name: {this.state.l_name}</h4>
-                <input
-                  type="text"
-                  placeholder={this.state.l_name}
-                  value={this.state.l_name}
-                  onChange={this.onChangeLastName}
-                  name="lastName"
-                />
+                  <input
+                    type="text"
+                    className={classes.inputName}
+                    placeholder={this.state.l_name}
+                    value={this.state.l_name}
+                    onChange={this.onChangeLastName}
+                    name="lastName"
+                  />
+                </div>
 
-                <h4>Current Address: {this.state.address}</h4>
-                <input
-                  type="text"
-                  placeholder={this.state.address}
-                  value={this.state.address}
-                  onChange={this.onChangeAddress}
-                  name="address"
-                />
+                <div className={classes.addressBirthRow}>
+                  <input
+                    type="text"
+                    placeholder={this.state.address}
+                    value={this.state.address}
+                    onChange={this.onChangeAddress}
+                    name="address"
+                  />
 
-                <h4>Current Date of Birth: {this.state.dob}</h4>
-                <input
-                  type="text"
-                  onFocus={(e) => (e.target.type = "date")}
-                  placeholder={this.state.dob}
-                  onChange={this.onChangeDateOfBirth}
-                  name="dob"
-                />
+                  
+                  <input
+                    type="text"
+                    className={classes.inputDOB}
+                    onFocus={(e) => (e.target.type = "date")}
+                    placeholder={this.state.dob}
+                    onChange={this.onChangeDateOfBirth}
+                    name="dob"
+                  />
+                </div>
+                
+                <div className={classes.countryInterestsRow}>
+                  <input
+                    type="text"
+                    placeholder={this.state.country}
+                    value={this.state.country}
+                    onChange={this.onChangeCountry}
+                    name="country"
+                  />
 
-                <h4>Current Country: {this.state.country}</h4>
-                <input
-                  type="text"
-                  placeholder={this.state.country}
-                  value={this.state.country}
-                  onChange={this.onChangeCountry}
-                  name="country"
-                />
+                  
+                  <input
+                    type="text"
+                    placeholder={this.state.interests}
+                    value={this.state.interests}
+                    onChange={this.onChangeInterests}
+                    name="interests"
+                  />
+                </div>
 
-                <h4>Current Interests: {this.state.interests}</h4>
-                <input
-                  type="text"
-                  placeholder={this.state.interests}
-                  value={this.state.interests}
-                  onChange={this.onChangeInterests}
-                  name="interests"
-                />
+                <div className={classes.roleRow}>
+                  <input
+                    type="text"
+                    placeholder={this.state.role}
+                    value={this.state.role}
+                    onChange={this.onChangeRole}
+                    name="role"
+                  />
 
-                <h4>Current Role: {this.state.role}</h4>
-                <input
-                  type="text"
-                  placeholder={this.state.role}
-                  value={this.state.role}
-                  onChange={this.onChangeRole}
-                  name="role"
-                />
+                  <input
+                    className={classes.dummy}
+                    disabled
+                    type="text"
+                    name="dummy"
+                  />
+                </div>
 
                 <button className={classes.button} type="submit">
-                  Confirm Changes
+                    Save
                 </button>
+
+              
               </div>
             </form>
           </div>
+          </FadeInUpDiv>
+          
         );
       }
     };
 
     return (
       <>
+        <FadeInUpDiv>
         <div className={classes.mainContainer}>
           <div className={classes.headerContainer}>
             <div className={classes.headerText}>
@@ -561,6 +601,7 @@ class UserProfile extends Component {
             </Dialog>
           </div>
         )}
+        </FadeInUpDiv>
       </>
     );
   }

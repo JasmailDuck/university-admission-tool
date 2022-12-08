@@ -1,7 +1,7 @@
 
 .mainContainer{
     display:flex;
-    height:95vh;
+    height:94vh;
     width:100vw;
 }
 
@@ -41,6 +41,7 @@ input[type="password"]{
     font-size:20px;
     padding-left:0px;
     width:100%;
+    border-color:gray;
 }
 
 
