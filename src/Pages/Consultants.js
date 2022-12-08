@@ -4,6 +4,12 @@ import function_service from "../services/function_service.js";
 import DrawTable from "./consultants/drawTable"
 import '../css/Consultant.css';
 
+import styled, { keyframes } from "styled-components";
+import { fadeInUp } from "react-animations";
+const FadeInUpAnimation = keyframes`${fadeInUp}`;
+const FadeInUpDiv = styled.div`
+  animation: 1.3s ${FadeInUpAnimation};
+`;
 
 
 class Consultants extends Component {
@@ -32,7 +38,8 @@ class Consultants extends Component {
 
   render() {
     return (
-      <div>
+      <FadeInUpDiv>
+        <div className="consultantContainer">
         <header>
           <h1 className="title">Consultants</h1>
             <div className = "Table">
@@ -40,6 +47,8 @@ class Consultants extends Component {
             </div> 
         </header>
       </div>
+      </FadeInUpDiv>
+      
     );
   }
 }

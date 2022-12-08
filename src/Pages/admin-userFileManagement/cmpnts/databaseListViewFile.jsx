@@ -1,6 +1,14 @@
 import React, {useCallback} from 'react'
 import { useNavigate } from 'react-router-dom';
 
+//Animations
+import styled, { keyframes } from "styled-components";
+import { fadeInUp } from "react-animations";
+const FadeInUpAnimation = keyframes`${fadeInUp}`;
+const FadeInUpDiv = styled.div`
+  animation: 1.45s ${FadeInUpAnimation};
+`;
+
 
 
 
@@ -16,12 +24,15 @@ function DatabaseListViewFile(props) {
   //console.log(dataURLToFile(Buffer.from(props.file, 'base64').toString('ascii'), props.fileName));
   return (
     
-    <div onClick={handleOnClick} className='flex text-l p-3 bg-neutral-100'>
+    <FadeInUpDiv>
+      <div onClick={handleOnClick} className='flex text-l p-3 bg-neutral-100'>
         <div className='flex-1'>{props.email}</div>
         <div className='flex-1'>{props.id}</div>
         <div className='flex-1'>{props.fileName}</div>
         <div className='flex-1'>{props.file}</div>
-    </div>
+      </div>
+    </FadeInUpDiv>
+    
   )
 }
 
