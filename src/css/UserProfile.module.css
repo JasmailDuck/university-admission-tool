@@ -191,6 +191,18 @@
     transition:0.5s;
 }
 
+input[type="date"]{
+    background-color: #F1F1F1;
+    outline: 0;
+    border-width: 0px 0px 2px;
+    width:50%;
+    transform:translateX(5px);
+}
+
+.addressBirthRow input[type="text"]::placeholder{
+    color:black;
+}
+
 .nameRow input:focus,
 .addressBirthRow input:focus,
 .countryInterestsRow input:focus,

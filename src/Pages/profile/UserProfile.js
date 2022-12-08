@@ -444,6 +444,7 @@ class UserProfile extends Component {
                   
                   <input
                     type="text"
+                    className={classes.inputDOB}
                     onFocus={(e) => (e.target.type = "date")}
                     placeholder={this.state.dob}
                     onChange={this.onChangeDateOfBirth}
