@@ -341,12 +341,20 @@ class UserProfile extends Component {
               <p>{this.state.email}</p>
             </div>
             <div className={classes.accountItems}>
+              <h1>Address</h1>
+              <p>{this.state.address}</p>
+            </div>
+            <div className={classes.accountItems}>
               <h1>Birthday</h1>
               <p>{this.state.dob}</p>
             </div>
             <div className={classes.accountItems}>
               <h1>Country/Origin</h1>
               <p>{this.state.country}</p>
+            </div>
+            <div className={classes.accountItems}>
+              <h1>Interests</h1>
+              <p>{this.state.interests}</p>
             </div>
           </div>
         );
