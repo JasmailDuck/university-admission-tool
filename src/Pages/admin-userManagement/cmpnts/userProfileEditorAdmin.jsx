@@ -478,7 +478,7 @@ class userProfileEditorAdmin extends Component {
                   </button>
 
                   <button className='p-3 mx-3 bg-neutral-100 rounded-2xl'>Delete Profile</button>
-                  <button className='p-3 mx-3 bg-neutral-100 rounded-2xl'>Suspend Profile</button>
+                  
                 </div>
               </div>
 
