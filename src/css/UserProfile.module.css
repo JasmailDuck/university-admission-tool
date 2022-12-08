@@ -1,19 +1,13 @@
-.button{
-    background-color:#D9534F;
-    margin-top:25px;
-    padding: 10px 5px 10px 5px;
-    font-size:25px;
-    letter-spacing: 2px;
-    color:#F1F1F1;
-    outline: 0;
-    border-width: 1px;
-}
+
 
 .mainContainer{
     display:flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    padding-top:50px;
+    padding-bottom:100px;
+    box-shadow: inset rgba(0, 0, 0, 0.20) 0px 5px 10px;
 }
 
 .headerContainer{
@@ -122,7 +116,9 @@
     box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);
 }
 
-.accountOverview > h1{
+.accountOverview > h1,
+.editProfileContainer > h1,
+.filesContainer > h1{
     font-size:50px;
     font-weight: bold;
 }
@@ -160,13 +156,78 @@
     display:flex;
     flex-direction:column;
     height:90vh;
+    padding-left:50px;
+    padding-top:20px;
 }
+
+.editProfileContainer form{
+    padding-top:30px;
+}
+
 
 .editForm{
     display:flex;
     flex-direction:column;
-    row-gap:10px;
+    row-gap:30px;
+    align-items: flex-start;
 }
+
+.editProfileContainer > h2,
+.filesContainer > h2{
+    padding-top:30px;
+    padding-bottom:30px;
+    font-size:30px;
+    
+}
+
+.nameRow input,
+.addressBirthRow input,
+.countryInterestsRow input,
+.roleRow input{
+    width:70%;
+    border: 1px solid black;
+    border-width: 0px 0px 2px;
+    -webkit-transition: 0.5s;
+    transition:0.5s;
+}
+
+input[type="date"]{
+    background-color: #F1F1F1;
+    outline: 0;
+    border-width: 0px 0px 2px;
+    width:50%;
+    transform:translateX(5px);
+}
+
+.addressBirthRow input[type="text"]::placeholder{
+    color:black;
+}
+
+.nameRow input:focus,
+.addressBirthRow input:focus,
+.countryInterestsRow input:focus,
+.roleRow input:focus{
+    border-color:#D9534F;
+}
+
+.nameRow, .addressBirthRow, 
+.countryInterestsRow, .roleRow{
+    display:flex;
+    flex-direction: row;
+    column-gap:20px;
+}
+
+.editForm .button{
+    height:60px;
+    width:45%;
+    font-size:25px;
+}
+
+.roleRow .dummy{
+    display:hidden;
+    border-color:#F1F1F1;
+}
+
 
 .filesContainer{
     display:flex;
@@ -176,4 +237,68 @@
 
 .confirmBox{
     margin-left: 100px;
+}
+
+.button{
+  margin-top:40px;
+  padding: 0.6em 1.2em;
+  border-radius: 0.375em;
+  cursor: pointer;
+  color: white;
+  background: linear-gradient(120deg, #D9534F, #f16560, #962d29);
+  background-size: 200% 100%;
+  background-position: 100% 0;
+  transition: background-position .5s, 0.2s all;
+  box-shadow: 7px 6px 28px 1px rgba(0, 0, 0, 0.24);
+  cursor: pointer;
+  outline: none;
+  width:45%;
+}
+
+ input::file-selector-button{
+    margin-top:30px;
+    padding: 0.6em 1.2em;
+    border-radius: 0.375em;
+    color: white;
+    background: linear-gradient(120deg, #D9534F, #f16560, #962d29);
+    background-size: 200% 100%;
+    background-position: 100% 0;
+    transition: background-position .5s, 0.2s all;
+    box-shadow: 7px 6px 28px 1px rgba(0, 0, 0, 0.24);
+    cursor: pointer;
+    outline: none;
+  }
+
+
+.button:active, input::file-selector-button:active{
+    transform: scale(0.98);
+    /* Scaling button to 0.98 to its original size */
+    box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+    /* Lowering the shadow */
+}
+
+.button:hover, input::file-selector-button:hover{
+    background-position: 0 0;
+
+}
+
+/*Files Container*/
+.filesContainer{
+    display:flex;
+    flex-direction:column;
+    height:90vh;
+    padding-left:50px;
+    padding-top:20px;
+}
+
+.filesView{
+    display:flex;
+    flex-direction: column-reverse;
+}
+
+.fileDetails{
+    font-size:18px;
+    flex-direction: column;
+    display:flex;
+    row-gap:10px;
 }

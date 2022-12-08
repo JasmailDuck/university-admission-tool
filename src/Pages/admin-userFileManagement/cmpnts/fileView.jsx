@@ -4,6 +4,12 @@ import DELETEFILE from './deleteFile';
 import { Document, Page } from 'react-pdf/dist/esm/entry.webpack5'
 
 
+import styled, { keyframes } from "styled-components";
+import { fadeInUp } from "react-animations";
+const FadeInUpAnimation = keyframes`${fadeInUp}`;
+const FadeInUpDiv = styled.div`
+  animation: 1.45s ${FadeInUpAnimation};
+`;
 
 
 class fileView extends Component {
@@ -96,7 +102,8 @@ class fileView extends Component {
 
     
     return (
-      <div className='flex h-full'>
+      <FadeInUpDiv>
+      <div className='flex filePage'>
 
         <div id='pdf-view' className=' flex-1 flex justify-center  bg-neutral-100 p-2'>
           <Document file={this.state.file} className=" "  >
@@ -141,7 +148,7 @@ class fileView extends Component {
 
 
       </div>
-
+      </FadeInUpDiv>
     )
 
 
