@@ -58,11 +58,7 @@ class fileView extends Component {
     });
   }
 
-  setConfirmDelete() {
-    this.setState({
-      confirmDelete: true
-    });
-  }
+
 
 
 
