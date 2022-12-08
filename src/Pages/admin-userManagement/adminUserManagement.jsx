@@ -7,6 +7,14 @@ import USER_SERVICE from '../../services/user_service'
 
 import DATABASELISTVIEW from './cmpnts/databaseListView'
 
+//Animations
+import styled, { keyframes } from "styled-components";
+import { fadeInUp } from "react-animations";
+const FadeInUpAnimation = keyframes`${fadeInUp}`;
+const FadeInUpDiv = styled.div`
+  animation: 1.45s ${FadeInUpAnimation};
+`;
+
 const USER_PROFILE_VIEWER_ADMIN_PAGE = '/admin/usermanagement/userEditor'
 
 class adminUserManagement extends Component {
@@ -29,7 +37,8 @@ class adminUserManagement extends Component {
 
 render() {
     return (
-    <div className='h-full w-full bg-neutral-100 '>
+    <FadeInUpDiv>
+    <div className='h-full w-full bg-neutral-100 userHome '>
 
         <div className='h-full w-full flex flex-col'>
             <div className='p-10 text-4xl'>
@@ -58,6 +67,7 @@ render() {
         </div>
 
     </div>
+    </FadeInUpDiv>
   )
 }
   

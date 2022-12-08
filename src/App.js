@@ -19,6 +19,14 @@ import ADMINFILEMANAGEMENT from "./Pages/admin-userFileManagement/adminFileManag
 import FILEVIEW from "./Pages/admin-userFileManagement/cmpnts/fileView";
 import logoIMG from "./images/testIcon.png";
 
+import styled, { keyframes } from "styled-components";
+import { fadeIn } from "react-animations";
+const FadeInUpAnimation = keyframes`${fadeIn}`;
+const FadeInUpDiv = styled.div`
+  animation: 3s ${FadeInUpAnimation};
+`;
+
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -130,7 +138,8 @@ class App extends Component {
         )}
 
         {/* Footer will go below this point! */}
-        <footer className={footerClasses.footer}>
+        <FadeInUpDiv>
+        <footer  className={footerClasses.footer}>
           <div className={footerClasses.links}>
             <p>
               <a href="?">Terms of Use</a>
@@ -153,6 +162,8 @@ class App extends Component {
             </p>
           </div>
         </footer>
+        </FadeInUpDiv>
+        
 
         <div>
             <Routes>

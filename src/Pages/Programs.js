@@ -21,6 +21,15 @@ import Multiselect from "multiselect-react-dropdown";
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 
+//Animations
+import styled, { keyframes } from "styled-components";
+import { fadeInUp } from "react-animations";
+const FadeInUpAnimation = keyframes`${fadeInUp}`;
+const FadeInUpDiv = styled.div`
+  animation: 1.45s ${FadeInUpAnimation};
+`;
+
+
 class Programs extends Component {
   
   constructor(props) {
@@ -245,7 +254,8 @@ class Programs extends Component {
    
   
     return(
-      <div className="container">
+      <FadeInUpDiv>
+          <div className="container">
            <div className="div1">
 
             <div className="topRow">
@@ -327,9 +337,9 @@ class Programs extends Component {
               
               <div className="minGrade">
 
-                <button  type="submit" onClick={this.getUserGradeReq}>Click to see eligible programs</button>                         
+                <button className="programBtn" type="submit" onClick={this.getUserGradeReq}>Click to see eligible programs</button>                         
                 
-                <button type="submit" onClick={this.getProgramInformation}>Confirm Changes</button> 
+                <button className="programBtn" type="submit" onClick={this.getProgramInformation}>Confirm Changes</button> 
               </div>
              </div>
             </div>
@@ -374,6 +384,8 @@ class Programs extends Component {
               })}
           </div>
       </div>
+      </FadeInUpDiv>
+      
     )
   }
 }

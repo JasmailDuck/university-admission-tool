@@ -1,5 +1,12 @@
 import React, {useCallback} from 'react'
 import { useNavigate } from 'react-router-dom';
+//Animations
+import styled, { keyframes } from "styled-components";
+import { fadeInUp } from "react-animations";
+const FadeInUpAnimation = keyframes`${fadeInUp}`;
+const FadeInUpDiv = styled.div`
+  animation: 1.45s ${FadeInUpAnimation};
+`;
 
 
 
@@ -12,6 +19,7 @@ function DatabaseListView(props) {
   }
 
   return (
+    <FadeInUpDiv>
     <div onClick={handleOnClick} className='flex text-l p-3 bg-neutral-100'>
         <div className='flex-1'>{props.id}</div>
         <div className='flex-1'>{props.firstName}</div>
@@ -22,6 +30,7 @@ function DatabaseListView(props) {
         <div className='flex-1'>{props.interests}</div>
         <div className='flex-1'>{props.role}</div>
     </div>
+    </FadeInUpDiv>
   )
 }
 
