@@ -4,14 +4,18 @@
 // with in the method calling this helper method 
 export const fileToDataURL = (file) => {
 
-    const promise = new Promise((resolve) => {
-        const reader = new FileReader();
-        reader.onload = function () {
-          resolve(reader.result);
-        }
-        reader.readAsDataURL(file);
-    });
-    return promise;     
+    try {
+        const promise = new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onload = function () {
+              resolve(reader.result);
+            }
+            reader.readAsDataURL(file);
+        });
+        return promise;  
+    } catch (e) {
+        throw "No document or wront file type!"
+    }  
 }
 
 export const dataURLToFile = (dataurl, filename) => {

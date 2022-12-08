@@ -349,7 +349,7 @@ class Programs extends Component {
                           </Typography>
                         </CardContent>
                         <CardActions>
-                          <Link size="small" href={university.webpage}>Learn more</Link>
+                          <Link size="small" href={university.webpage} target="_blank">Learn more</Link>
                         </CardActions>
                     </Card>
                   )

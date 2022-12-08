@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import {withRouter} from "../helpers/withRouter";
+import { withRouter } from "../helpers/withRouter";
 import { signup } from "../actions/auth";
 
 import classes from "../css/Signup.module.css";
@@ -184,7 +184,6 @@ class Signup extends Component {
       }
     }
   };
-  
 
   // renders HTML to the web page, and enables reading props and state and return our JSX code to the root of the app.
   render() {
@@ -194,7 +193,7 @@ class Signup extends Component {
       <>
         <div className={classes.mainContainer}>
           <div className={classes.leftContainer}>
-            <img className={classes.signupBG} src={signupBG} alt="signup pic"/>
+            <img className={classes.signupBG} src={signupBG} alt="signup pic" />
           </div>
 
           <div className={classes.rightContainer}>
@@ -255,7 +254,7 @@ class Signup extends Component {
                       <input
                         type="password"
                         name="password"
-                        placeholder="&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;" 
+                        placeholder="&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;"
                         value={this.state.password}
                         onChange={this.onChangePassword}
                         onKeyUp={this.handlePasswordValidation}
@@ -274,7 +273,7 @@ class Signup extends Component {
                       <input
                         type="password"
                         name="confirmPassword"
-                        placeholder="&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;" 
+                        placeholder="&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;"
                         value={this.state.confirmPassword}
                         onChange={this.onChangeConfirmPassword}
                         onKeyUp={this.handlePasswordValidation}
@@ -284,31 +283,31 @@ class Signup extends Component {
                         {this.state.confirmPasswordErrorMessage}
                       </p>
                     </div>
+                    {/* message on sign up confirmation or error */}
+                    {message && (
+                      <div>
+                        <div>{message}</div>
+                      </div>
+                    )}
 
                     {/* Signup button */}
                     <button className={classes.confirm_button}>Sign up</button>
-                    <div >
-                        <p className={classes.others}>Already have an account? <a href="/login">Log in here!</a> </p>
+                    <div>
+                      <p className={classes.others}>
+                        Already have an account?{" "}
+                        <a href="/login">Log in here!</a>{" "}
+                      </p>
                     </div>
-                  </div>
-                )}
-
-                {/* message on sign up confirmation or error */}
-                {message && (
-                  <div>
-                    <div>{message}</div>
                   </div>
                 )}
               </form>
             </div>
           </div>
         </div>
-        
       </>
     );
   }
 }
-
 
 // This connects the react components to a Redux store
 function mapStateToProps(state) {
