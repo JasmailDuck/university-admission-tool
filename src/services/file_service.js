@@ -4,7 +4,7 @@ import apiInstance from "../api";
 class FileService {
 
   getFileByID(id) {
-    console.log(id);
+    
     return apiInstance
       .post(config.uniAdminToolServer.get_file_user,
         {"id": id})
@@ -21,6 +21,14 @@ class FileService {
   
         return response.data;
       });
+  }
+
+  deleteFileAdminOnly(id) {
+    return apiInstance
+      .delete(config.uniAdminToolServer.delete_File + id)
+      .then((response) => {
+        return response.data
+      })
   }
 
 

@@ -21,9 +21,12 @@ const config = {
       "/user/adminProfileAccess/",  
     consultantUsers:
       "/consultantUsers",
-
+  
     get_all_files:
       "/files",
+    
+    delete_File:
+    "/files/admin/delete/",
 
     get_file_user:
       "/files/all",
@@ -39,8 +42,10 @@ const config = {
       "/programlist/filter/city",
     program_list_province_location:
       "/programlist/filter/province",
-      program_list_duration_location:
-      "/programlist/filter/duration"      
+    program_list_duration_location:
+      "/programlist/filter/duration",      
+    setReviewed:
+      "/consultantUsers/files/reviewed"
   },
 };
 //35.209.74.28

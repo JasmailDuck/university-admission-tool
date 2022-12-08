@@ -29,7 +29,15 @@ class adminFileManagement extends Component {
         })
     }
     
-   
+
+fileType(userFile) {
+    try {
+        let type = dataURLToFile(Buffer.from(userFile.file, 'base64').toString('ascii'), userFile.file_name).type
+        return type
+    } catch (error) {
+        return "UNKNOWN FILE TYPE"
+    }
+}
 
 
 render() {
@@ -54,7 +62,12 @@ render() {
                 
                 {
                     this.state.files.map(userFile =>
-                        <DATABASELISTVIEWFILE id={userFile.fileID} email={userFile.email} fileName={userFile.file_name} page={FILEPAGE} file={dataURLToFile(Buffer.from(userFile.file, 'base64').toString('ascii'), userFile.file_name).type}   />
+                        <DATABASELISTVIEWFILE
+                         id={userFile.fileID} 
+                         email={userFile.email} 
+                         fileName={userFile.file_name} 
+                         page={FILEPAGE} 
+                         file={ this.fileType(userFile) }   />
                     )
                 }
                 

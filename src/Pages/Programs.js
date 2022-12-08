@@ -362,8 +362,10 @@ class Programs extends Component {
                             {"Location: " + university.city + ", " + university.province + ", " + university.country }
                           </Typography>
                         </CardContent>
-                        <CardActions class="linkText">
-                          <Link size="small" href={university.webpage}>Learn more</Link>
+
+                        <CardActions>
+                          <Link size="small" href={university.webpage} target="_blank">Learn more</Link>
+
                         </CardActions>
                     </Card>
                     </div>
