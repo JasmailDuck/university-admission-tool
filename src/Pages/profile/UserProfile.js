@@ -64,7 +64,7 @@ class UserProfile extends Component {
       fileString: "",
       editing: 0,
       files: 0,
-      confirmBox: false,
+      confirmBox: 0,
     };
   }
 
@@ -154,13 +154,13 @@ class UserProfile extends Component {
 
   openConfirmBox() {
     this.setState({
-      confirmBox: true,
+      confirmBox: 1,
     });
   }
 
   closeConfirmBox() {
     this.setState({
-      confirmBox: false,
+      confirmBox: 0,
     });
   }
 
@@ -531,7 +531,7 @@ class UserProfile extends Component {
           </div>
         </div>
 
-        {confirmBox && (
+        {confirmBox === 1 && (
           <div>
             <Dialog
               open={true}

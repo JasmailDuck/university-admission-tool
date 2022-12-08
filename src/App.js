@@ -46,6 +46,7 @@ class App extends Component {
     this.setState({
       currentUser: undefined,
     });
+    window.location.reload(false);
   }
 
   // This method stops a user from using the back button on the website to get to login page
