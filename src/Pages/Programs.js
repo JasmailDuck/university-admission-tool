@@ -21,7 +21,7 @@ import Multiselect from "multiselect-react-dropdown";
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 
-
+import CircularProgress from '@mui/material/CircularProgress';
 //Animations
 import styled, { keyframes } from "styled-components";
 import { fadeInUp } from "react-animations";
@@ -32,7 +32,7 @@ const FadeInUpDiv = styled.div`
 
 
 // This is for loading animation 
-import CircularProgress from '@mui/material/CircularProgress';
+
 
 
 class Programs extends Component {

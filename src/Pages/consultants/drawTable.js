@@ -11,8 +11,11 @@ import { Collapse } from "@mui/material";
 import Box from '@mui/material/Box';
 import '../../css/Consultant.css';
 import function_service from '../../services/function_service'
-import {Document, Page} from 'react-pdf'
 import TextField from '@mui/material/TextField';
+import VIEBUTTON from "./viebutton";
+
+
+
 function CreateRows(user) {
   const [open, setOpen] = React.useState(false);
   return (
@@ -77,7 +80,7 @@ function GetFiles(user) {
         </div>
         <br></br>
         <div className="buttons">
-        <button id = {file.id} onClick={e => showFile(file)}>View</button>
+        <VIEBUTTON id={file.id} />
         <button
           id = {file.id} 
           className = "save"
@@ -91,9 +94,7 @@ function GetFiles(user) {
     });
 }
 
-function showFile() {
-  
-}
+
 function checkReviewed(file) {
   if (file.reviewed === 0 || file.reviewed === null) {
     return false
