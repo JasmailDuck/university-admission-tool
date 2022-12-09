@@ -9,7 +9,6 @@ function DeleteFile() {
             Delete User's File
             <button onClick={()=> {
                 FILE_SERVICE.deleteFileAdminOnly(parseInt(sessionStorage.getItem("fileID"))).then((response) =>{
-                    console.log(response);
                     navigate(-1)
                 })
             }} className='p-2 bg-neutral-200 text-red-600 rounded-2xl mx-5'>

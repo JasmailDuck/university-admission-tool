@@ -8,24 +8,24 @@ import IconButton from "@mui/material/IconButton";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { Collapse } from "@mui/material";
-import Box from '@mui/material/Box';
-import '../../css/Consultant.css';
-import function_service from '../../services/function_service'
-import TextField from '@mui/material/TextField';
+import Box from "@mui/material/Box";
+import "../../css/Consultant.css";
+import function_service from "../../services/function_service";
+import TextField from "@mui/material/TextField";
 import VIEBUTTON from "./viebutton";
-
-
 
 function CreateRows(user) {
   const [open, setOpen] = React.useState(false);
   return (
     <TableBody>
       <TableRow>
-        <TableCell>
+        <TableCell key={Math.floor(Math.random() * 16777215).toString(16)}>
           <IconButton
             aria-label="expand row"
             size="small"
-            onClick={() => {setOpen(!open) }}
+            onClick={() => {
+              setOpen(!open);
+            }}
           >
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
@@ -37,23 +37,21 @@ function CreateRows(user) {
         <TableCell>{user.country}</TableCell>
       </TableRow>
       <TableRow>
-      <TableCell style={{ paddingBottom: 0 }} colSpan={6}>
-        <Collapse in={open} unmountOnExit>
-          <Box className="files">
-            {GetFiles(user)}
-          </Box>
-        </Collapse>
-      </TableCell>
+        <TableCell style={{ paddingBottom: 0 }} colSpan={6}>
+          <Collapse in={open} unmountOnExit>
+            <Box className="files">{GetFiles(user)}</Box>
+          </Collapse>
+        </TableCell>
       </TableRow>
     </TableBody>
   );
 }
 
 function GetFiles(user) {
-    return user.files.map((file) => {
-      var isChecked = checkReviewed(file)
-      var comments = file.comments
-      return (
+  return user.files.map((file) => {
+    var isChecked = checkReviewed(file);
+    var comments = file.comments;
+    return (
       <TableCell className="file">
         <h1>{file.name}</h1>
         <br></br>
@@ -62,57 +60,56 @@ function GetFiles(user) {
           className="comments"
           label="Comments"
           multiline
-          defaultValue= {comments}
+          defaultValue={comments}
           maxRows={5}
-          onChange={(e) => {comments = e.target.value; console.log(comments)}}
+          onChange={(e) => {
+            comments = e.target.value;
+          }}
         />
         <br></br>
         <div className="input">
-        <label>
-          <input
-            defaultChecked = {isChecked}
-            type = "checkbox"  
-            onChange={(event) => {isChecked = !isChecked; event.target.checked = isChecked;
-            console.log(event.target.checked)}}
-          />
-          Reviewed
-        </label>
+          <label>
+            <input
+              defaultChecked={isChecked}
+              type="checkbox"
+              onChange={(event) => {
+                isChecked = !isChecked;
+                event.target.checked = isChecked;
+              }}
+            />
+            Reviewed
+          </label>
         </div>
         <br></br>
         <div className="buttons">
-        <VIEBUTTON id={file.id} />
-        <button
-          id = {file.id} 
-          className = "save"
-          onClick={e =>handleReviewed(isChecked,e, comments)}
-        >
-          Save
-        </button>
+          <VIEBUTTON id={file.id} />
+          <button
+            id={file.id}
+            className="save"
+            onClick={(e) => handleReviewed(isChecked, e, comments)}
+          >
+            Save
+          </button>
         </div>
       </TableCell>
-      )
-    });
+    );
+  });
 }
-
 
 function checkReviewed(file) {
   if (file.reviewed === 0 || file.reviewed === null) {
-    return false
-  } else 
-    return true
-  
+    return false;
+  } else return true;
 }
 
 function handleReviewed(isChecked, e, comments) {
-  console.log(isChecked)
   var reviewBit = 0;
   if (isChecked) {
-    reviewBit = 1
+    reviewBit = 1;
   }
-  
-  function_service.setReview(e.target.id, reviewBit, comments).then((resp) =>{
-      console.log('TEST')
-    })
+
+  function_service.setReview(e.target.id, reviewBit, comments).then((resp) => {
+  });
 }
 
 export default function GenerateTable(props) {
@@ -129,7 +126,7 @@ export default function GenerateTable(props) {
         </TableRow>
       </TableHead>
       {props.users.map((user) => {
-        return CreateRows(user);        
+        return CreateRows(user);
       })}
     </Table>
   );

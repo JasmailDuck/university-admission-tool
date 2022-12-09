@@ -83,7 +83,6 @@ class FunctionService extends Component {
   };
 
   setReview = (id, reviewState, fileComments) => {
-    console.log(fileComments)
     return apiInstance.patch(config.uniAdminToolServer.setReviewed, {
         id: id,
         reviewed: reviewState,

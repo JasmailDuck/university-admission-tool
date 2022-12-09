@@ -72,6 +72,7 @@ render() {
                         {
                             this.state.files.map(userFile =>
                                 <DATABASELISTVIEWFILE
+                                key={userFile.fileID}
                                 id={userFile.fileID} 
                                 email={userFile.email} 
                                 fileName={userFile.file_name} 

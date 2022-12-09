@@ -52,6 +52,7 @@ class Programs extends Component {
     this.setLoading = this.setLoading.bind(this); 
     this.getUserGradeReq= this.getUserGradeReq.bind(this); 
     this.getProgramInformation = this.getProgramInformation.bind(this);
+    this.compareObjects = this.compareObjects.bind(this);
     
     // When the website is first launch all university and there programs should be displayed 
     // The university search filter will handle one university at a time , there shold be  a list of all the university name 
@@ -94,11 +95,16 @@ class Programs extends Component {
     });
   }
 
+  compareObjects = (a, b) => {
+    return a.university_name === b.university_name;
+  };
+
   // Using spread operator(three dots) you are able to iterate and remove duplicate elements from the array
   // This method will get all the unique university names 
   setListOfUniName(uniName){
     this.setState({
       listOfUniName:[...new Set(uniName.map((value) => value.university_name))]
+
     })
   }
   
@@ -301,9 +307,7 @@ class Programs extends Component {
                               onChange={this.handleUniversityName}
                             > 
                               {this.state.listOfUniName.map((uniName) =>{
-                                // creating random key
-                                var i = Math.floor(Math.random()*16777215).toString(16);
-                                return(<MenuItem value={uniName} key={i}>{uniName}</MenuItem>)
+                                return(<MenuItem value={uniName} key={uniName}>{uniName}</MenuItem>)
                               })}
 
                             </Select>

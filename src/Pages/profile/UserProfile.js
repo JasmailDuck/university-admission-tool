@@ -283,7 +283,6 @@ class UserProfile extends Component {
   // On file upload (click the upload button)
   onFileUpload = () => {
 
-    console.log("uploaded!");
     this.handleButtonClicked();
     if (this.state.selectedFile === null) {
       this.props.dispatch(

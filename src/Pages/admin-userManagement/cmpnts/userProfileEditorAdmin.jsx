@@ -239,7 +239,6 @@ class userProfileEditorAdmin extends Component {
 
   updateInformation(e) {
     e.preventDefault();
-    console.log(e);
     UserService.updateUserInformation(
       this.state.email,
       this.state.f_name,
