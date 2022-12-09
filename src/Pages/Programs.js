@@ -21,7 +21,6 @@ import Multiselect from "multiselect-react-dropdown";
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 
-import CircularProgress from '@mui/material/CircularProgress';
 //Animations
 // This is for loading animation 
 import CircularProgress from '@mui/material/CircularProgress';
