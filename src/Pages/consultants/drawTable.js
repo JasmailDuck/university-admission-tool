@@ -19,7 +19,7 @@ function CreateRows(user) {
   return (
     <TableBody>
       <TableRow>
-        <TableCell key={Math.floor(Math.random() * 16777215).toString(16)}>
+        <TableCell key={user.id}>
           <IconButton
             aria-label="expand row"
             size="small"
