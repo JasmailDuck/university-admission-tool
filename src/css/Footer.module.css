@@ -26,3 +26,53 @@
   justify-content: center;
   column-gap: 20px;
 }
+
+
+/*Mobile CSS*/
+@media only screen and (max-width: 800px) {
+  .footer{
+    width:100vw;
+  }
+
+  .links {
+    color:white;
+    font-family: 'Lato', 'Open-Sans';
+    display:flex;
+    justify-content: center;
+    column-gap: 10px;
+  }
+}
+
+@media only screen and (max-width: 750px) {
+ 
+  .links p {
+    font-size:14px;
+  }
+}
+
+@media only screen and (max-width: 570px) {
+
+  .links {
+    column-gap: 6px;
+  }
+
+  .links p {
+    font-size:12px;
+  }
+}
+
+@media only screen and (max-width: 425px) {
+
+  .footer{
+    padding: 5px;
+  }
+
+  .links {
+    column-gap: 3px;
+  }
+
+  .links p {
+    font-size:12px;
+  }
+}
+

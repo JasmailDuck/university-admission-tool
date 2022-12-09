@@ -28,7 +28,6 @@ class adminUserManagement extends Component {
     componentDidMount() {
         USER_SERVICE.getUserInformationLocation().then((response) => {
             this.setState({test: response})
-            console.log(this.state.test);
         })
     }
     
@@ -57,7 +56,7 @@ render() {
 
                 {
                     this.state.test.map(testd =>
-                        <DATABASELISTVIEW id={testd.userID} firstName={testd.f_name} lastName={testd.l_name} address={testd.address} email={testd.email} dob={testd.dob} country={testd.country} interests={testd.interests} role={testd.role_id} page={USER_PROFILE_VIEWER_ADMIN_PAGE}  />
+                        <DATABASELISTVIEW key={testd.userID} id={testd.userID} firstName={testd.f_name} lastName={testd.l_name} address={testd.address} email={testd.email} dob={testd.dob} country={testd.country} interests={testd.interests} role={testd.role_id} page={USER_PROFILE_VIEWER_ADMIN_PAGE}  />
                     )
                 }
                 

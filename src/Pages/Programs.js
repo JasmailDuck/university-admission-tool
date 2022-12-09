@@ -4,7 +4,7 @@ import "../css/Programs.page.css"
 // For the drop down box - university name
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
+import MenuItem, { menuItemClasses } from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 // This is for the University Card 
@@ -21,7 +21,6 @@ import Multiselect from "multiselect-react-dropdown";
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 
-
 //Animations
 import CircularProgress from '@mui/material/CircularProgress';
 import styled, { keyframes } from "styled-components";
@@ -30,9 +29,6 @@ const FadeInUpAnimation = keyframes`${fadeInUp}`;
 const FadeInUpDiv = styled.div`
   animation: 1.45s ${FadeInUpAnimation};
 `;
-
-
-// This is for loading animation 
 
 
 class Programs extends Component {
@@ -55,6 +51,7 @@ class Programs extends Component {
     this.setLoading = this.setLoading.bind(this); 
     this.getUserGradeReq= this.getUserGradeReq.bind(this); 
     this.getProgramInformation = this.getProgramInformation.bind(this);
+    this.compareObjects = this.compareObjects.bind(this);
     
     // When the website is first launch all university and there programs should be displayed 
     // The university search filter will handle one university at a time , there shold be  a list of all the university name 
@@ -97,11 +94,16 @@ class Programs extends Component {
     });
   }
 
+  compareObjects = (a, b) => {
+    return a.university_name === b.university_name;
+  };
+
   // Using spread operator(three dots) you are able to iterate and remove duplicate elements from the array
   // This method will get all the unique university names 
   setListOfUniName(uniName){
     this.setState({
       listOfUniName:[...new Set(uniName.map((value) => value.university_name))]
+
     })
   }
   
@@ -305,7 +307,8 @@ class Programs extends Component {
                               onChange={this.handleUniversityName}
                             > 
                               {this.state.listOfUniName.map((uniName) =>{
-                                return(<MenuItem value={uniName} >{uniName}</MenuItem>)
+                                return(<MenuItem value={uniName} key={uniName}>{uniName}</MenuItem>)
+
                               })}
 
                             </Select>
