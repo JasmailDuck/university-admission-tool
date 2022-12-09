@@ -23,6 +23,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 
 
 //Animations
+import CircularProgress from '@mui/material/CircularProgress';
 import styled, { keyframes } from "styled-components";
 import { fadeInUp } from "react-animations";
 const FadeInUpAnimation = keyframes`${fadeInUp}`;
@@ -32,7 +33,6 @@ const FadeInUpDiv = styled.div`
 
 
 // This is for loading animation 
-import CircularProgress from '@mui/material/CircularProgress';
 
 
 class Programs extends Component {
@@ -124,7 +124,7 @@ class Programs extends Component {
   // This method will get all unique province 
   setListOfProvince(provinceName){
     this.setState({
-      listOfProvince:[...new Set(provinceName.map((value) => value.province))]
+      listOfProvince:[...new Set(provinceName.map((value) => value.province) )]
     })
   }
 
@@ -300,11 +300,12 @@ class Programs extends Component {
                               className="uniSelect"
                               labelId="demo-simple-select-label"
                               id="demo-simple-select"
+                              key={Math.floor(Math.random() * 100)}
                               value={this.state.setUniversityName}
                               onChange={this.handleUniversityName}
                             > 
                               {this.state.listOfUniName.map((uniName) =>{
-                                return(<MenuItem value={uniName}>{uniName}</MenuItem>)
+                                return(<MenuItem value={uniName} >{uniName}</MenuItem>)
                               })}
 
                             </Select>
@@ -394,20 +395,21 @@ class Programs extends Component {
                             height="100"
                             image= {university.logo}
                             alt={university.title}
+                            key={university.id}
                           />
                           <CardContent>
-                            <Typography gutterBottom variant="h5" component="div">
+                            <Typography variant="h5" component="div">
                               {university.title}
                             </Typography>
                             <Typography variant="body2" color="text.secondary" height={100} >
                               {university.overview}
                             </Typography>
-                            <Typography class="locationText" gutterBottom variant={true} component="p" >
+                            <Typography className="locationText"  gutterBottom = {true} component="p" >
                               {"Location: " + university.city + ", " + university.province + ", " + university.country }
                             </Typography>
                           </CardContent>
 
-                          <CardActions>
+                          <CardActions >
                             <Link size="small" href={university.webpage} target="_blank">Learn more</Link>
 
                           </CardActions>
