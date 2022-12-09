@@ -10,6 +10,7 @@ import classes from "../css/front.module.css";
 
 import styled, { keyframes } from "styled-components";
 import { fadeIn } from "react-animations";
+
 const FadeInUpAnimation = keyframes`${fadeIn}`;
 const FadeInUpDiv = styled.div`
   animation: 1.45s ${FadeInUpAnimation};

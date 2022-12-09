@@ -7,18 +7,13 @@ import classes from "../css/Signup.module.css";
 import signupBG from "../images/signup.png";
 import logoIMG from "../images/testIcon.png";
 import styled, { keyframes } from "styled-components";
+
 import { fadeIn } from "react-animations";
 const FadeInUpAnimation = keyframes`${fadeIn}`;
 const FadeInUpDiv = styled.div`
   animation: 1.45s ${FadeInUpAnimation};
 `;
 
-import styled, { keyframes } from "styled-components";
-import { fadeIn } from "react-animations";
-const FadeInUpAnimation = keyframes`${fadeIn}`;
-const FadeInUpDiv = styled.div`
-  animation: 1.45s ${FadeInUpAnimation};
-`;
 
 class Signup extends Component {
   constructor(props) {
