@@ -17,6 +17,7 @@ import Consultants from "./Pages/Consultants";
 import USERPROFILEEDITORADMIN from "./Pages/admin-userManagement/cmpnts/userProfileEditorAdmin";
 import ADMINFILEMANAGEMENT from "./Pages/admin-userFileManagement/adminFileManagement";
 import FILEVIEW from "./Pages/admin-userFileManagement/cmpnts/fileView";
+import { setMessage } from "./actions/message";
 import logoIMG from "./images/testIcon.png";
 
 import styled, { keyframes } from "styled-components";
@@ -54,7 +55,10 @@ class App extends Component {
     this.setState({
       currentUser: undefined,
     });
-    window.location.reload(false);
+    this.props.dispatch(
+      setMessage("Successfully logged out!")
+    );
+    //window.location.reload(false);
   }
 
   // This method stops a user from using the back button on the website to get to login page

@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Navigate } from "react-router-dom";
 import { withRouter } from "../helpers/withRouter";
 import { connect } from "react-redux";
 
@@ -58,7 +57,7 @@ class Login extends Component {
     if (this.state.email !== "" && this.state.password !== "") {
       dispatch(login(this.state.email, this.state.password))
         .then(() => {
-          this.sendToProfile();
+          //this.sendToProfile();
           window.location.reload();
         })
         .catch(() => {
