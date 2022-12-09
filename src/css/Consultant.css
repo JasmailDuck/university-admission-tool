@@ -7,8 +7,10 @@
 }
 
 .files{
-    display: flex;
-    justify-content: space-evenly;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    column-gap:20px;
+    row-gap: 20px;
     margin-top: 20px;
     margin-bottom:40px;
 }
@@ -87,4 +89,20 @@
 
 .Table table thead tr th{
     font-size:20px;
+}
+
+/*Mobile CSS*/
+@media only screen and (max-width:990px){
+    .files{
+        display:grid;
+        grid-template-columns: 1fr 1fr;
+        column-gap: 20px;
+        row-gap: 20px;
+    }
+}
+
+@media only screen and (max-width: 610px){
+    .consultantContainer{
+        width:100vw;
+    }
 }

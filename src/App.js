@@ -139,7 +139,7 @@ class App extends Component {
         )}
 
         {/* Footer will go below this point! */}
-        <FadeInUpDiv>
+        
         <footer  className={footerClasses.footer}>
           <div className={footerClasses.links}>
             <p>
@@ -163,7 +163,7 @@ class App extends Component {
             </p>
           </div>
         </footer>
-        </FadeInUpDiv>
+        
         
 
         <div>
