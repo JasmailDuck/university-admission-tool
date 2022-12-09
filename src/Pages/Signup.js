@@ -222,6 +222,8 @@ class Signup extends Component {
         return false;
       } else if (!minLengthPassword) {
         return false;
+      } else {
+        return true;
       }
     };
 

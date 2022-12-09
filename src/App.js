@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { BrowserRouter, Routes, Route, Link, Navigate, Outlet, useLocation } from "react-router-dom";
-import { FaBars, FaUserCircle } from "react-icons/fa";
+import { FaUserCircle } from "react-icons/fa";
 
 import navbarClasses from "./css/Navbar.module.css";
 import footerClasses from "./css/Footer.module.css";
@@ -69,6 +69,20 @@ class App extends Component {
       // along to that page after they login, which is a nicer user experience
       // than dropping them off on the home page.
       return <Navigate to="/login" state={{ from: location }} />;
+    }
+  
+    return <Outlet />;
+  }
+
+    NotRequireAuth = () => {
+    let location = useLocation();
+  
+    if (this.state.currentUser) {
+      // Redirect them to the /login page, but save the current location they were
+      // trying to go to when they were redirected. This allows us to send them
+      // along to that page after they login, which is a nicer user experience
+      // than dropping them off on the home page.
+      return <Navigate to="/userProfile" state={{ from: location }} />;
     }
   
     return <Outlet />;
@@ -167,8 +181,10 @@ class App extends Component {
 
         <div>
             <Routes>
-              <Route path="/signup" element={<Signup />} />
-              <Route path="/login" element={<LOGIN />} />
+              <Route element={<this.NotRequireAuth />}>
+                <Route path="/signup" element={<Signup />} />
+                <Route path="/login" element={<LOGIN />} />
+              </Route>
               <Route element={<this.RequireAuth />}>
                 <Route path="/programs" element={<Programs />} />
                 <Route path="/userProfile" element={<UserProfile />} />

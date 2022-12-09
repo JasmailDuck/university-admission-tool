@@ -72,6 +72,7 @@ class UserProfile extends Component {
       editing: 0,
       files: 0,
       confirmBox: 0,
+      disabled: false,
     };
   }
 
@@ -272,6 +273,9 @@ class UserProfile extends Component {
 
   // On file upload (click the upload button)
   onFileUpload = () => {
+
+    console.log("uploaded!");
+    this.handleButtonClicked();
     if (this.state.selectedFile === null) {
       this.props.dispatch(
         setMessage("No Document Selected! (only pdfs accepted)")
@@ -292,6 +296,18 @@ class UserProfile extends Component {
         setMessage("Wrong Document Selected! (only pdfs accepted)")
       );
     }
+  };
+
+  handleButtonClicked = () => {
+    //going back logic
+    this.setState({
+      disabled: true,
+    });
+    setTimeout(() => {
+        this.setState(() => ({
+          disabled: false,
+        }));
+      }, 3000);
   };
 
   // File content to be displayed after
@@ -323,9 +339,7 @@ class UserProfile extends Component {
 
   render() {
     const { message } = this.props;
-    const { editing } = this.state;
-    const { files } = this.state;
-    const { confirmBox } = this.state;
+    const { editing, files, confirmBox, disabled } = this.state;
 
     // Enables the transition for the confirmation box when deleting account
     const Transition = React.forwardRef(function Transition(props, ref) {
@@ -391,6 +405,7 @@ class UserProfile extends Component {
             <button
               className={classes.button}
               onClick={this.onFileUpload}
+              disabled={disabled}
               type="button"
             >
               Upload File

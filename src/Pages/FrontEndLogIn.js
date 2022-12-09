@@ -80,11 +80,6 @@ class Login extends Component {
   // renders HTML to the web page, and enables reading props and state and return our JSX code to the root of the app.
   render() {
     const { message } = this.props;
-    const { isLoggedIn } = this.props;
-
-    if (isLoggedIn) {
-      return <Navigate to="/userProfile" />;
-    }
 
     return (
       <>
