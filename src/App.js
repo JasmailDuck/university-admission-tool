@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { BrowserRouter, Routes, Route, Link, Navigate, Outlet, useLocation } from "react-router-dom";
-import { FaUserCircle } from "react-icons/fa";
+
+import { FaBars, FaUserCircle, FaUserCog } from "react-icons/fa";
+
 
 import navbarClasses from "./css/Navbar.module.css";
 import footerClasses from "./css/Footer.module.css";
@@ -22,6 +24,7 @@ import logoIMG from "./images/testIcon.png";
 
 import styled, { keyframes } from "styled-components";
 import { fadeIn } from "react-animations";
+
 const FadeInUpAnimation = keyframes`${fadeIn}`;
 const FadeInUpDiv = styled.div`
   animation: 3s ${FadeInUpAnimation};
@@ -145,10 +148,10 @@ class App extends Component {
               </Link>
 
               <Link className={navbarClasses.NavBtnLink} to="/adminDashboard">
-                  Admin Tools Icon
+                  <FaUserCog className={navbarClasses.Profile}/>
               </Link>
 
-              <Link to="/userProfile">
+              <Link className={navbarClasses.NavBtnLink} to="/userProfile">
                   <FaUserCircle className={navbarClasses.Profile} />
               </Link>
             </div>
@@ -156,7 +159,6 @@ class App extends Component {
         )}
 
         {/* Footer will go below this point! */}
-        <FadeInUpDiv>
         <footer  className={footerClasses.footer}>
           <div className={footerClasses.links}>
             <p>
@@ -180,7 +182,6 @@ class App extends Component {
             </p>
           </div>
         </footer>
-        </FadeInUpDiv>
         
 
         <div>

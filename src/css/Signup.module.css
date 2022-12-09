@@ -1,100 +1,165 @@
 
-.mainContainer{
-  display:flex;
-  height:95vh;
-  width:100vw;
-}
+@media only screen and (max-width: 2540px){
+  .mainContainer{
+    display:flex;
+    height:95vh;
+    width:100vw;
+  }
 
-.leftContainer{
-  display:flex;
-  align-items: center;
-  justify-content: center;
-  flex: 60%;
-}
+  .input_error{
+    color:#D9534F;
+    font-weight:bold;
+  }
+  
+  .leftContainer{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    flex: 60%;
+  }
+  
+  .signupBG{
+    height:717.44px;
+    width:748.8px;
+  }
 
-.signupBG{
-  height:717.44px;
-  width:748.8px;
-}
-
-.rightContainer{
-  flex:40%;
-  display:flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-
-
-.form{
-  display:flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.inputContainer{
-  display:flex;
-  flex-direction: column;
-  row-gap:20px;
-}
-
-.signin_title{
-  font-size: 35px;
-  margin-bottom:30px;
-}
-
-.inputContainer > input[type="text"],
-.inputContainer > div > input[type="password"]{
-    outline: 0;
+  .logoIMG{
+    display:none;
+  }
+  
+  .rightContainer{
+    flex:40%;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  
+  
+  .form{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .inputContainer{
+    display:flex;
+    flex-direction: column;
+    row-gap:20px;
+  }
+  
+  .signin_title{
+    font-size: 35px;
+    margin-bottom:30px;
+  }
+  
+  .inputContainer > input[type="text"],
+  .inputContainer > div > input[type="password"]{
+      outline: 0;
+      border: 1px solid black;
+      border-width: 0px 0px 2px;
+      background-color: #FFFFFF;
+      text-align: left;
+      font-size:20px;
+      padding-left:0px;
+      width:100%;
+      -webkit-transition: 0.5s;
+      transition:0.5s;
+  }
+  
+  .inputContainer > input:focus,
+  .inputContainer > div > input:focus{
+    border-color:#D9534F;
+  }
+  
+  .inputContainer > input[type="text"]::placeholder{
+    font-size:16px;
+  }
+  
+  label > p{
+    font-size: 20px;
+  }
+  
+  .inputContainer > input[type="email"]{
     border: 1px solid black;
     border-width: 0px 0px 2px;
-    background-color: #FFFFFF;
-    text-align: left;
-    font-size:20px;
-    padding-left:0px;
-    width:100%;
     -webkit-transition: 0.5s;
     transition:0.5s;
-}
-
-.inputContainer > input:focus,
-.inputContainer > div > input:focus{
-  border-color:#D9534F;
-}
-
-.inputContainer > input[type="text"]::placeholder{
-  font-size:16px;
-}
-
-label > p{
-  font-size: 20px;
-}
-
-.inputContainer > input[type="email"]{
-  border: 1px solid black;
-  border-width: 0px 0px 2px;
-  -webkit-transition: 0.5s;
-  transition:0.5s;
-}
-
-.others{
-  text-align: center;
-}
-
-.inputContainer > input[type="email"]:focus{
-  outline: 0;
-  border-color:#D9534F;
-}
-
-
-.confirm_button{
-    background-color:#D9534F;
-    width:100%;
-    margin-top:25px;
-    padding: 15px 0px 15px 0px;
-    font-size:25px;
-    letter-spacing: 2px;
-    color:#F1F1F1;
+  }
+  
+  .others{
+    text-align: center;
+  }
+  
+  .inputContainer > input[type="email"]:focus{
     outline: 0;
-    border-width: 0px;
+    border-color:#D9534F;
+  }
+  
+  
+  .confirm_button{
+      background-color:#D9534F;
+      width:100%;
+      margin-top:25px;
+      padding: 15px 0px 15px 0px;
+      font-size:25px;
+      letter-spacing: 2px;
+      color:#F1F1F1;
+      outline: 0;
+      border-width: 0px;
+  }
+}
+
+/*Mobile CSS*/
+@media only screen and (max-width: 1050px) {
+    .signupBG{
+      height:600px;
+      width:750px;
+      padding-left:50px;
+    }
+    .leftContainer{
+      flex:50%;
+    }
+    .rightContainer{
+      padding-right:50px;
+      flex:40%;
+    }
+}
+
+/* @media only screen and (max-width: 853px) {
+  .signin_title{
+    text-align: center;
+  }
+  .signupBG{
+    height:600px;
+    width:750px;
+    padding-left:50px;
+  }
+  .leftContainer{
+    flex:50%;
+  }
+  .rightContainer{
+    padding-right:50px;
+    flex:40%;
+  }
+} */
+
+@media only screen and (max-width: 900px) {
+
+  .mainContainer{
+    height:110vh;
+    padding-top:50px;
+    padding-bottom:120px;
+  }
+  .rightContainer{
+    padding-right:0px;
+  }
+
+  .logoIMG{
+    display:flex;
+  }
+
+  .leftContainer{
+    display:None;
+  }
 }
