@@ -23,7 +23,6 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 
 
 //Animations
-
 // This is for loading animation 
 import CircularProgress from '@mui/material/CircularProgress';
 import styled, { keyframes } from "styled-components";

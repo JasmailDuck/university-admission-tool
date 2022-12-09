@@ -189,6 +189,35 @@
     border-width: 0px 0px 2px;
     -webkit-transition: 0.5s;
     transition:0.5s;
+
+}
+
+input[type="date"]{
+    background-color: #F1F1F1;
+    outline: 0;
+    border-width: 0px 0px 2px;
+    width:50%;
+    transform:translateX(5px);
+}
+
+.addressBirthRow input[type="text"]::placeholder{
+    color:black;
+}
+
+.nameRow input:focus,
+.addressBirthRow input:focus,
+.countryInterestsRow input:focus,
+.roleRow input:focus{
+    border-color:#D9534F;
+}
+
+.nameRow, .addressBirthRow, 
+.countryInterestsRow, .roleRow{
+    display:flex;
+    flex-direction: row;
+    column-gap:20px;
+}
+
 }
 
 input[type="date"]{
@@ -301,4 +330,64 @@ input[type="date"]{
     flex-direction: column;
     display:flex;
     row-gap:10px;
+}
+
+/*Mobile CSS*/
+
+@media only screen and (max-width:977px){
+    .profileName{
+        text-align: center;
+    }
+}
+@media only screen and (max-width: 925px) {
+
+    .profileContainer{
+        display:flex;
+        flex-direction:column;
+        
+    }
+
+    .leftContainer{
+        width:90vw;
+        padding-top:20px;
+        padding-bottom:20px;
+    }
+
+    .rightContainer{
+        width:90vw;
+        
+        display:flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+  }
+
+@media only screen and (max-width: 425px){
+    .headerImg{
+        display:none;
+    }
+
+    .headerContainer{
+        height:30vh;
+    }
+    
+
+    .headerText{
+        padding-left:0px;
+        text-align: center;
+    }
+
+    .headerText > p{
+        font-size:15px;
+    }
+
+    .headerSign{
+        font-size:50px;
+    }
+
+    .editProfileContainer{
+        width:90vw;
+        transform:translateX(-20px);
+    }
 }
