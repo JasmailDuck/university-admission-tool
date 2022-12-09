@@ -139,8 +139,9 @@ input#search_input.searchBox {
   object-fit: scale-down;
 }
 
-.locationText{
-  padding-top:5px;
+.cardChild .locationText{
+  padding-top:5px;  
+  font-family: 'Lato';
 }
 
 .linkText{
