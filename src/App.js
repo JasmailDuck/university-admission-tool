@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { BrowserRouter, Routes, Route, Link, Navigate, Outlet, useLocation } from "react-router-dom";
+
 import { FaBars, FaUserCircle, FaUserCog } from "react-icons/fa";
+
 
 import navbarClasses from "./css/Navbar.module.css";
 import footerClasses from "./css/Footer.module.css";
@@ -17,6 +19,7 @@ import Consultants from "./Pages/Consultants";
 import USERPROFILEEDITORADMIN from "./Pages/admin-userManagement/cmpnts/userProfileEditorAdmin";
 import ADMINFILEMANAGEMENT from "./Pages/admin-userFileManagement/adminFileManagement";
 import FILEVIEW from "./Pages/admin-userFileManagement/cmpnts/fileView";
+import { setMessage } from "./actions/message";
 import logoIMG from "./images/testIcon.png";
 
 import styled, { keyframes } from "styled-components";
@@ -55,7 +58,10 @@ class App extends Component {
     this.setState({
       currentUser: undefined,
     });
-    window.location.reload(false);
+    this.props.dispatch(
+      setMessage("Successfully logged out!")
+    );
+    //window.location.reload(false);
   }
 
   // This method stops a user from using the back button on the website to get to login page
@@ -70,6 +76,20 @@ class App extends Component {
       // along to that page after they login, which is a nicer user experience
       // than dropping them off on the home page.
       return <Navigate to="/login" state={{ from: location }} />;
+    }
+  
+    return <Outlet />;
+  }
+
+    NotRequireAuth = () => {
+    let location = useLocation();
+  
+    if (this.state.currentUser) {
+      // Redirect them to the /login page, but save the current location they were
+      // trying to go to when they were redirected. This allows us to send them
+      // along to that page after they login, which is a nicer user experience
+      // than dropping them off on the home page.
+      return <Navigate to="/userProfile" state={{ from: location }} />;
     }
   
     return <Outlet />;
@@ -166,8 +186,10 @@ class App extends Component {
 
         <div>
             <Routes>
-              <Route path="/signup" element={<Signup />} />
-              <Route path="/login" element={<LOGIN />} />
+              <Route element={<this.NotRequireAuth />}>
+                <Route path="/signup" element={<Signup />} />
+                <Route path="/login" element={<LOGIN />} />
+              </Route>
               <Route element={<this.RequireAuth />}>
                 <Route path="/programs" element={<Programs />} />
                 <Route path="/userProfile" element={<UserProfile />} />

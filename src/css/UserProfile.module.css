@@ -284,6 +284,10 @@ input[type="date"]{
   width:45%;
 }
 
+.button:disabled {
+    background: linear-gradient(120deg, #d6c3c2, #f0ccca, #8e6d6c);
+}
+
  input::file-selector-button{
     margin-top:30px;
     padding: 0.6em 1.2em;

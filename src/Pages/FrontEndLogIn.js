@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Navigate } from "react-router-dom";
 import { withRouter } from "../helpers/withRouter";
 import { connect } from "react-redux";
 
@@ -59,7 +58,7 @@ class Login extends Component {
     if (this.state.email !== "" && this.state.password !== "") {
       dispatch(login(this.state.email, this.state.password))
         .then(() => {
-          this.sendToProfile();
+          //this.sendToProfile();
           window.location.reload();
         })
         .catch(() => {
@@ -81,11 +80,6 @@ class Login extends Component {
   // renders HTML to the web page, and enables reading props and state and return our JSX code to the root of the app.
   render() {
     const { message } = this.props;
-    const { isLoggedIn } = this.props;
-
-    if (isLoggedIn) {
-      return <Navigate to="/userProfile" />;
-    }
 
     return (
       <>
