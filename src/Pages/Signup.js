@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "../helpers/withRouter";
 import { signup } from "../actions/auth";
+import { setMessage } from "../actions/message";
 
 import classes from "../css/Signup.module.css";
 import signupBG from "../images/signup.png";
@@ -86,8 +87,8 @@ class Signup extends Component {
       this.state.f_name !== "" &&
       this.state.l_name !== "" &&
       this.state.email !== "" &&
-      this.state.password !== "" &&
-      this.state.confirmPassword !== ""
+      this.checkPasswordValication(this.state.password) &&
+      this.checkPasswordValication(this.state.confirmPassword)
     ) {
       this.props
         .dispatch(
@@ -103,13 +104,16 @@ class Signup extends Component {
             successful: true,
           });
           this.sendToLogin();
-          window.location.reload();
         })
         .catch(() => {
           this.setState({
             successful: false,
           });
         });
+    } else {
+      this.props.dispatch(
+        setMessage("Information on form not valid!")
+      );
     }
   }
 
@@ -191,6 +195,35 @@ class Signup extends Component {
       }
     }
   };
+
+    // Ensures password is actually valid before it is submitted
+    checkPasswordValication = (password) => {;
+      const uppercaseRegExp = /(?=.*?[A-Z])/;
+      const lowercaseRegExp = /(?=.*?[a-z])/;
+      const digitsRegExp = /(?=.*?[0-9])/;
+      const specialCharRegExp = /(?=.*?[#?!@$%^&*-])/;
+      const minLengthRegExp = /.{8,}/;
+      const passwordLength = password.length;
+      const uppercasePassword = uppercaseRegExp.test(password);
+      const lowercasePassword = lowercaseRegExp.test(password);
+      const digitsPassword = digitsRegExp.test(password);
+      const specialCharPassword = specialCharRegExp.test(password);
+      const minLengthPassword = minLengthRegExp.test(password);
+  
+      if (passwordLength === 0) {
+        return false;
+      } else if (!uppercasePassword) {
+        return false;
+      } else if (!lowercasePassword) {
+        return false;
+      } else if (!digitsPassword) {
+        return false;
+      } else if (!specialCharPassword) {
+        return false;
+      } else if (!minLengthPassword) {
+        return false;
+      }
+    };
 
   // renders HTML to the web page, and enables reading props and state and return our JSX code to the root of the app.
   render() {
@@ -291,15 +324,16 @@ class Signup extends Component {
                         {this.state.confirmPasswordErrorMessage}
                       </p>
                     </div>
+
+                    {/* Signup button */}
+                    <button className={classes.confirm_button}>Sign up</button>
+
                     {/* message on sign up confirmation or error */}
                     {message && (
                       <div>
                         <div>{message}</div>
                       </div>
                     )}
-
-                    {/* Signup button */}
-                    <button className={classes.confirm_button}>Sign up</button>
                     <div>
                       <p className={classes.others}>
                         Already have an account?{" "}
