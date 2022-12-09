@@ -4,7 +4,7 @@ import "../css/Programs.page.css"
 // For the drop down box - university name
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
+import MenuItem, { menuItemClasses } from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 // This is for the University Card 
@@ -301,7 +301,9 @@ class Programs extends Component {
                               onChange={this.handleUniversityName}
                             > 
                               {this.state.listOfUniName.map((uniName) =>{
-                                return(<MenuItem value={uniName}>{uniName}</MenuItem>)
+                                // creating random key
+                                var i = Math.floor(Math.random()*16777215).toString(16);
+                                return(<MenuItem value={uniName} key={i}>{uniName}</MenuItem>)
                               })}
 
                             </Select>
