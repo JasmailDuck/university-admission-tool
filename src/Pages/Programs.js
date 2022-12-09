@@ -21,6 +21,7 @@ import Multiselect from "multiselect-react-dropdown";
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 
+
 //Animations
 import styled, { keyframes } from "styled-components";
 import { fadeInUp } from "react-animations";
@@ -28,6 +29,10 @@ const FadeInUpAnimation = keyframes`${fadeInUp}`;
 const FadeInUpDiv = styled.div`
   animation: 1.45s ${FadeInUpAnimation};
 `;
+
+
+// This is for loading animation 
+import CircularProgress from '@mui/material/CircularProgress';
 
 
 class Programs extends Component {
@@ -47,6 +52,7 @@ class Programs extends Component {
     this.setListOfProgram= this.setListOfProgram.bind(this);
     this.setListOfCity= this.setListOfCity.bind(this); 
     this.setListOfProvince= this.setListOfProvince.bind(this); 
+    this.setLoading = this.setLoading.bind(this); 
     this.getUserGradeReq= this.getUserGradeReq.bind(this); 
     this.getProgramInformation = this.getProgramInformation.bind(this);
     
@@ -57,7 +63,7 @@ class Programs extends Component {
 
     // controls state of Programs.
     this.state = {
-      
+      loading : true, 
       listOfUniName:[],
       listOfProgram:[],
       listOfProvince:[],
@@ -82,6 +88,12 @@ class Programs extends Component {
   setData(programInfo){
     this.setState({
       data:programInfo,
+    });
+  }
+  
+  setLoading(currentState){
+    this.setState({
+      loading:currentState,
     });
   }
 
@@ -161,7 +173,6 @@ class Programs extends Component {
   };
   
   handleDuration(programYear){
-    console.log(programYear)
     this.setState({
         setUniversityName: "",   
         setUniversityProgram: "",
@@ -189,8 +200,12 @@ class Programs extends Component {
   }
 
   getUserGradeReq(){
+    this.setLoading(false)
     function_service.userGradeRequirement().then((response) =>{
       this.setData(response.map((data) => data))
+      setTimeout(() => {
+        this.setLoading(true)
+      },1000)
     })
   }
   
@@ -210,38 +225,56 @@ class Programs extends Component {
           this.setListOfProvince(response.map((data) => data))
         })
       }else{
-
+        
         if(this.state.setUniversityName !== ""){
+           this.setLoading(false)
           function_service.listOfUniName(this.state.setUniversityName).then((response) =>{
-            this.setData(response.map((data) => data)) 
+            this.setData(response.map((data) => data))
+            setTimeout(() => {
+              this.setLoading(true)
+            },1000)
           })
+            
         }
           
   
         if(this.state.setUniversityProgram.length > 0){
+          this.setLoading(false)
           function_service.listOfProgramName(this.state.setUniversityProgram).then((response) =>{
-            this.setData(response.map((data) => data)) 
+            this.setData(response.map((data) => data))
+            setTimeout(() => {
+              this.setLoading(true)
+            },1000) 
           })
         }
 
         if(this.state.setCity.length > 0){
+          this.setLoading(false)
            function_service.listOfCities(this.state.setCity).then((response) =>{
-             this.setData(response.map((data) => data)) 
+             this.setData(response.map((data) => data))
+             setTimeout(() => {
+              this.setLoading(true)
+            },1000) 
            })
          }
 
-         if(this.state.setProvince.length > 0){
-          console.log(this.state.setProvince); 
+         if(this.state.setProvince.length > 0){ 
+          this.setLoading(false)
            function_service.listOfProvinces(this.state.setProvince).then((response) =>{
-             this.setData(response.map((data) => data)) 
+             this.setData(response.map((data) => data))
+             setTimeout(() => {
+              this.setLoading(true)
+            },1000)
            })
          }
 
          if(this.state.setYear.length > 0){
-          console.log(this.state.setYear);
-          console.log(this.state.checkedYear);
+          this.setLoading(false)
            function_service.listOfDurations(this.setYear()).then((response) =>{
-             this.setData(response.map((data) => data)) 
+             this.setData(response.map((data) => data))
+             setTimeout(() => {
+              this.setLoading(true)
+            },1000)
            })
          }
       }
@@ -340,6 +373,7 @@ class Programs extends Component {
                 <button className="programBtn" type="submit" onClick={this.getUserGradeReq}>Click to see eligible programs</button>                         
                 
                 <button className="programBtn" type="submit" onClick={this.getProgramInformation}>Confirm Changes</button> 
+
               </div>
              </div>
             </div>
@@ -348,40 +382,40 @@ class Programs extends Component {
               
 
             <div className="div2">
-              
-                {this.state.data.map((university) => {
-                
-                  return (
-                    <div className="cardChild">
-                      <Card sx={{ maxWidth: 345 }} className="uni" key={university.id}>
-                        <CardMedia 
-                          className='test'
-                          component="img"
-                          height="100"
-                          image= {university.logo}
-                          alt="green iguana"
-                        />
-                        <CardContent>
-                          <Typography gutterBottom variant="h5" component="div">
-                            {university.title}
-                          </Typography>
-                          <Typography variant="body2" color="text.secondary" height={100} >
-                            {university.overview}
-                          </Typography>
-                          <Typography class="locationText" gutterBottom variant={true} component="p" >
-                            {"Location: " + university.city + ", " + university.province + ", " + university.country }
-                          </Typography>
-                        </CardContent>
-
-                        <CardActions>
-                          <Link size="small" href={university.webpage} target="_blank">Learn more</Link>
-
-                        </CardActions>
-                    </Card>
-                    </div>
+                  {this.state.loading ?  (this.state.data.map((university) => {
                     
-                  )
-              })}
+                    return (
+                      <div className="cardChild">
+                      
+                        <Card sx={{ maxWidth: 345 }} className="uni" key={university.id}>
+                          <CardMedia 
+                            className='test'
+                            component="img"
+                            height="100"
+                            image= {university.logo}
+                            alt={university.title}
+                          />
+                          <CardContent>
+                            <Typography gutterBottom variant="h5" component="div">
+                              {university.title}
+                            </Typography>
+                            <Typography variant="body2" color="text.secondary" height={100} >
+                              {university.overview}
+                            </Typography>
+                            <Typography class="locationText" gutterBottom variant={true} component="p" >
+                              {"Location: " + university.city + ", " + university.province + ", " + university.country }
+                            </Typography>
+                          </CardContent>
+
+                          <CardActions>
+                            <Link size="small" href={university.webpage} target="_blank">Learn more</Link>
+
+                          </CardActions>
+                      </Card>
+                      </div>
+                      
+                    )
+                })) : (  <CircularProgress /> )}           
           </div>
       </div>
       </FadeInUpDiv>
