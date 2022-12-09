@@ -89,6 +89,7 @@
 
 .Table table thead tr th{
     font-size:20px;
+
 }
 
 /*Mobile CSS*/
@@ -105,4 +106,5 @@
     .consultantContainer{
         width:100vw;
     }
+
 }

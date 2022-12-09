@@ -435,7 +435,7 @@ class UserProfile extends Component {
                     type="text"
                     className={classes.inputName}
                     placeholder="Enter First Name..."
-                    
+
                     onChange={this.onChangeFirstName}
                     name="firstName"
                   />
@@ -444,6 +444,7 @@ class UserProfile extends Component {
                     type="text"
                     className={classes.inputName}
                     placeholder="Enter Last Name..."
+
                     onChange={this.onChangeLastName}
                     name="lastName"
                   />
@@ -453,6 +454,7 @@ class UserProfile extends Component {
                   <input
                     type="text"
                     placeholder="Enter Address..."
+
                     onChange={this.onChangeAddress}
                     name="address"
                   />

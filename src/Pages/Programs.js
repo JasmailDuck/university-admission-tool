@@ -34,8 +34,6 @@ const FadeInUpDiv = styled.div`
 
 
 
-
-
 class Programs extends Component {
   
   constructor(props) {
