@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 
 import { login } from "../actions/auth";
 import loginBG from "../images/login.png";
-
+import logoIMG from "../images/testIcon.png";
 import classes from "../css/front.module.css";
 
 import styled, { keyframes } from "styled-components";
@@ -96,6 +96,7 @@ class Login extends Component {
 
           <div className={classes.rightContainer}>
             <div className={classes.formContainer}>
+            <img className={classes.logoIMG} src={logoIMG} alt="Logo Pic" />
               <form className={classes.form} onSubmit={this.handleLogin}>
                 <label className={classes.loginLogo} htmlFor="loginsign">
                   <p>Log In</p>
@@ -132,7 +133,7 @@ class Login extends Component {
                 {/* message on log in confirmation or error */}
                 {message && (
                   <div>
-                    <div>{message}</div>
+                    <div className={classes.errorMessage}>{message}</div>
                   </div>
                 )}
                 {/* Login button */}

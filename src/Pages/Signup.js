@@ -5,7 +5,7 @@ import { signup } from "../actions/auth";
 
 import classes from "../css/Signup.module.css";
 import signupBG from "../images/signup.png";
-
+import logoIMG from "../images/testIcon.png";
 import styled, { keyframes } from "styled-components";
 import { fadeIn } from "react-animations";
 const FadeInUpAnimation = keyframes`${fadeIn}`;
@@ -205,6 +205,7 @@ class Signup extends Component {
           </div>
 
           <div className={classes.rightContainer}>
+            <img className={classes.logoIMG} src={logoIMG} alt="Logo Pic" />
             <h1 className={classes.signin_title}>Create a Shirah Profile</h1>
 
             <div className={classes.form}>

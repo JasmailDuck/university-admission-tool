@@ -72,6 +72,10 @@ class UserProfile extends Component {
       editing: 0,
       files: 0,
       confirmBox: 0,
+      editSuccess: 0,
+      uploadNoDoc: 0,
+      uploadWrongDoc: 0,
+      uploadSuccess: 0,
     };
   }
 
@@ -168,6 +172,10 @@ class UserProfile extends Component {
   closeConfirmBox() {
     this.setState({
       confirmBox: 0,
+      editSuccess: 0,
+      uploadNoDoc: 0,
+      uploadWrongDoc: 0,
+      uploadSuccess: 0
     });
   }
 
@@ -247,6 +255,9 @@ class UserProfile extends Component {
       this.state.role
     ).then(() => {
       this.setInformation();
+      this.setState({
+        editSuccess: 1,
+      });
     });
   }
 
@@ -276,6 +287,7 @@ class UserProfile extends Component {
       this.props.dispatch(
         setMessage("No Document Selected! (only pdfs accepted)")
       );
+      this.setState({ uploadNoDoc: 1});
     } else if (this.state.selectedFile.type === "application/pdf") {
       var fileString = fileToDataURL(this.state.selectedFile);
 
@@ -285,12 +297,14 @@ class UserProfile extends Component {
           this.props.dispatch(
             setMessage("Document uploaded!")
           );
+          this.setState({ uploadSuccess: 1});
         });
       }, 200);
     } else {
       this.props.dispatch(
         setMessage("Wrong Document Selected! (only pdfs accepted)")
       );
+      this.setState({ uploadWrongDoc: 1});
     }
   };
 
@@ -326,6 +340,10 @@ class UserProfile extends Component {
     const { editing } = this.state;
     const { files } = this.state;
     const { confirmBox } = this.state;
+    const { editSuccess } = this.state;
+    const { uploadSuccess } = this.state;
+    const { uploadNoDoc } = this.state;
+    const { uploadWrongDoc } = this.state;
 
     // Enables the transition for the confirmation box when deleting account
     const Transition = React.forwardRef(function Transition(props, ref) {
@@ -416,8 +434,8 @@ class UserProfile extends Component {
                   <input
                     type="text"
                     className={classes.inputName}
-                    placeholder={this.state.f_name}
-                    value={this.state.f_name}
+                    placeholder="Enter First Name..."
+                    
                     onChange={this.onChangeFirstName}
                     name="firstName"
                   />
@@ -425,8 +443,7 @@ class UserProfile extends Component {
                   <input
                     type="text"
                     className={classes.inputName}
-                    placeholder={this.state.l_name}
-                    value={this.state.l_name}
+                    placeholder="Enter Last Name..."
                     onChange={this.onChangeLastName}
                     name="lastName"
                   />
@@ -435,8 +452,7 @@ class UserProfile extends Component {
                 <div className={classes.addressBirthRow}>
                   <input
                     type="text"
-                    placeholder={this.state.address}
-                    value={this.state.address}
+                    placeholder="Enter Address..."
                     onChange={this.onChangeAddress}
                     name="address"
                   />
@@ -455,8 +471,7 @@ class UserProfile extends Component {
                 <div className={classes.countryInterestsRow}>
                   <input
                     type="text"
-                    placeholder={this.state.country}
-                    value={this.state.country}
+                    placeholder="Enter Country..."
                     onChange={this.onChangeCountry}
                     name="country"
                   />
@@ -464,27 +479,9 @@ class UserProfile extends Component {
                   
                   <input
                     type="text"
-                    placeholder={this.state.interests}
-                    value={this.state.interests}
+                    placeholder="Enter Interests..."
                     onChange={this.onChangeInterests}
                     name="interests"
-                  />
-                </div>
-
-                <div className={classes.roleRow}>
-                  <input
-                    type="text"
-                    placeholder={this.state.role}
-                    value={this.state.role}
-                    onChange={this.onChangeRole}
-                    name="role"
-                  />
-
-                  <input
-                    className={classes.dummy}
-                    disabled
-                    type="text"
-                    name="dummy"
                   />
                 </div>
 
@@ -601,6 +598,103 @@ class UserProfile extends Component {
             </Dialog>
           </div>
         )}
+
+        {editSuccess === 1 && (
+          <div>
+            <Dialog
+              open={true}
+              TransitionComponent={Transition}
+              keepMounted
+              onClose={this.closeConfirmBox}
+              aria-describedby="alert-dialog-slide-description"
+            >
+              <DialogTitle>
+                {"Profile changes successfully saved!"}
+              </DialogTitle>
+              <DialogContent>
+                <DialogContentText id="alert-dialog-slide-description">
+                  Your profile changes have been successfully saved! 
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions className={classes.confirmBox}>
+                <Button onClick={this.closeConfirmBox}>OK</Button>
+              </DialogActions>
+            </Dialog>
+          </div>
+        )}
+
+        {uploadSuccess === 1 && (
+          <div>
+            <Dialog
+              open={true}
+              TransitionComponent={Transition}
+              keepMounted
+              onClose={this.closeConfirmBox}
+              aria-describedby="alert-dialog-slide-description"
+            >
+              <DialogTitle>
+                {"File uploaded successfully!"}
+              </DialogTitle>
+              <DialogContent>
+                <DialogContentText id="alert-dialog-slide-description">
+                  Your file has been uploaded! NOTE: Uploading another file will replace the recent file! 
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions className={classes.confirmBox}>
+                <Button onClick={this.closeConfirmBox}>OK</Button>
+              </DialogActions>
+            </Dialog>
+          </div>
+        )}
+
+        {uploadNoDoc === 1 && (
+          <div>
+            <Dialog
+              open={true}
+              TransitionComponent={Transition}
+              keepMounted
+              onClose={this.closeConfirmBox}
+              aria-describedby="alert-dialog-slide-description"
+            >
+              <DialogTitle>
+                {"No Document Uploaded!"}
+              </DialogTitle>
+              <DialogContent>
+                <DialogContentText id="alert-dialog-slide-description">
+                  Please select a valid PDF document file! 
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions className={classes.confirmBox}>
+                <Button onClick={this.closeConfirmBox}>OK</Button>
+              </DialogActions>
+            </Dialog>
+          </div>
+        )}
+
+        {uploadWrongDoc === 1 && (
+          <div>
+            <Dialog
+              open={true}
+              TransitionComponent={Transition}
+              keepMounted
+              onClose={this.closeConfirmBox}
+              aria-describedby="alert-dialog-slide-description"
+            >
+              <DialogTitle>
+                {"Wrong File uploaded!"}
+              </DialogTitle>
+              <DialogContent>
+                <DialogContentText id="alert-dialog-slide-description">
+                  Please select a valid PDF document file! 
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions className={classes.confirmBox}>
+                <Button onClick={this.closeConfirmBox}>OK</Button>
+              </DialogActions>
+            </Dialog>
+          </div>
+        )}
+
         </FadeInUpDiv>
       </>
     );
