@@ -55,3 +55,38 @@
 .Profile{
   font-size:2em;
 }
+
+@media only screen and (max-width: 920px) {
+  .Nav{
+    display:flex;
+    flex-direction: column;
+    height:20vh;
+  }
+
+  .navMenu{
+    padding: 0;
+    height:10px;
+    margin-top:-30px;
+    display:flex;
+    flex-wrap: wrap;
+  }
+
+
+}
+
+@media only screen and (max-width:510px){
+
+  .Nav{
+    height:30vh;
+  }
+  .navMenu{
+    flex-wrap:wrap-reverse;
+    column-gap: 50px;
+    row-gap:10px;
+  }
+
+  .navMenu > .NavLink
+  .navMenu > .NavBtnLink{
+    flex:90%;
+  }
+}

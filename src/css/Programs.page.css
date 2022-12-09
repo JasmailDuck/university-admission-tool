@@ -174,3 +174,103 @@ input#search_input.searchBox {
   background-position: 0 0;
 
 }
+
+/*Mobile CSS*/
+@media only screen and (max-width:1125px){
+
+  .div2{
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .div1 .provinceMultiSelect .search-wrapper,
+.div1 .cityMultiSelect .search-wrapper,
+.div1 .programMultiSelect .search-wrapper{
+  width:245px;
+  
+}
+  .cardChild .MuiPaper-root{
+    overflow-y:auto
+  }
+}
+
+@media only screen and (max-width:815px){
+  .div1 .provinceMultiSelect .search-wrapper,
+.div1 .cityMultiSelect .search-wrapper,
+.div1 .programMultiSelect .search-wrapper{
+  width:185px;
+}
+
+.bottomRow{
+  flex-direction:column;
+  align-items: center;
+  justify-content: center;
+}
+
+.minGrade{
+  padding-top:10px;
+}
+}
+
+@media only screen and (max-width:775px){
+  .div2{
+    grid-template-columns: 1fr;
+  }
+}
+
+@media only screen and (max-width:660px){
+  .div1 .provinceMultiSelect .search-wrapper,
+  .div1 .cityMultiSelect .search-wrapper,
+  .div1 .programMultiSelect .search-wrapper{
+    width:165px;
+  }
+}
+
+
+@media only screen and (max-width:575px){
+  .div1 .provinceMultiSelect .search-wrapper,
+  .div1 .cityMultiSelect .search-wrapper,
+  .div1 .programMultiSelect .search-wrapper{
+    width:145px;
+  }
+}
+
+@media only screen and (max-width:500px){
+  .div1 .provinceMultiSelect .search-wrapper,
+  .div1 .cityMultiSelect .search-wrapper,
+  .div1 .programMultiSelect .search-wrapper{
+    width:285px;
+  }
+
+  .topRow{
+    padding-left: 20px;
+  }
+
+  .middleRow{
+    flex-direction: column;
+    row-gap:20px;
+  }
+}
+
+@media only screen and (max-width:450px){
+  .div1 .provinceMultiSelect .search-wrapper,
+  .div1 .cityMultiSelect .search-wrapper,
+  .div1 .programMultiSelect .search-wrapper{
+    width:245px;
+  }
+
+  .topRow{
+    padding-left: 20px;
+  }
+
+  .middleRow{
+    flex-direction: column;
+    row-gap:20px;
+  }
+  
+  .minGrade{
+    display:flex;
+    flex-direction: column;
+    row-gap:20px;
+  }
+}
+

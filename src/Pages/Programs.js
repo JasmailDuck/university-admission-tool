@@ -23,6 +23,8 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 
 
 //Animations
+// This is for loading animation 
+import CircularProgress from '@mui/material/CircularProgress';
 import styled, { keyframes } from "styled-components";
 import { fadeInUp } from "react-animations";
 const FadeInUpAnimation = keyframes`${fadeInUp}`;
@@ -31,8 +33,7 @@ const FadeInUpDiv = styled.div`
 `;
 
 
-// This is for loading animation 
-import CircularProgress from '@mui/material/CircularProgress';
+
 
 
 class Programs extends Component {
